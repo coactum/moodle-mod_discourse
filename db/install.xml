@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+  <XMLDB PATH="mod/discourse/db" VERSION="20210530" COMMENT="XMLDB file for Moodle mod/discourse"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+  >
+    <TABLES>
+      <TABLE NAME="discourse" COMMENT="Main table with all information of all plugin instances">
+        <FIELDS>
+          <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+          <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Course discourse activity belongs to"/>
+          <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT="Name of the discourse instance"/>
+          <FIELD NAME="intro" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Description of the discourse used by feature MOD_INTRO."/>
+          <FIELD NAME="introformat" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Format of the intro field used by feature MOD_INTRO."/>
+          <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+          <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+          <FIELD NAME="autoswitch" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Autoswitching of phases enabled"/>
+          <FIELD NAME="activephase" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="1" SEQUENCE="false" COMMENT="Active phase"/>
+          <FIELD NAME="hintphaseone" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Hint text for first phase"/>
+          <FIELD NAME="hintphasetwo" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Hint text for second phase"/>
+          <FIELD NAME="hintphasethree" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Hint text for third phase"/>
+          <FIELD NAME="hintphasefour" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Hint text for fourth phase"/>
+          <FIELD NAME="deadlinephaseone" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Deadline for first phase"/>
+          <FIELD NAME="deadlinephasetwo" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Deadline for second phase"/>
+          <FIELD NAME="deadlinephasethree" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Deadline for third phase"/>
+          <FIELD NAME="deadlinephasefour" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Deadline for fourth phase"/>
+        </FIELDS>
+        <KEYS>
+          <KEY NAME="primary" TYPE="primary" FIELDS="id" />
+        </KEYS>
+        <INDEXES>
+          <INDEX NAME="course" UNIQUE="false" FIELDS="course"/>
+        </INDEXES>
+      </TABLE>
+      <TABLE NAME="discourse_participants" COMMENT="Tabele with data of all participants of all discourses">
+        <FIELDS>
+          <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+          <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Moodle id of user"/>
+          <FIELD NAME="discourse" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Id of discourse"/>
+          <FIELD NAME="groupids" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Group ids of user in discourse as array in json syntax"/>
+        </FIELDS>
+        <KEYS>
+          <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        </KEYS>
+        <INDEXES>
+          <INDEX NAME="discourse" UNIQUE="false" FIELDS="discourse"/>
+        </INDEXES>
+      </TABLE>
+      <TABLE NAME="discourse_submissions" COMMENT="Table with all submitted group texts">
+        <FIELDS>
+          <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+          <FIELD NAME="discourse" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Id of discourse"/>
+          <FIELD NAME="groupid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Group id of submission"/>
+          <FIELD NAME="submission" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Text of submission"/>
+          <FIELD NAME="editlock" TYPE="int" LENGTH="1" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="Flag if group text is edited"/>
+          <FIELD NAME="currentversion" TYPE="int" LENGTH="3" NOTNULL="false" SEQUENCE="false" COMMENT="Version of submission"/>
+          <FIELD NAME="format" TYPE="int" LENGTH="2" NOTNULL="false" SEQUENCE="false" COMMENT="Format of submission"/>
+          <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+          <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="false" DEFAULT="0" SEQUENCE="false"/>
+        </FIELDS>
+        <KEYS>
+          <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        </KEYS>
+        <INDEXES>
+          <INDEX NAME="discourse" UNIQUE="false" FIELDS="discourse"/>
+        </INDEXES>
+      </TABLE>
+    </TABLES>
+  </XMLDB>
