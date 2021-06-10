@@ -27,6 +27,7 @@ if (!defined('MOODLE_INTERNAL')) {
 }
 
 require_once($CFG->dirroot.'/course/moodleform_mod.php');
+require_once($CFG->dirroot . '/mod/discourse/locallib.php');
 
 /**
  * Module instance settings form.
@@ -41,7 +42,13 @@ class mod_discourse_mod_form extends moodleform_mod {
      * Defines forms elements
      */
     public function definition() {
-        global $CFG;
+        global $CFG, $PAGE;
+
+        $id = optional_param('update', null, PARAM_INT);
+
+        if (isset($id) && $id !== 0) {
+            $discourse = discourse::get_discourse_instance($id);
+        }
 
         $mform = $this->_form;
 
@@ -68,10 +75,47 @@ class mod_discourse_mod_form extends moodleform_mod {
             $this->add_intro_editor();
         }
 
-        // Adding the rest of mod_discourse settings, spreading all them into this fieldset
-        // ... or adding more fieldsets ('header' elements) if needed for better logic.
-        /* $mform->addElement('static', 'label1', 'discoursesettings', get_string('discoursesettings', 'mod_discourse'));
-        $mform->addElement('header', 'discoursefieldset', get_string('discoursefieldset', 'mod_discourse')); */
+        // Adding section for phase completion.
+        $mform->addElement('header', 'phasecompletion', get_string('phasecompletion', 'mod_discourse'));
+
+        $mform->addElement('advcheckbox', 'autoswitch', get_string('mode_autoswitch', 'mod_discourse'), get_string('autoswitch', 'mod_discourse'));
+
+        if (isset($id) && $id !== 0 && isset($discourse->get_course_module_instance()->autoswitch)) {
+            $mform->setDefault('autoswitch', 1);
+        } else {
+            $mform->setDefault('autoswitch', 0);
+        }
+
+        $mform->addElement('date_time_selector', 'deadlinephaseone', get_string('deadlinephaseone', 'mod_discourse'));
+        $mform->setDefault('deadlinephaseone', time() + (7 * 24 * 60 * 60));
+        $mform->hideIf('deadlinephaseone', 'autoswitch', 'eq', 0);
+
+        $mform->addElement('date_time_selector', 'deadlinephasetwo', get_string('deadlinephasetwo', 'mod_discourse'));
+        $mform->setDefault('deadlinephasetwo', time() + (14 * 24 * 60 * 60));
+        $mform->hideIf('deadlinephasetwo', 'autoswitch', 'eq', 0);
+
+        $mform->addElement('date_time_selector', 'deadlinephasethree', get_string('deadlinephasethree', 'mod_discourse'));
+        $mform->setDefault('deadlinephasethree', time() + (21 * 24 * 60 * 60));
+        $mform->hideIf('deadlinephasethree', 'autoswitch', 'eq', 0);
+
+        $mform->addElement('date_time_selector', 'deadlinephasefour', get_string('deadlinephasefour', 'mod_discourse'));
+        $mform->setDefault('deadlinephasefour', time() + (28 * 24 * 60 * 60));
+        $mform->hideIf('deadlinephasefour', 'autoswitch', 'eq', 0);
+
+        // Adding section for phase hints.
+        $mform->addElement('header', 'phaseshints', get_string('phaseshints', 'mod_discourse'));
+
+        $mform->addElement('textarea', 'hintphaseone', get_string('hintphaseone', 'mod_discourse'), 'wrap="virtual" rows="2" cols="150"');
+        $mform->setType('hintphaseone', PARAM_TEXT);
+
+        $mform->addElement('textarea', 'hintphasetwo', get_string('hintphasetwo', 'mod_discourse'), 'wrap="virtual" rows="2" cols="150"');
+        $mform->setType('hintphasetwo', PARAM_TEXT);
+
+        $mform->addElement('textarea', 'hintphasethree', get_string('hintphasethree', 'mod_discourse'), 'wrap="virtual" rows="2" cols="150"');
+        $mform->setType('hintphasethree', PARAM_TEXT);
+
+        $mform->addElement('textarea', 'hintphasefour', get_string('hintphasefour', 'mod_discourse'), 'wrap="virtual" rows="2" cols="150"');
+        $mform->setType('hintphasefour', PARAM_TEXT);
 
         // Add standard elements.
         $this->standard_coursemodule_elements();

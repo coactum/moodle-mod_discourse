@@ -24,12 +24,13 @@
 
 require(__DIR__.'/../../config.php');
 require_once(__DIR__.'/lib.php');
+require_once($CFG->dirroot . '/mod/discourse/locallib.php');
 
 // Course_module ID.
 $id = optional_param('id', 0, PARAM_INT);
 
 // Module instance ID as alternative.
-$d  = optional_param('e', 0, PARAM_INT);
+/* $d  = optional_param('d', 0, PARAM_INT);
 
 if ($id) {
     $cm             = get_coursemodule_from_id('discourse', $id, 0, false, MUST_EXIST);
@@ -41,15 +42,23 @@ if ($id) {
     $cm             = get_coursemodule_from_instance('discourse', $moduleinstance->id, $course->id, false, MUST_EXIST);
 } else {
     throw new moodle_exception('missingparameter');
+} */
+
+if ($id) {
+    $discourse = discourse::get_discourse_instance($id);
+    $moduleinstance = $discourse->get_module_instance();
+    $course = $discourse->get_course();
+    $context = $discourse->get_context();
+    $cm = $discourse->get_course_module();
+} else {
+    throw new moodle_exception('missingparameter');
 }
 
 require_login($course, true, $cm);
 
-$modulecontext = context_module::instance($cm->id);
-
 $event = \mod_discourse\event\course_module_viewed::create(array(
     'objectid' => $moduleinstance->id,
-    'context' => $modulecontext
+    'context' => $context
 ));
 $event->add_record_snapshot('course', $course);
 $event->add_record_snapshot('discourse', $moduleinstance);
@@ -58,10 +67,12 @@ $event->trigger();
 $PAGE->set_url('/mod/discourse/view.php', array('id' => $cm->id));
 $PAGE->set_title(format_string($moduleinstance->name));
 $PAGE->set_heading(format_string($course->fullname));
-$PAGE->set_context($modulecontext);
+$PAGE->set_context($context);
 
 echo $OUTPUT->header();
 
-echo 'Testinhalt';
+echo 'Testinhalt <br>';
+
+var_dump($moduleinstance);
 
 echo $OUTPUT->footer();

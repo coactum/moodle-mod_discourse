@@ -25,11 +25,24 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+$string['pluginname'] = 'Discourse';
 
 // mod_form.php
 $string['modulename'] = 'Discourse';
 $string['modulename_help'] = 'The discourse activity allows group discussions ... ';
 $string['pluginadministration'] = 'Administration of discourse';
+$string['phasecompletion'] = 'Phase completion';
+$string['mode_autoswitch'] = 'Activate mode "Automatic phase switch"';
+$string['autoswitch'] = 'The phases are changed automatically at the times specified below';
+$string['deadlinephaseone'] = 'Completion of the solo phase';
+$string['deadlinephasetwo'] = 'Completion of the 1st group phase';
+$string['deadlinephasethree'] = 'Completion of the 2nd group phase';
+$string['deadlinephasefour'] = 'Completion of the collaborative phase';
+$string['phaseshints'] = 'Hints for the phases';
+$string['hintphaseone'] = 'Note on the solo phase';
+$string['hintphasetwo'] = 'Note on the 1st group phase';
+$string['hintphasethree'] = 'Note on the 2nd group phase';
+$string['hintphasefour'] = 'Note on the collaborative phase';
 
 // index.php
 $string['modulenameplural'] = 'Discourses';

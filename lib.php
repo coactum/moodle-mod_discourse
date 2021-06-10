@@ -63,14 +63,14 @@ function discourse_supports($feature) {
  * @param mod_discourse_mod_form $mform The form.
  * @return int The id of the newly inserted record.
  */
-function discourse_add_instance($discourse, $mform = null) {
+function discourse_add_instance($discourse, mod_discourse_mod_form $mform = null) {
     global $DB;
 
     $discourse->timecreated = time();
 
-    $id = $DB->insert_record('discourse', $discourse);
+    $discourse->id = $DB->insert_record('discourse', $discourse);
 
-    return $id;
+    return $discourse->id;
 }
 
 /**
@@ -83,7 +83,7 @@ function discourse_add_instance($discourse, $mform = null) {
  * @param mod_discourse_mod_form $mform The form.
  * @return bool True if successful, false otherwise.
  */
-function discourse_update_instance($discourse, $mform = null) {
+function discourse_update_instance($discourse, mod_discourse_mod_form $mform = null) {
     global $DB;
 
     $discourse->timemodified = time();

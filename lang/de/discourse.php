@@ -25,11 +25,24 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+$string['pluginname'] = 'DisKurs';
 
 // mod_form.php
 $string['modulename'] = 'DisKurs';
 $string['modulename_help'] = 'Die Aktivität DisKurs erlaubt die Durchführung einer besonderen Gruppendiskussion ... ';
 $string['pluginadministration'] = 'Administration des DisKurses';
+$string['phasecompletion'] = 'Phasen-Abschluss';
+$string['mode_autoswitch'] = 'Modus "Automatischer Phasenwechsel" aktivieren';
+$string['autoswitch'] = 'Die Phasen werden automatisch zu den im folgenden angegebenen Zeitpunkten gewechselt';
+$string['deadlinephaseone'] = 'Abschluss der Einzelphase';
+$string['deadlinephasetwo'] = 'Abschluss der 1. Gruppenphase';
+$string['deadlinephasethree'] = 'Abschluss der 2. Gruppenphase';
+$string['deadlinephasefour'] = 'Abschluss der Gemeinschaftsphase';
+$string['phaseshints'] = 'Hinweistexte zu den Phasen';
+$string['hintphaseone'] = 'Hinweis zur Einzelphase';
+$string['hintphasetwo'] = 'Hinweis zur 1. Gruppenphase';
+$string['hintphasethree'] = 'Hinweis zur 2. Gruppenphase';
+$string['hintphasefour'] = 'Hinweis zur Gemeinschaftsphase';
 
 // index.php
 $string['modulenameplural'] = 'DisKurse';
