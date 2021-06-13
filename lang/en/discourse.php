@@ -51,6 +51,15 @@ $string['nonewmodules'] = 'No new modules';
 // lib.php
 $string['deletealluserdata'] = 'Delete all user data';
 
+// locallib.php
+$string['groupingdescription'] = 'Grouping for discourse activity {$a}';
+$string['phaseone'] = 'Solo phase';
+$string['phasetwo'] = '1st group phase';
+$string['phasethree'] = '2nd group phase';
+$string['phasefour'] = 'Collaborative phas';
+$string['groupfor'] = 'Group for {$a}';
+$string['group'] = 'Group';
+
 // capabilities
 $string['discourse:addinstance'] = 'Add new discourse';
 $string['discourse:viewdiscourseteacher'] = 'View disocurse as teacher';

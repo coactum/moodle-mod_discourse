@@ -80,7 +80,7 @@ class mod_discourse_mod_form extends moodleform_mod {
 
         $mform->addElement('advcheckbox', 'autoswitch', get_string('mode_autoswitch', 'mod_discourse'), get_string('autoswitch', 'mod_discourse'));
 
-        if (isset($id) && $id !== 0 && isset($discourse->get_course_module_instance()->autoswitch)) {
+        if (isset($id) && $id !== 0 && isset($discourse->get_module_instance()->autoswitch)) {
             $mform->setDefault('autoswitch', 1);
         } else {
             $mform->setDefault('autoswitch', 0);

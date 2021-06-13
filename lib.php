@@ -74,6 +74,19 @@ function discourse_add_instance($discourse, mod_discourse_mod_form $mform = null
 }
 
 /**
+ * Creating initial grouping and groups and assigning participants to them after the creation of a discourse instance.
+ * This function is called by the course_module_created observer.
+ *
+ * @param object $context the discourse context
+ * @param stdClass $discourse The discourse object
+ * @return void
+ */
+function discourse_instance_created($context, $discourse) {
+    $enrolledusers = get_enrolled_users($context, 'mod/discourse:viewdiscoursestudent');
+    $discourse->create_groups_and_grouping($enrolledusers);
+}
+
+/**
  * Updates an instance of the mod_discourse in the database.
  *
  * Given an object containing all the necessary data (defined in mod_form.php),

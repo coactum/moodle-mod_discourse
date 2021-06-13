@@ -27,4 +27,8 @@ defined('MOODLE_INTERNAL') || die();
 
 // List of observers.
 $observers = array(
+    array(
+        'eventname' => '\core\event\course_module_created',
+        'callback'  => 'mod_discourse_observer::course_module_created',
+    )
 );

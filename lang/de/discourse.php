@@ -51,6 +51,15 @@ $string['nonewmodules'] = 'Keine neuen DisKurse';
 // lib.php
 $string['deletealluserdata'] = 'Alle Benutzerdaten löschen';
 
+// locallib.php
+$string['groupingdescription'] = 'Gruppierung für die DisKurs-Aktivität {$a}';
+$string['phaseone'] = 'Einzelphase';
+$string['phasetwo'] = '1. Gruppenphase';
+$string['phasethree'] = '2. Gruppenphase';
+$string['phasefour'] = 'Gemeinschaftsphase';
+$string['groupfor'] = 'Gruppe für {$a}';
+$string['group'] = 'Gruppe';
+
 // capabilities
 $string['discourse:addinstance'] = 'Neuen DisKurs hinzufügen';
 $string['discourse:viewdiscourseteacher'] = 'DisKurs als Lehrender ansehen';

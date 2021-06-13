@@ -27,11 +27,12 @@ require_once(__DIR__.'/lib.php');
 require_once($CFG->dirroot . '/mod/discourse/locallib.php');
 
 // Course_module ID.
-$id = optional_param('id', 0, PARAM_INT);
+$id = optional_param('id', null, PARAM_INT);
 
 // Module instance ID as alternative.
-/* $d  = optional_param('d', 0, PARAM_INT);
+$d  = optional_param('d', null, PARAM_INT);
 
+/*
 if ($id) {
     $cm             = get_coursemodule_from_id('discourse', $id, 0, false, MUST_EXIST);
     $course         = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
@@ -44,15 +45,12 @@ if ($id) {
     throw new moodle_exception('missingparameter');
 } */
 
-if ($id) {
-    $discourse = discourse::get_discourse_instance($id);
-    $moduleinstance = $discourse->get_module_instance();
-    $course = $discourse->get_course();
-    $context = $discourse->get_context();
-    $cm = $discourse->get_course_module();
-} else {
-    throw new moodle_exception('missingparameter');
-}
+$discourse = discourse::get_discourse_instance($id, $d);
+
+$moduleinstance = $discourse->get_module_instance();
+$course = $discourse->get_course();
+$context = $discourse->get_context();
+$cm = $discourse->get_course_module();
 
 require_login($course, true, $cm);
 
@@ -73,6 +71,10 @@ echo $OUTPUT->header();
 
 echo 'Testinhalt <br>';
 
-var_dump($moduleinstance);
+global $DB;
+
+var_dump($DB->get_records('discourse_participants', array('discourse' => $moduleinstance->id)));
+var_dump('<br>');
+var_dump(groups_get_all_groups($course->id, 0, $moduleinstance->groupingid));
 
 echo $OUTPUT->footer();

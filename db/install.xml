@@ -23,6 +23,7 @@
           <FIELD NAME="deadlinephasetwo" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Deadline for second phase"/>
           <FIELD NAME="deadlinephasethree" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Deadline for third phase"/>
           <FIELD NAME="deadlinephasefour" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Deadline for fourth phase"/>
+          <FIELD NAME="groupingid" TYPE="int" LENGTH="10" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="ID of grouping of discourse actisvity"/>
         </FIELDS>
         <KEYS>
           <KEY NAME="primary" TYPE="primary" FIELDS="id" />
