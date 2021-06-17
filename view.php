@@ -22,6 +22,8 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use mod_discourse\output\discourse_view;
+
 require(__DIR__.'/../../config.php');
 require_once(__DIR__.'/lib.php');
 require_once($CFG->dirroot . '/mod/discourse/locallib.php');
@@ -32,18 +34,8 @@ $id = optional_param('id', null, PARAM_INT);
 // Module instance ID as alternative.
 $d  = optional_param('d', null, PARAM_INT);
 
-/*
-if ($id) {
-    $cm             = get_coursemodule_from_id('discourse', $id, 0, false, MUST_EXIST);
-    $course         = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
-    $moduleinstance = $DB->get_record('discourse', array('id' => $cm->instance), '*', MUST_EXIST);
-} else if ($d) {
-    $moduleinstance = $DB->get_record('discourse', array('id' => $d), '*', MUST_EXIST);
-    $course         = $DB->get_record('course', array('id' => $moduleinstance->course), '*', MUST_EXIST);
-    $cm             = get_coursemodule_from_instance('discourse', $moduleinstance->id, $course->id, false, MUST_EXIST);
-} else {
-    throw new moodle_exception('missingparameter');
-} */
+// New phase that discourse should switch to.
+$newphase  = optional_param('newphase', null, PARAM_INT);
 
 $discourse = discourse::get_discourse_instance($id, $d);
 
@@ -68,13 +60,91 @@ $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($context);
 
 echo $OUTPUT->header();
+echo $OUTPUT->heading(get_string('modulename', 'mod_discourse').': ' . format_string($moduleinstance->name));
 
-echo 'Testinhalt <br>';
+if ($moduleinstance->intro) {
+    echo $OUTPUT->box(format_module_intro('discourse', $moduleinstance, $cm->id), 'generalbox mod_introbox', 'newmoduleintro');
+}
 
-global $DB;
+if (isset($newphase)) {
+    global $DB;
+    switch ($newphase) {
+        case 1:
+            $moduleinstance->activephase = 1;
+            $activephaseone = true;
+            $activephasetwo = false;
+            $activephasethree = false;
+            $activephasefour = false;
+            break;
+        case 2:
+            $moduleinstance->activephase = 2;
+            $activephaseone = false;
+            $activephasetwo = true;
+            $activephasethree = false;
+            $activephasefour = false;
+            break;
+        case 3:
+            $moduleinstance->activephase = 3;
+            $activephaseone = false;
+            $activephasetwo = false;
+            $activephasethree = true;
+            $activephasefour = false;
+            break;
+        case 4:
+            $moduleinstance->activephase = 4;
+            $activephaseone = false;
+            $activephasetwo = false;
+            $activephasethree = false;
+            $activephasefour = true;
+            break;
+        default:
+            $activephaseone = true;
+            $activephasetwo = false;
+            $activephasethree = false;
+            $activephasefour = false;
+            break;
+    }
 
-var_dump($DB->get_records('discourse_participants', array('discourse' => $moduleinstance->id)));
-var_dump('<br>');
-var_dump(groups_get_all_groups($course->id, 0, $moduleinstance->groupingid));
+    $DB->update_record('discourse', $moduleinstance);
+} else {
+    switch ($moduleinstance->activephase) {
+        case 1:
+            $activephaseone = true;
+            $activephasetwo = false;
+            $activephasethree = false;
+            $activephasefour = false;
+            break;
+        case 2:
+            $activephaseone = false;
+            $activephasetwo = true;
+            $activephasethree = false;
+            $activephasefour = false;
+            break;
+        case 3:
+            $activephaseone = false;
+            $activephasetwo = false;
+            $activephasethree = true;
+            $activephasefour = false;
+            break;
+        case 4:
+            $activephaseone = false;
+            $activephasetwo = false;
+            $activephasethree = false;
+            $activephasefour = true;
+            break;
+        default:
+            $activephaseone = true;
+            $activephasetwo = false;
+            $activephasethree = false;
+            $activephasefour = false;
+            break;
+    }
+}
+
+$page = new discourse_view($cm->id, $discourse->get_groups(), $moduleinstance->autoswitch, $activephaseone, $activephasetwo, $activephasethree,
+    $activephasefour, $moduleinstance->hintphaseone, $moduleinstance->hintphasetwo, $moduleinstance->hintphasethree, $moduleinstance->hintphasefour,
+    $moduleinstance->deadlinephaseone, $moduleinstance->deadlinephasetwo, $moduleinstance->deadlinephasethree, $moduleinstance->deadlinephasefour);
+
+echo $OUTPUT->render($page);
 
 echo $OUTPUT->footer();

@@ -60,6 +60,13 @@ $string['phasefour'] = 'Gemeinschaftsphase';
 $string['groupfor'] = 'Gruppe für {$a}';
 $string['group'] = 'Gruppe';
 
+// discourse_view.mustache
+$string['activephase'] = 'Aktive Phase';
+$string['switchto'] = 'Wechseln zu';
+$string['hint'] = 'Hinweis';
+$string['activesince'] = 'Aktiv seit';
+$string['activefrom'] = 'Aktiv ab';
+
 // capabilities
 $string['discourse:addinstance'] = 'Neuen DisKurs hinzufügen';
 $string['discourse:viewdiscourseteacher'] = 'DisKurs als Lehrender ansehen';

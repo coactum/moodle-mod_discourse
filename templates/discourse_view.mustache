@@ -1,0 +1,197 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template discourse/discourse_view
+
+    Example context (json):
+    {
+        "comment": "Example comment for the context"
+    }
+}}
+
+{{#js}}
+{{/js}}
+
+<div class="discourse-view">
+    <div class="table-responsive discourse-table-phases">
+        <table class="table table-striped table-hover generaltable generalbox">
+            <thead>
+
+                <th scope="col">
+                    {{#str}}phaseone, mod_discourse{{/str}}
+                    {{#activephaseone}}<i class="fa fa-lg fa-check text-success pull-right" title="{{#str}}activephase, mod_discourse{{/str}}"></i>{{/activephaseone}}
+                    {{^activephaseone}}<a href="view.php?id={{cmid}}&newphase=1"><i class="fa fa-lg fa-toggle-off pull-right" title="{{#str}}switchto, mod_discourse{{/str}} {{#str}}phaseone, mod_discourse{{/str}}"></i></a>{{/activephaseone}}
+                </th>
+                <th scope="col">
+                    {{#str}}phasetwo, mod_discourse{{/str}}
+                    {{#activephasetwo}}<i class="fa fa-lg fa-check text-success pull-right" title="{{#str}}activephase, mod_discourse{{/str}}"></i>{{/activephasetwo}}
+                    {{^activephasetwo}}<a href="view.php?id={{cmid}}&newphase=2"><i class="fa fa-lg fa-toggle-off pull-right" title="{{#str}}switchto, mod_discourse{{/str}} {{#str}}phasetwo, mod_discourse{{/str}}"></i></a>{{/activephasetwo}}
+                </th>
+                <th scope="col">
+                    {{#str}}phasethree, mod_discourse{{/str}}
+                    {{#activephasethree}}<i class="fa fa-lg fa-check text-success pull-right" title="{{#str}}activephase, mod_discourse{{/str}}"></i>{{/activephasethree}}
+                    {{^activephasethree}}<a href="view.php?id={{cmid}}&newphase=3"><i class="fa fa-lg fa-toggle-off pull-right" title="{{#str}}switchto, mod_discourse{{/str}} {{#str}}phasethree, mod_discourse{{/str}}"></i></a>{{/activephasethree}}
+                </th>
+                <th scope="col">
+                    {{#str}}phasefour, mod_discourse{{/str}}
+                    {{#activephasefour}}<i class="fa fa-lg fa-check text-success pull-right" title="{{#str}}activephase, mod_discourse{{/str}}"></i>{{/activephasefour}}
+                    {{^activephasefour}}<a href="view.php?id={{cmid}}&newphase=4"><i class="fa fa-lg fa-toggle-off pull-right" title="{{#str}}switchto, mod_discourse{{/str}} {{#str}}phasefour, mod_discourse{{/str}}"></i></a>{{/activephasefour}}
+                </th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        {{#deadlinephaseone}}
+                            {{#activephaseone}} <strong> {{#str}}activesince, mod_discourse{{/str}}:</strong> {{/activephaseone}}
+                            {{^activephaseone}} <strong> {{#str}}activefrom, mod_discourse{{/str}}:</strong> {{/activephaseone}}
+
+                            <span class="pull-right">{{#userdate}}{{deadlinephaseone}}, {{#str}} strftimedate {{/str}}{{/userdate}}</span>
+                            <br><br>
+                        {{/deadlinephaseone}}
+                        {{#hintphaseone}}
+                            <strong> {{#str}}hint, mod_discourse{{/str}}: </strong>
+                            <span class="pull-right"><p> {{#shortentext}} 210, {{hintphaseone}} {{/shortentext}}</p></span>
+                        {{/hintphaseone}}
+                    </td>
+                    <td>
+                        {{#deadlinephasetwo}}
+                            {{#activephasetwo}} <strong> {{#str}}activesince, mod_discourse{{/str}}:</strong> {{/activephasetwo}}
+                            {{^activephasetwo}} <strong> {{#str}}activefrom, mod_discourse{{/str}}:</strong> {{/activephasetwo}}
+
+                            <span class="pull-right">{{#userdate}}{{deadlinephasetwo}}, {{#str}} strftimedate {{/str}}{{/userdate}}</span>
+                            <br><br>
+                        {{/deadlinephasetwo}}
+                        {{#hintphasetwo}}<strong> {{#str}}hint, mod_discourse{{/str}}: </strong><span class="pull-right"><p> {{#shortentext}} 210, {{hintphasetwo}} {{/shortentext}}</p>{{/hintphasetwo}} </span>
+                    </td>
+                    <td>
+                        {{#deadlinephasethree}}
+                            {{#activephasethree}} <strong> {{#str}}activesince, mod_discourse{{/str}}:</strong> {{/activephasethree}}
+                            {{^activephasethree}} <strong> {{#str}}activefrom, mod_discourse{{/str}}:</strong> {{/activephasethree}}
+
+                            <span class="pull-right">{{#userdate}}{{deadlinephasethree}}, {{#str}} strftimedate {{/str}}{{/userdate}}</span>
+                            <br><br>
+                        {{/deadlinephasethree}}
+                        {{#hintphasethree}}<strong> {{#str}}hint, mod_discourse{{/str}}: </strong><span class="pull-right"><p> {{#shortentext}} 210, {{hintphasethree}} {{/shortentext}}</p>{{/hintphasethree}} </span>
+                     </td>
+                    <td>
+                        {{#deadlinephasefour}}
+                            {{#activephasefour}} <strong> {{#str}}activesince, mod_discourse{{/str}}:</strong> {{/activephasefour}}
+                            {{^activephasefour}} <strong> {{#str}}activefrom, mod_discourse{{/str}}:</strong> {{/activephasefour}}
+
+                            <span class="pull-right">{{#userdate}}{{deadlinephasefour}}, {{#str}} strftimedate {{/str}}{{/userdate}}</span>
+                            <br><br>
+                        {{/deadlinephasefour}}
+                        {{#hintphasefour}}<strong> {{#str}}hint, mod_discourse{{/str}}: </strong><span class="pull-right"><p> {{#shortentext}} 210, {{hintphasefour}} {{/shortentext}}</p>{{/hintphasefour}} </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row">
+        <div class="table-responsive discourse-table-phaseone col-md-3">
+            <table class="table table-striped table-hover generaltable generalbox">
+                <thead>
+                    <th scope="col">{{#str}}phaseone, mod_discourse{{/str}}</th>
+                </thead>
+                <tbody>
+                    {{#groups.phaseone}} <tr>
+                        <td>
+                            <span><strong><a href="/mod/discourse/viewgroup?id={{cmid}}&group={{id}}">{{name}}</a></strong></span>
+                            <br><br>
+                            <span>
+                                Abgegeben: 21.06.21
+                            </span>
+                        </td>
+                    </tr>{{/groups.phaseone}}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-responsive discourse-table-phasetwo col-md-3">
+            <table class="table table-striped table-hover generaltable generalbox">
+                <thead>
+                    <th scope="col">{{#str}}phasetwo, mod_discourse{{/str}}</th>
+                </thead>
+                <tbody>
+                    {{#groups.phasetwo}} <tr>
+                        <td>
+                            <span>
+                                {{#.}}<strong><a href="/mod/discourse/viewgroup?id={{cmid}}&group={{id}}">{{name}}</a></strong>
+                                <br><br>
+                                {{#participants}} {{{profilelink}}}  <br> {{/participants}}
+                                <br>
+                                {{/.}}
+                            </span>
+                            <span>
+                                Abgegeben 21.06.21
+                            </span>
+                        </td>
+                    </tr>{{/groups.phasetwo}}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-responsive discourse-table-phasethree col-md-3">
+            <table class="table table-striped table-hover generaltable generalbox">
+                <thead>
+                    <th scope="col">{{#str}}phasethree, mod_discourse{{/str}}</th>
+                </thead>
+                <tbody>
+                    {{#groups.phasethree}} <tr>
+                        <td>
+                            <span>
+                                {{#.}}<strong><a href="/mod/discourse/viewgroup?id={{cmid}}&group={{id}}">{{name}}</a></strong>
+                                <br><br>
+                                {{#participants}} {{{profilelink}}}  <br> {{/participants}}
+                                <br>
+                                {{/.}}
+                            </span>
+                            <span>
+                                Abgegeben 21.06.21
+                            </span>
+                        </td>
+                    </tr>{{/groups.phasethree}}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-responsive discourse-table-phasefour col-md-3">
+            <table class="table table-striped table-hover generaltable generalbox">
+                <thead>
+                    <th scope="col">{{#str}}phasefour, mod_discourse{{/str}}</th>
+                </thead>
+                <tbody>
+                    {{#groups.phasefour}} <tr>
+                        <td>
+                            <span>
+                                {{#.}}<strong><a href="/mod/discourse/viewgroup?id={{cmid}}&group={{id}}">{{name}}</a></strong>
+                                <br><br>
+                                {{#participants}} {{{profilelink}}}  <br> {{/participants}}
+                                <br>
+                                {{/.}}
+                            </span>
+                            <span>
+                                Abgegeben 21.06.21
+                            </span>
+                        </td>
+                    </tr>{{/groups.phasefour}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

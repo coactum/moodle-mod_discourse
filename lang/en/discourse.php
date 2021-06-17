@@ -60,6 +60,14 @@ $string['phasefour'] = 'Collaborative phas';
 $string['groupfor'] = 'Group for {$a}';
 $string['group'] = 'Group';
 
+
+// discourse_view.mustache
+$string['activephase'] = 'Active phase';
+$string['switchto'] = 'Switch to';
+$string['hint'] = 'Hint';
+$string['activesince'] = 'Active since';
+$string['activefrom'] = 'Active from';
+
 // capabilities
 $string['discourse:addinstance'] = 'Add new discourse';
 $string['discourse:viewdiscourseteacher'] = 'View disocurse as teacher';

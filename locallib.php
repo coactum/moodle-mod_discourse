@@ -52,7 +52,7 @@ class discourse {
     private $participants = array();
 
     /** @var array cached list of user groups used in the discourse. */
-    private $usergroups = array();
+    private $groups;
 
     /** @var array Array of error messages encountered during the execution of discourse related operations. */
     private $errors = array();
@@ -87,9 +87,42 @@ class discourse {
 
         $this->modulename = get_string('modulename', 'mod_discourse');
 
-        /* $this->participants = array();
-        $this->usergroups = array(); */
+        $this->participants = $DB->get_records('discourse_participants', array('discourse' => $this->cm->instance));
 
+        $groups = groups_get_activity_allowed_groups($this->cm);
+
+        $this->groups = new stdClass();
+        $this->groups->phaseone = array();
+        $this->groups->phasetwo = array();
+        $this->groups->phasethree = array();
+        $this->groups->phasefour = array();
+
+        foreach ($groups as $group) {
+
+            $groupurl = new moodle_url('/group/index.php', array('id' => $group->id[0], 'courseid' => $this->course->id));
+            $group->profilelink = '<strong><a href="'.$groupurl.'">'.$group->name.'</a></strong>';
+
+            $group->participants = array();
+
+            foreach (groups_get_members($group->id) as $participant) {
+                $profileurl = new moodle_url('/user/view.php', array('id' => $participant->id, 'course' => $this->course->id));
+
+                $participant->profilelink = '<a href="'.$profileurl.'">'.$participant->firstname.' '.$participant->lastname.'</a>';
+
+                array_push($group->participants, $participant);
+            }
+
+            if (stripos($group->idnumber, 'phase_1')) {
+                array_push($this->groups->phaseone, $group);
+            } else if (stripos($group->idnumber, 'phase_2')) {
+                array_push($this->groups->phasetwo, $group);
+            } else if (stripos($group->idnumber, 'phase_3')) {
+                array_push($this->groups->phasethree, $group);
+            } else if (stripos($group->idnumber, 'phase_4')) {
+                array_push($this->groups->phasefour, $group);
+            }
+
+        }
     }
 
     /**
@@ -142,6 +175,24 @@ class discourse {
      */
     public function get_module_instance() {
         return $this->instance;
+    }
+
+    /**
+     * Returns the discourse participants from the table discourse_participants.
+     *
+     * @return string action
+     */
+    public function get_participants() {
+        return $this->participants;
+    }
+
+    /**
+     * Returns the discourse groups.
+     *
+     * @return string action
+     */
+    public function get_groups() {
+        return $this->groups;
     }
 
     /**
