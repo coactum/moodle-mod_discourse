@@ -83,7 +83,7 @@ class discourse {
 
         $this->cm = cm_info::create($cm);
 
-        $this->instance = $DB->get_record('discourse', array('id' => $this->cm->instance), '*', MUST_EXIST);
+        $this->instance = $DB->get_record('discourse', array('id' => $this->cm->instance));
 
         $this->modulename = get_string('modulename', 'mod_discourse');
 
@@ -111,6 +111,8 @@ class discourse {
 
                 array_push($group->participants, $participant);
             }
+
+            $group->submission = $DB->get_record('discourse_submissions', array('groupid' => $group->id));
 
             if (stripos($group->idnumber, 'phase_1')) {
                 array_push($this->groups->phaseone, $group);
@@ -193,6 +195,22 @@ class discourse {
      */
     public function get_groups() {
         return $this->groups;
+    }
+
+    /**
+     * Returns the discourse group.
+     * @param int $id int id of the group
+     * @return string action
+     */
+    public function get_group($id) {
+        foreach ($this->groups as $phase) {
+            foreach ($phase as $group) {
+                if ($group->id == $id) {
+                    $groupviewed = $group;
+                }
+            }
+        }
+        return $groupviewed;
     }
 
     /**

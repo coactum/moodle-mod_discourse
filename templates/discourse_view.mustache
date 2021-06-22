@@ -111,10 +111,10 @@
                 <tbody>
                     {{#groups.phaseone}} <tr>
                         <td>
-                            <span><strong><a href="/mod/discourse/viewgroup?id={{cmid}}&group={{id}}">{{name}}</a></strong></span>
+                            <span><strong><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}">{{name}}</a></strong></span>
                             <br><br>
-                            <span>
-                                Abgegeben: 21.06.21
+                            <span><strong>{{#str}}submission, mod_discourse{{/str}}: </strong><br>
+                                    {{#submissions}} {{{submission}}} {{/submissions}}
                             </span>
                         </td>
                     </tr>{{/groups.phaseone}}
@@ -131,14 +131,14 @@
                     {{#groups.phasetwo}} <tr>
                         <td>
                             <span>
-                                {{#.}}<strong><a href="/mod/discourse/viewgroup?id={{cmid}}&group={{id}}">{{name}}</a></strong>
+                                {{#.}}<strong><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}">{{name}}</a></strong>
                                 <br><br>
                                 {{#participants}} {{{profilelink}}}  <br> {{/participants}}
                                 <br>
                                 {{/.}}
-                            </span>
-                            <span>
-                                Abgegeben 21.06.21
+                                <span><strong>{{#str}}submission, mod_discourse{{/str}}: </strong><br>
+                                    {{#submission.id}} {{{submission.submission}}} {{/submission.id}}
+                                </span>
                             </span>
                         </td>
                     </tr>{{/groups.phasetwo}}
@@ -155,14 +155,14 @@
                     {{#groups.phasethree}} <tr>
                         <td>
                             <span>
-                                {{#.}}<strong><a href="/mod/discourse/viewgroup?id={{cmid}}&group={{id}}">{{name}}</a></strong>
+                                {{#.}}<strong><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}">{{name}}</a></strong>
                                 <br><br>
                                 {{#participants}} {{{profilelink}}}  <br> {{/participants}}
                                 <br>
                                 {{/.}}
-                            </span>
-                            <span>
-                                Abgegeben 21.06.21
+                                <span><strong>{{#str}}submission, mod_discourse{{/str}}: </strong><br>
+                                    {{#submissions}} {{{submission}}} {{/submissions}}
+                                </span>
                             </span>
                         </td>
                     </tr>{{/groups.phasethree}}
@@ -179,14 +179,14 @@
                     {{#groups.phasefour}} <tr>
                         <td>
                             <span>
-                                {{#.}}<strong><a href="/mod/discourse/viewgroup?id={{cmid}}&group={{id}}">{{name}}</a></strong>
+                                {{#.}}<strong><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}">{{name}}</a></strong>
                                 <br><br>
                                 {{#participants}} {{{profilelink}}}  <br> {{/participants}}
                                 <br>
                                 {{/.}}
-                            </span>
-                            <span>
-                                Abgegeben 21.06.21
+                                <span><strong>{{#str}}submission, mod_discourse{{/str}}: </strong><br>
+                                    {{#submissions}} {{{submission}}} {{/submissions}}
+                                </span>
                             </span>
                         </td>
                     </tr>{{/groups.phasefour}}

@@ -129,9 +129,9 @@ function discourse_delete_instance($id) {
 }
 
 /**
- * Called by course/reset.php
+ * Called by course/reset.php.
  *
- * @param $mform form passed by reference.
+ * @param &$mform form passed by reference.
  */
 function discourse_reset_course_form_definition(&$mform) {
     $mform->addElement('header', 'discourseheader', get_string('modulenameplural', 'mod_discourse'));
@@ -143,7 +143,7 @@ function discourse_reset_course_form_definition(&$mform) {
  * Course reset form defaults.
  *
  * @param $course course object.
- * @return array
+ * @return array array.
  */
 function discourse_reset_course_form_defaults($course) {
     return array('reset_discourse_all' => 1);
@@ -153,8 +153,8 @@ function discourse_reset_course_form_defaults($course) {
  * This function is used by the reset_course_userdata function in moodlelib.
  * This function will remove all userdata from the specified discourse.
  *
- * @param $data the data submitted from the reset course.
- * @return array status array
+ * @param $data The data submitted from the reset course.
+ * @return array $status Status array.
  */
 function discourse_reset_userdata($data) {
 
@@ -184,7 +184,7 @@ function discourse_reset_userdata($data) {
  * @param $user the user object.
  * @param $mod the modulename.
  * @param $discourse the plugin instance.
- * @return object A standard object with 2 variables: info and time (last modified)
+ * @return object $return A standard object with 2 variables: info and time (last modified).
  */
 function discourse_user_outline($course, $user, $mod, $discourse) {
     $return = new stdClass();
@@ -346,16 +346,6 @@ function discourse_pluginfile($course, $cm, $context, $filearea, $args, $forcedo
  * @param  context_course $coursecontext Course context
  */
 function discourse_extend_navigation_course($discoursenode, $course, $coursecontext) {
-    $modinfo = get_fast_modinfo($course); // Get mod_fast_modinfo from $course.
-    $index = 1; // Set index.
-    foreach ($modinfo->get_cms() as $cmid => $cm) { // Search existing course modules for this course.
-        if ($cm->modname == "discourse" && $cm->uservisible && $cm->available) { // Look if module exists, is uservisible and available.
-            $url = new moodle_url("/mod/" . $cm->modname . "/view.php", array("id" => $cmid)); // Set url for the link in the navigation node.
-            $node = navigation_node::create($cm->name.' ('.get_string('modulename', 'discourse').')', $url, navigation_node::TYPE_CUSTOM, null , null , null);
-            $discoursenode->add_node($node);
-        }
-        $index++;
-    }
 }
 
 /**

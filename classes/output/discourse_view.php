@@ -85,7 +85,7 @@ class discourse_view implements renderable, templatable {
      * @param int $deadlinephaseone Deadline for phase one
      * @param int $deadlinephasetwo Deadline for phase two
      * @param int $deadlinephasethree Deadline for phase three
-     * @param int $deadlinephasethree Deadline for phase four
+     * @param int $deadlinephasefour Deadline for phase four
      */
     public function __construct($cmid, $groups, $autoswitch, $activephaseone, $activephasetwo, $activephasethree, $activephasefour,
         $hintphaseone, $hintphasetwo, $hintphasethree, $hintphasefour, $deadlinephaseone, $deadlinephasetwo, $deadlinephasethree, $deadlinephasefour) {

@@ -78,29 +78,25 @@ class mod_discourse_mod_form extends moodleform_mod {
         // Adding section for phase completion.
         $mform->addElement('header', 'phasecompletion', get_string('phasecompletion', 'mod_discourse'));
 
-        $mform->addElement('advcheckbox', 'autoswitch', get_string('mode_autoswitch', 'mod_discourse'), get_string('autoswitch', 'mod_discourse'));
+        $mform->addElement('date_time_selector', 'deadlinephaseone', get_string('deadlinephaseone', 'mod_discourse'));
+        $mform->setDefault('deadlinephaseone', time() + (7 * 24 * 60 * 60));
+
+        $mform->addElement('date_time_selector', 'deadlinephasetwo', get_string('deadlinephasetwo', 'mod_discourse'));
+        $mform->setDefault('deadlinephasetwo', time() + (14 * 24 * 60 * 60));
+
+        $mform->addElement('date_time_selector', 'deadlinephasethree', get_string('deadlinephasethree', 'mod_discourse'));
+        $mform->setDefault('deadlinephasethree', time() + (21 * 24 * 60 * 60));
+
+        $mform->addElement('date_time_selector', 'deadlinephasefour', get_string('deadlinephasefour', 'mod_discourse'));
+        $mform->setDefault('deadlinephasefour', time() + (28 * 24 * 60 * 60));
+
+        $mform->addElement('advcheckbox', 'autoswitch', get_string('modeautoswitch', 'mod_discourse'), get_string('autoswitch', 'mod_discourse'));
 
         if (isset($id) && $id !== 0 && isset($discourse->get_module_instance()->autoswitch)) {
             $mform->setDefault('autoswitch', 1);
         } else {
             $mform->setDefault('autoswitch', 0);
         }
-
-        $mform->addElement('date_time_selector', 'deadlinephaseone', get_string('deadlinephaseone', 'mod_discourse'));
-        $mform->setDefault('deadlinephaseone', time() + (7 * 24 * 60 * 60));
-        $mform->hideIf('deadlinephaseone', 'autoswitch', 'eq', 0);
-
-        $mform->addElement('date_time_selector', 'deadlinephasetwo', get_string('deadlinephasetwo', 'mod_discourse'));
-        $mform->setDefault('deadlinephasetwo', time() + (14 * 24 * 60 * 60));
-        $mform->hideIf('deadlinephasetwo', 'autoswitch', 'eq', 0);
-
-        $mform->addElement('date_time_selector', 'deadlinephasethree', get_string('deadlinephasethree', 'mod_discourse'));
-        $mform->setDefault('deadlinephasethree', time() + (21 * 24 * 60 * 60));
-        $mform->hideIf('deadlinephasethree', 'autoswitch', 'eq', 0);
-
-        $mform->addElement('date_time_selector', 'deadlinephasefour', get_string('deadlinephasefour', 'mod_discourse'));
-        $mform->setDefault('deadlinephasefour', time() + (28 * 24 * 60 * 60));
-        $mform->hideIf('deadlinephasefour', 'autoswitch', 'eq', 0);
 
         // Adding section for phase hints.
         $mform->addElement('header', 'phaseshints', get_string('phaseshints', 'mod_discourse'));

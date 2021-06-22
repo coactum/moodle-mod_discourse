@@ -32,7 +32,8 @@ $string['modulename'] = 'DisKurs';
 $string['modulename_help'] = 'Die Aktivität DisKurs erlaubt die Durchführung einer besonderen Gruppendiskussion ... ';
 $string['pluginadministration'] = 'Administration des DisKurses';
 $string['phasecompletion'] = 'Phasen-Abschluss';
-$string['mode_autoswitch'] = 'Modus "Automatischer Phasenwechsel" aktivieren';
+$string['usedeadlines'] = 'Deadlines für Phasen nutzen';
+$string['modeautoswitch'] = 'Modus "Automatischer Phasenwechsel" aktivieren';
 $string['autoswitch'] = 'Die Phasen werden automatisch zu den im folgenden angegebenen Zeitpunkten gewechselt';
 $string['deadlinephaseone'] = 'Abschluss der Einzelphase';
 $string['deadlinephasetwo'] = 'Abschluss der 1. Gruppenphase';
@@ -66,6 +67,15 @@ $string['switchto'] = 'Wechseln zu';
 $string['hint'] = 'Hinweis';
 $string['activesince'] = 'Aktiv seit';
 $string['activefrom'] = 'Aktiv ab';
+$string['submission'] = 'Einreichung';
+
+// view.php
+$string['view'] = 'Übersicht';
+
+// groupview.php
+$string['groupview'] = 'Gruppenansicht';
+$string['submissioncontent'] = 'Inhalt der Einreichung';
+$string['errfilloutfield'] = 'Bitte Feld ausfüllen';
 
 // capabilities
 $string['discourse:addinstance'] = 'Neuen DisKurs hinzufügen';
@@ -80,4 +90,3 @@ $string['privacy:metadata:discourse_submissions'] = 'Enthält alle Daten zu DisK
 $string['privacy:metadata:discourse_participants:discourse'] = 'ID des DisKurses des Teilnehmers';
 $string['privacy:metadata:discourse_submissions:discourse'] = 'ID des DisKurses der Einreichung';
 $string['privacy:metadata:core_message'] = 'Das DisKurs Plugin sendet Nachrichten an Benutzer und speichert deren Inhalte in der Datenbank.';
-

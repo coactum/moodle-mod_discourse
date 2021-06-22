@@ -32,7 +32,8 @@ $string['modulename'] = 'Discourse';
 $string['modulename_help'] = 'The discourse activity allows group discussions ... ';
 $string['pluginadministration'] = 'Administration of discourse';
 $string['phasecompletion'] = 'Phase completion';
-$string['mode_autoswitch'] = 'Activate mode "Automatic phase switch"';
+$string['usedeadlines'] = 'Use deadlines for phases';
+$string['modeautoswitch'] = 'Activate mode "Automatic phase switch"';
 $string['autoswitch'] = 'The phases are changed automatically at the times specified below';
 $string['deadlinephaseone'] = 'Completion of the solo phase';
 $string['deadlinephasetwo'] = 'Completion of the 1st group phase';
@@ -60,13 +61,21 @@ $string['phasefour'] = 'Collaborative phas';
 $string['groupfor'] = 'Group for {$a}';
 $string['group'] = 'Group';
 
-
 // discourse_view.mustache
 $string['activephase'] = 'Active phase';
 $string['switchto'] = 'Switch to';
 $string['hint'] = 'Hint';
 $string['activesince'] = 'Active since';
 $string['activefrom'] = 'Active from';
+$string['submission'] = 'Submission';
+
+// view.php
+$string['view'] = 'Overview';
+
+// groupview.php
+$string['groupview'] = 'Group view';
+$string['submissioncontent'] = 'Content of submission';
+$string['errfilloutfield'] = 'Please fill out this field';
 
 // capabilities
 $string['discourse:addinstance'] = 'Add new discourse';
