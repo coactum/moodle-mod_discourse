@@ -1,3 +1,8 @@
 .discourse-view th {
     width: 25%;
 }
+
+.discourse-view th,
+.discourse-view td {
+    border: 2px solid #dee2e6;
+}

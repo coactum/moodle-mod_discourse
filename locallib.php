@@ -189,12 +189,17 @@ class discourse {
     }
 
     /**
-     * Returns the discourse groups.
+     * Returns the discourse groups the user can view.
      *
      * @return string action
      */
     public function get_groups() {
-        return $this->groups;
+
+        if (has_capability('mod/discourse:viewallgroups', $this->context) && groups_get_activity_groupmode($this->cm, $this->course) == 2) {
+            return $this->groups;
+        } else {
+            return $this->groups;
+        }
     }
 
     /**
@@ -203,6 +208,7 @@ class discourse {
      * @return string action
      */
     public function get_group($id) {
+        $groupviewed = false;
         foreach ($this->groups as $phase) {
             foreach ($phase as $group) {
                 if ($group->id == $id) {
@@ -352,6 +358,15 @@ class discourse {
             'course' => $this->course->id,
             'instance' => $this->instance->id
         ));
+
+        // Set group mode for module.
+        if ($DB->get_field('course_modules', 'groupmode', array('id' => $this->cm->id, 'course' => $this->course->id, 'instance' => $this->instance->id)) === 0) {
+            $DB->set_field('course_modules', 'groupmode', 2, array(
+                'id' => $this->cm->id,
+                'course' => $this->course->id,
+                'instance' => $this->instance->id
+            ));
+        }
 
         // Bind visibility of course module to grouping membership.
         $restriction = \core_availability\tree::get_root_json([

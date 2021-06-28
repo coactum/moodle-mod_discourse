@@ -29,36 +29,50 @@
 <div class="discourse-groupview container-fluid">
     {{#group}}
         <div class="row">
-            <strong class="col-md-12 text-center">{{name}}</strong>
+            <h3 class="col-md-12 text-center">{{name}}</h3>
         </div>
-        <div class="row">
-            <span class="col-md-4">
-                TeilnehmerInnen: <br>
-                {{#participants}} {{{profilelink}}}  <br> {{/participants}}
-            </span>
-            <span class="col-md-4">
-                {{#submission.id}} Abgegeben {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedate {{/str}}{{/userdate}} {{/submission.id}}
-                {{^submission.id}} Nicht abgegeben {{/submission.id}}
-            </span>
-            <span class="col-md-4">
-                {{#submission.currentversion}} Version {{submission.currentversion}} {{/submission.currentversion}}
-                {{^submission.currentversion}} Keine Version {{/submission.currentversion}}
-            </span>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover generaltable generalbox">
+                <thead>
+                    <th scope="col">{{#str}}groupparticipants, mod_discourse{{/str}}</th>
+                    <th scope="col">{{#str}}submissionstate, mod_discourse{{/str}}</th>
+                    <th scope="col">{{#str}}currentversion, mod_discourse{{/str}}</th>
+                    {{#caneditsubmission}}<th scope="col"></th>{{/caneditsubmission}}
+                </thead>
+                <tbody><tr>
+                    <td>
+                        {{#participants}} {{{profilelink}}}  <br> {{/participants}}
+                    </td>
+                    <td>
+                        {{#submission.timecreated}}
+                            {{^submission.timemodified}}{{#str}}submittet, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}
+                            {{#submission.timemodified}}{{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}
+                        {{/submission.timecreated}}
+                        {{^submission.timecreated}}{{#str}}notsubmittet, mod_discourse{{/str}} {{/submission.timecreated}}
+                    </td>
+                    <td>
+                        {{#submission.id}}{{submission.currentversion}}{{/submission.id}}
+                        {{^submission.id}}-{{/submission.id}}
+                    </td>
+                    {{#caneditsubmission}}<td>
+                        {{#submission.id}}<button class="btn btn-primary pull-right" data-toggle="collapse" data-target=".collapseSubmissionForm" aria-expanded="false" aria-controls="collapseSubmissionForm">{{#str}}editsubmission, mod_discourse{{/str}}</button>{{/submission.id}}
+                        {{^submission.id}}<button class="btn btn-primary pull-right" data-toggle="collapse" data-target=".collapseSubmissionForm" aria-expanded="false" aria-controls="collapseSubmissionForm">{{#str}}submitsubmission, mod_discourse{{/str}}</button>{{/submission.id}}
+                    </td>{{/caneditsubmission}}
+                </tr></tbody>
+            </table>
         </div>
-        <div class="row">
-            {{#submission.id}}<strong class="col-md-4">Einreichung:</strong>{{/submission.id}}
-            {{^submission.id}}<strong class="col-md-4">Noch keine Einreichung abgegeben</strong>{{/submission.id}}
+        {{#submission.id}}<div class="row collapseSubmissionForm">
+            <strong class="col-md-4">{{#str}}submission, mod_discourse{{/str}}:</strong>
             <span class="col-md-8">
-                {{#submission.id}} {{{submission.submission}}} <button class="btn btn-primary" data-toggle="collapse" data-target=".collapseSubmissionForm" aria-expanded="false" aria-controls="collapseSubmissionForm">Bearbeiten</button>{{/submission.id}}
-                {{^submission.id}} <button class="btn btn-primary" data-toggle="collapse" data-target=".collapseSubmissionForm" aria-expanded="false" aria-controls="collapseSubmissionForm">Abgeben</button>{{/submission.id}}
+                {{{submission.submission}}}
             </span>
         </div>
-
+        {{/submission.id}}
     {{/group}}
 
-    <br>
-
-    <div class="collapse collapseSubmissionForm">
-        {{{form}}}
-    </div>
+    {{#caneditsubmission}}
+        <div class="collapse collapseSubmissionForm">
+            {{{form}}}
+        </div>
+    {{/caneditsubmission}}
 </div>

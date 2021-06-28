@@ -67,13 +67,23 @@ $string['switchto'] = 'Switch to';
 $string['hint'] = 'Hint';
 $string['activesince'] = 'Active since';
 $string['activefrom'] = 'Active from';
+$string['groupparticipants'] = 'Participants';
 $string['submission'] = 'Submission';
+$string['nosubmission'] = 'No submission yet';
+$string['submissionreceived'] = 'Submission handed in';
 
 // view.php
 $string['view'] = 'Overview';
 
 // groupview.php
 $string['groupview'] = 'Group view';
+$string['submissionstate'] = 'State';
+$string['submittet'] = 'Submittet at';
+$string['notsubmittet'] = 'Not submittet yet';
+$string['updated'] = 'Updated at';
+$string['submitsubmission'] = 'Hand in submission';
+$string['editsubmission'] = 'Edit submission';
+$string['currentversion'] = 'Current version';
 $string['submissioncontent'] = 'Content of submission';
 $string['errfilloutfield'] = 'Please fill out this field';
 
@@ -81,7 +91,8 @@ $string['errfilloutfield'] = 'Please fill out this field';
 $string['discourse:addinstance'] = 'Add new discourse';
 $string['discourse:viewdiscourseteacher'] = 'View disocurse as teacher';
 $string['discourse:viewdiscoursestudent'] = 'View disocurse as student';
-$string['discourse:editgrouptext'] = 'Submit or edit group text';
+$string['discourse:editsubmission'] = 'Submit or edit group text';
+$string['discourse:editphase'] = 'Edit phase information';
 $string['discourse:switchphase'] = 'Toogle discourse phase';
 
 // privacy

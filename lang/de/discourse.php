@@ -67,13 +67,23 @@ $string['switchto'] = 'Wechseln zu';
 $string['hint'] = 'Hinweis';
 $string['activesince'] = 'Aktiv seit';
 $string['activefrom'] = 'Aktiv ab';
+$string['groupparticipants'] = 'TeilnehmerInnen';
 $string['submission'] = 'Einreichung';
+$string['nosubmission'] = 'Noch keine Einreichung';
+$string['submissionreceived'] = 'Einreichung abgegeben';
 
 // view.php
 $string['view'] = 'Übersicht';
 
 // groupview.php
 $string['groupview'] = 'Gruppenansicht';
+$string['submissionstate'] = 'Status';
+$string['submittet'] = 'Abgegeben am';
+$string['notsubmittet'] = 'Noch nicht abgegeben';
+$string['updated'] = 'Aktualisiert am';
+$string['submitsubmission'] = 'Einreichung abgeben';
+$string['editsubmission'] = 'Einreichung bearbeiten';
+$string['currentversion'] = 'Aktuelle Version';
 $string['submissioncontent'] = 'Inhalt der Einreichung';
 $string['errfilloutfield'] = 'Bitte Feld ausfüllen';
 
@@ -81,7 +91,8 @@ $string['errfilloutfield'] = 'Bitte Feld ausfüllen';
 $string['discourse:addinstance'] = 'Neuen DisKurs hinzufügen';
 $string['discourse:viewdiscourseteacher'] = 'DisKurs als Lehrender ansehen';
 $string['discourse:viewdiscoursestudent'] = 'DisKurs als Teilnehmer ansehen';
-$string['discourse:editgrouptext'] = 'Gruppentext einreichen oder bearbeiten';
+$string['discourse:editsubmission'] = 'Gruppentext einreichen oder bearbeiten';
+$string['discourse:editphase'] = 'Phaseninformationen bearbeiten';
 $string['discourse:switchphase'] = 'Diskurs-Phase umschalten';
 
 // privacy

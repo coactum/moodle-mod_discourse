@@ -44,18 +44,22 @@ class discourse_groupview implements renderable, templatable {
     protected $group;
     /** @var string */
     protected $form;
+    /** @var bool */
+    protected $caneditsubmission;
 
     /**
      * Construct this renderable.
      * @param int $cmid The course module id
      * @param array $group The group that should be viewed
      * @param string $form The form for submitting text
+     * @param bool $caneditsubmission Boolean if user can edit the submission
      */
-    public function __construct($cmid, $group, $form) {
+    public function __construct($cmid, $group, $form, $caneditsubmission) {
 
         $this->cmid = $cmid;
         $this->group = $group;
         $this->form = $form;
+        $this->caneditsubmission = $caneditsubmission;
     }
 
     /**
@@ -69,6 +73,7 @@ class discourse_groupview implements renderable, templatable {
         $data->cmid = $this->cmid;
         $data->group = $this->group;
         $data->form = $this->form;
+        $data->caneditsubmission = $this->caneditsubmission;
         return $data;
     }
 }

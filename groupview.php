@@ -93,7 +93,7 @@ if ($mform->is_cancelled()) {
         $DB->update_record('discourse_submissions', $submission);
     }
 
-    redirect(new moodle_url('/discourse/groupview.php', array('id' => $id, 'group' => $fromform->group)));
+    redirect(new moodle_url('/mod/discourse/groupview.php', array('id' => $id, 'group' => $fromform->group)));
 
 } else {
     // This branch is executed if the form is submitted but the data doesn't validate and the form should be redisplayed
@@ -109,9 +109,15 @@ if ($mform->is_cancelled()) {
         $mform->set_data(array('id' => $id, 'group' => $groupid, 'submissionid' => 0));
     }
 
-    $form = $mform->render();
+    $caneditsubmission = has_capability('mod/discourse:editsubmission', $context);
 
-    $page = new discourse_groupview($cm->id, $group, $form);
+    if ($caneditsubmission) {
+        $form = $mform->render();
+    } else {
+        $form = '';
+    }
+
+    $page = new discourse_groupview($cm->id, $group, $form, $caneditsubmission);
 
     // Render page and display the form.
     echo $OUTPUT->render($page);

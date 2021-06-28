@@ -143,9 +143,13 @@ if (isset($newphase)) {
     }
 }
 
-$page = new discourse_view($cm->id, $discourse->get_groups(), $moduleinstance->autoswitch, $activephaseone, $activephasetwo, $activephasethree,
-    $activephasefour, $moduleinstance->hintphaseone, $moduleinstance->hintphasetwo, $moduleinstance->hintphasethree, $moduleinstance->hintphasefour,
-    $moduleinstance->deadlinephaseone, $moduleinstance->deadlinephasetwo, $moduleinstance->deadlinephasethree, $moduleinstance->deadlinephasefour);
+$caneditphase = has_capability('mod/discourse:editphase', $context);
+$canswitchphase = has_capability('mod/discourse:switchphase', $context);
+
+$page = new discourse_view($cm->id, $discourse->get_groups(), $moduleinstance->autoswitch, $activephaseone, $activephasetwo,
+    $activephasethree, $activephasefour, $moduleinstance->hintphaseone, $moduleinstance->hintphasetwo, $moduleinstance->hintphasethree,
+    $moduleinstance->hintphasefour, $moduleinstance->deadlinephaseone, $moduleinstance->deadlinephasetwo, $moduleinstance->deadlinephasethree,
+    $moduleinstance->deadlinephasefour, $caneditphase, $canswitchphase);
 
 echo $OUTPUT->render($page);
 
