@@ -2,9 +2,12 @@
     width: 25%;
 }
 
-.discourse-view th,
-.discourse-view td {
-    border: 2px solid #dee2e6;
+.discourse-view .discourse-border-default {
+    border: 1px solid #dee2e6;
+}
+
+.discourse-view .discourse-border-success {
+    border: 1px solid #357a32 !important;
 }
 
 .discourse-view .discourse-btn-round {
