@@ -11,8 +11,8 @@
 }
 
 .discourse-view .discourse-btn-round {
-    width: 2.3125rem !important;
-    height: 2.3125rem !important;
+    width: 2rem !important;
+    height: 2rem !important;
     border-radius: 50% !important;
     padding: 0 !important;
 }
@@ -24,7 +24,19 @@
     padding: 0 !important;
 }
 
-.discourse-view tr span > i {
+.discourse-view tr div.row span > i {
     position: relative;
     top: -4px;
+}
+
+.discourse-view .badge-pill {
+    border-radius: 10rem;
+    position: relative;
+    top: 2px;
+}
+
+.discourse-view .discourse-table-groups .badge-pill {
+    border-radius: 10rem;
+    position: relative;
+    top: -2px;
 }
