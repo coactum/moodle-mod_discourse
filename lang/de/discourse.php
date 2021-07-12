@@ -74,6 +74,7 @@ $string['groupparticipants'] = 'TeilnehmerInnen';
 $string['submission'] = 'Einreichung';
 $string['nosubmission'] = 'Noch keine Einreichung';
 $string['submissionreceived'] = 'Einreichung abgegeben';
+$string['nogroups'] = 'Keine Gruppen vorhanden';
 
 // view.php
 $string['view'] = 'Übersicht';
@@ -97,6 +98,8 @@ $string['discourse:viewdiscoursestudent'] = 'DisKurs als Teilnehmer ansehen';
 $string['discourse:editsubmission'] = 'Gruppentext einreichen oder bearbeiten';
 $string['discourse:editphase'] = 'Phaseninformationen bearbeiten';
 $string['discourse:switchphase'] = 'Diskurs-Phase umschalten';
+$string['discourse:viewallgroups'] = 'Alle Gruppen sehen';
+$string['discourse:viewgroupparticipants'] = 'Alle Gruppenteilnehmer einsehen';
 
 // privacy
 $string['privacy:metadata:discourse_participants'] = 'Enthält die persönlichen Daten aller DisKurs Teilnehmenden.';

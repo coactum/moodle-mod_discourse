@@ -118,12 +118,19 @@ function discourse_update_instance($discourse, mod_discourse_mod_form $mform = n
 function discourse_delete_instance($id) {
     global $DB;
 
-    $exists = $DB->get_record('discourse', array('id' => $id));
-    if (!$exists) {
+    if (!$DB->record_exists('discourse', array('id' => $id))) {
         return false;
     }
 
     $DB->delete_records('discourse', array('id' => $id));
+
+    if ($DB->record_exists('discourse_participants', array('discourse' => $id))) {
+        $DB->delete_records('discourse_participants', array('discourse' => $id));
+    }
+
+    if ($DB->record_exists('discourse_submissions', array('discourse' => $id))) {
+        $DB->delete_records('discourse_submissions', array('discourse' => $id));
+    }
 
     return true;
 }

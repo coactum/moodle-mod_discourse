@@ -58,6 +58,7 @@ $PAGE->set_url('/mod/discourse/view.php', array('id' => $cm->id));
 $PAGE->set_title(format_string($moduleinstance->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($context);
+$PAGE->force_settings_menu();
 
 $navbar = $PAGE->navbar->add(get_string('view', 'mod_discourse'), $PAGE->url);
 
@@ -145,11 +146,18 @@ if (isset($newphase)) {
 
 $caneditphase = has_capability('mod/discourse:editphase', $context);
 $canswitchphase = has_capability('mod/discourse:switchphase', $context);
+$canviewgroupparticipants = has_capability('mod/discourse:viewgroupparticipants', $context);
+
+if (has_capability('mod/discourse:viewallgroups', $context) || groups_get_activity_groupmode($cm, $course) == 2) {
+    $canviewallgroups = true;
+} else {
+    $canviewallgroups = false;
+}
 
 $page = new discourse_view($cm->id, $discourse->get_groups(), $moduleinstance->autoswitch, $activephaseone, $activephasetwo,
     $activephasethree, $activephasefour, $moduleinstance->hintphaseone, $moduleinstance->hintphasetwo, $moduleinstance->hintphasethree,
     $moduleinstance->hintphasefour, $moduleinstance->deadlinephaseone, $moduleinstance->deadlinephasetwo, $moduleinstance->deadlinephasethree,
-    $moduleinstance->deadlinephasefour, $caneditphase, $canswitchphase);
+    $moduleinstance->deadlinephasefour, $caneditphase, $canswitchphase, $canviewallgroups, $canviewgroupparticipants);
 
 echo $OUTPUT->render($page);
 

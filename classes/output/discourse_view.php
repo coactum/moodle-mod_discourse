@@ -72,6 +72,10 @@ class discourse_view implements renderable, templatable {
     protected $caneditphase;
     /** @var bool */
     protected $canswitchphase;
+    /** @var bool */
+    protected $canviewallgroups;
+    /** @var bool */
+    protected $canviewgroupparticipants;
     /**
      * Construct this renderable.
      * @param int $cmid The course module id
@@ -91,10 +95,12 @@ class discourse_view implements renderable, templatable {
      * @param int $deadlinephasefour Deadline for phase four
      * @param bool $caneditphase If user can edit phase information
      * @param bool $canswitchphase If user can switch phases
+     * @param bool $canviewallgroups If user can view all groups
+     * @param bool $canviewgroupparticipants If user can view all groups
      */
     public function __construct($cmid, $groups, $autoswitch, $activephaseone, $activephasetwo, $activephasethree, $activephasefour,
         $hintphaseone, $hintphasetwo, $hintphasethree, $hintphasefour, $deadlinephaseone, $deadlinephasetwo, $deadlinephasethree,
-        $deadlinephasefour, $caneditphase, $canswitchphase) {
+        $deadlinephasefour, $caneditphase, $canswitchphase, $canviewallgroups, $canviewgroupparticipants) {
 
         $this->cmid = $cmid;
         $this->groups = $groups;
@@ -113,6 +119,8 @@ class discourse_view implements renderable, templatable {
         $this->deadlinephasefour = $deadlinephasefour;
         $this->caneditphase = $caneditphase;
         $this->canswitchphase = $canswitchphase;
+        $this->canviewallgroups = $canviewallgroups;
+        $this->canviewgroupparticipants = $canviewgroupparticipants;
     }
 
     /**
@@ -140,6 +148,8 @@ class discourse_view implements renderable, templatable {
         $data->deadlinephasefour = $this->deadlinephasefour;
         $data->caneditphase = $this->caneditphase;
         $data->canswitchphase = $this->canswitchphase;
+        $data->canviewallgroups = $this->canviewallgroups;
+        $data->canviewgroupparticipants = $this->canviewgroupparticipants;
         return $data;
     }
 }

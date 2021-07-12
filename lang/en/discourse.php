@@ -74,6 +74,7 @@ $string['groupparticipants'] = 'Participants';
 $string['submission'] = 'Submission';
 $string['nosubmission'] = 'No submission yet';
 $string['submissionreceived'] = 'Submission handed in';
+$string['nogroups'] = 'No groups available';
 
 // view.php
 $string['view'] = 'Overview';
@@ -97,6 +98,8 @@ $string['discourse:viewdiscoursestudent'] = 'View disocurse as student';
 $string['discourse:editsubmission'] = 'Submit or edit group text';
 $string['discourse:editphase'] = 'Edit phase information';
 $string['discourse:switchphase'] = 'Toogle discourse phase';
+$string['discourse:viewallgroups'] = 'View all groups';
+$string['discourse:viewgroupparticipants'] = 'View group participants';
 
 // privacy
 $string['privacy:metadata:discourse_participants'] = 'Contains the personal data of all discourse participants.';

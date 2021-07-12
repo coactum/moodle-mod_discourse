@@ -25,7 +25,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'mod_discourse';
-$plugin->release = '0.2.7';
-$plugin->version = 2021062500;
+$plugin->release = '0.4.0';
+$plugin->version = 2021071200;
 $plugin->requires = 2020061507;
 $plugin->maturity = MATURITY_ALPHA;

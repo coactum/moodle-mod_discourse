@@ -115,12 +115,16 @@ class discourse {
             $group->submission = $DB->get_record('discourse_submissions', array('groupid' => $group->id));
 
             if (stripos($group->idnumber, 'phase_1')) {
+                $group->phase = 1;
                 array_push($this->groups->phaseone, $group);
             } else if (stripos($group->idnumber, 'phase_2')) {
+                $group->phase = 2;
                 array_push($this->groups->phasetwo, $group);
             } else if (stripos($group->idnumber, 'phase_3')) {
+                $group->phase = 3;
                 array_push($this->groups->phasethree, $group);
             } else if (stripos($group->idnumber, 'phase_4')) {
+                $group->phase = 4;
                 array_push($this->groups->phasefour, $group);
             }
 
@@ -194,12 +198,7 @@ class discourse {
      * @return string action
      */
     public function get_groups() {
-
-        if (has_capability('mod/discourse:viewallgroups', $this->context) && groups_get_activity_groupmode($this->cm, $this->course) == 2) {
-            return $this->groups;
-        } else {
-            return $this->groups;
-        }
+        return $this->groups;
     }
 
     /**
@@ -361,7 +360,7 @@ class discourse {
 
         // Set group mode for module.
         if ($DB->get_field('course_modules', 'groupmode', array('id' => $this->cm->id, 'course' => $this->course->id, 'instance' => $this->instance->id)) === 0) {
-            $DB->set_field('course_modules', 'groupmode', 2, array(
+            $DB->set_field('course_modules', 'groupmode', 1, array(
                 'id' => $this->cm->id,
                 'course' => $this->course->id,
                 'instance' => $this->instance->id

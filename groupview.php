@@ -109,7 +109,11 @@ if ($mform->is_cancelled()) {
         $mform->set_data(array('id' => $id, 'group' => $groupid, 'submissionid' => 0));
     }
 
-    $caneditsubmission = has_capability('mod/discourse:editsubmission', $context);
+    if (has_capability('mod/discourse:editsubmission', $context) && $moduleinstance->activephase == $group->phase) {
+        $caneditsubmission = true;
+    } else {
+        $caneditsubmission = false;
+    }
 
     if ($caneditsubmission) {
         $form = $mform->render();
@@ -117,7 +121,9 @@ if ($mform->is_cancelled()) {
         $form = '';
     }
 
-    $page = new discourse_groupview($cm->id, $group, $form, $caneditsubmission);
+    $canviewgroupparticipants = has_capability('mod/discourse:viewgroupparticipants', $context);
+
+    $page = new discourse_groupview($cm->id, $group, $form, $caneditsubmission, $canviewgroupparticipants);
 
     // Render page and display the form.
     echo $OUTPUT->render($page);

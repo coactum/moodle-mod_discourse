@@ -34,15 +34,15 @@
         <div class="table-responsive">
             <table class="table table-striped table-hover generaltable generalbox">
                 <thead>
-                    <th scope="col">{{#str}}groupparticipants, mod_discourse{{/str}}</th>
+                    {{#canviewgroupparticipants}}<th scope="col">{{#str}}groupparticipants, mod_discourse{{/str}}</th>{{/canviewgroupparticipants}}
                     <th scope="col">{{#str}}submissionstate, mod_discourse{{/str}}</th>
                     <th scope="col">{{#str}}currentversion, mod_discourse{{/str}}</th>
                     {{#caneditsubmission}}<th scope="col"></th>{{/caneditsubmission}}
                 </thead>
                 <tbody><tr>
-                    <td>
+                    {{#canviewgroupparticipants}}<td>
                         {{#participants}} {{{profilelink}}}  <br> {{/participants}}
-                    </td>
+                    </td>{{/canviewgroupparticipants}}
                     <td>
                         {{#submission.timecreated}}
                             {{^submission.timemodified}}{{#str}}submittet, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}
