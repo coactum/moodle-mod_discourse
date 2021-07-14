@@ -26,4 +26,13 @@
 defined('MOODLE_INTERNAL') || die();
 
 $tasks = array(
+    [
+        'classname' => 'mod_discourse\task\switchphases',
+        'blocking' => 0,
+        'minute' => '29',
+        'hour' => '*',
+        'day' => '*',
+        'month' => '*',
+        'dayofweek' => '*',
+    ],
 );

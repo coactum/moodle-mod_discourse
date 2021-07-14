@@ -52,6 +52,8 @@ $PAGE->set_title(format_string($moduleinstance->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($context);
 
+$PAGE->requires->js_call_amd('mod_discourse/groupview', 'init');
+
 $navbar = $PAGE->navbar->add(get_string('groupview', 'mod_discourse'), $PAGE->url);
 
 echo $OUTPUT->header();
@@ -60,10 +62,7 @@ echo $OUTPUT->heading(get_string('modulename', 'mod_discourse').': ' . format_st
 // Instantiate form.
 $mform = new submit_form();
 
-// Form processing and displaying is done here.
-if ($mform->is_cancelled()) {
-    // Handle form cancel operation, if cancel button is present on form.
-} else if ($fromform = $mform->get_data()) {
+if ($fromform = $mform->get_data()) {
     // In this case you process validated data. $mform->get_data() returns data posted in form.
 
     global $DB;

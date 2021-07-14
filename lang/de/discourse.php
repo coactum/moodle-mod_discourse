@@ -65,8 +65,7 @@ $string['group'] = 'Gruppe';
 $string['activephase'] = 'Aktive Phase';
 $string['switchto'] = 'Wechseln zu';
 $string['hint'] = 'Hinweis';
-$string['activesince'] = 'Aktiv seit';
-$string['activefrom'] = 'Aktiv ab';
+$string['sheduledstart'] = 'Geplanter Beginn';
 $string['openallgroups'] = 'Alle Gruppen der {$a} öffnen';
 $string['opengroup'] = 'Gruppe {$a} maximieren';
 $string['closegroup'] = 'Gruppe {$a} minimieren';
@@ -75,6 +74,8 @@ $string['submission'] = 'Einreichung';
 $string['nosubmission'] = 'Noch keine Einreichung';
 $string['submissionreceived'] = 'Einreichung abgegeben';
 $string['nogroups'] = 'Keine Gruppen vorhanden';
+$string['noautoswitch'] = 'Der automatische Phasenwechsel ist deaktiviert. Die Phasen müssen deshalb manuell gewechselt werden.';
+$string['shouldswitchphaseto'] = 'Der automatische Phasenwechsel ist deaktiviert. Die nächste Phase sollte aktiviert werden.';
 
 // view.php
 $string['view'] = 'Übersicht';
@@ -100,6 +101,9 @@ $string['discourse:editphase'] = 'Phaseninformationen bearbeiten';
 $string['discourse:switchphase'] = 'Diskurs-Phase umschalten';
 $string['discourse:viewallgroups'] = 'Alle Gruppen sehen';
 $string['discourse:viewgroupparticipants'] = 'Alle Gruppenteilnehmer einsehen';
+
+// task
+$string['task_switchphases'] = 'Automatischer Phasenwechsel';
 
 // privacy
 $string['privacy:metadata:discourse_participants'] = 'Enthält die persönlichen Daten aller DisKurs Teilnehmenden.';

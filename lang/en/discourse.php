@@ -65,8 +65,7 @@ $string['group'] = 'Group';
 $string['activephase'] = 'Active phase';
 $string['switchto'] = 'Switch to';
 $string['hint'] = 'Hint';
-$string['activesince'] = 'Active since';
-$string['activefrom'] = 'Active from';
+$string['sheduledstart'] = 'Sheduled start';
 $string['openallgroups'] = 'Open all groups in phase {$a}';
 $string['opengroup'] = 'Maximize group {$a}';
 $string['closegroup'] = 'Minimize group {$a}';
@@ -75,6 +74,8 @@ $string['submission'] = 'Submission';
 $string['nosubmission'] = 'No submission yet';
 $string['submissionreceived'] = 'Submission handed in';
 $string['nogroups'] = 'No groups available';
+$string['noautoswitch'] = 'The automatic phase switch is deactivated. The phases must therefore be changed manually.';
+$string['shouldswitchphaseto'] = 'The automatic phase switch is deactivated. The next phase should be activated by now.';
 
 // view.php
 $string['view'] = 'Overview';
@@ -100,6 +101,9 @@ $string['discourse:editphase'] = 'Edit phase information';
 $string['discourse:switchphase'] = 'Toogle discourse phase';
 $string['discourse:viewallgroups'] = 'View all groups';
 $string['discourse:viewgroupparticipants'] = 'View group participants';
+
+// task
+$string['task_switchphases'] = 'Automatic phase switch';
 
 // privacy
 $string['privacy:metadata:discourse_participants'] = 'Contains the personal data of all discourse participants.';

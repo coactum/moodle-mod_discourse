@@ -1,4 +1,3 @@
-<?php
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -15,11 +14,27 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * A cron_task class for doing stuff in discourse to be used by Tasks API.
+ * Module for the group view a discourse.
  *
- * @package     mod_discourse
- * @copyright   2021 coactum GmbH
- * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @module     mod_discourse/group_view
+ * @package    mod_discourse
+ * @copyright  2021 coactum GmbH
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+ define(['jquery'], function($) {
+    return {
+        init: function() {
+          $('#id_cancel').click(function(e) {
+            e.preventDefault();
+            $('.collapseSubmissionForm').each(function() {
+                if ($(this).hasClass('show')) {
+                    $(this).removeClass('show');
+                } else {
+                    $(this).addClass('show');
+                }
+            });
+          });
+        }
+    };
+});
