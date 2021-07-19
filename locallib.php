@@ -87,7 +87,7 @@ class discourse {
 
         $this->modulename = get_string('modulename', 'mod_discourse');
 
-        $this->participants = $DB->get_records('discourse_participants', array('discourse' => $this->cm->instance));
+        $this->participants = $DB->get_records('discourse_participants', array('discourse' => $this->cm->instance), '', 'userid, discourse, groupids');
 
         $groups = groups_get_activity_allowed_groups($this->cm);
 
@@ -98,6 +98,10 @@ class discourse {
         $this->groups->phasefour = array();
 
         foreach ($groups as $group) {
+
+            // For retrieving former submissions.
+            $participantids = array();
+            $formergroupids = array();
 
             $groupurl = new moodle_url('/group/index.php', array('id' => $group->id[0], 'courseid' => $this->course->id));
             $group->profilelink = '<strong><a href="'.$groupurl.'">'.$group->name.'</a></strong>';
@@ -110,12 +114,37 @@ class discourse {
                 $participant->profilelink = '<a href="'.$profileurl.'">'.$participant->firstname.' '.$participant->lastname.'</a>';
 
                 array_push($group->participants, $participant);
+
+                array_push($participantids, $participant->id);
             }
 
             $group->submission = $DB->get_record('discourse_submissions', array('groupid' => $group->id));
 
+            // Former submissions of all participants groups from previous phases.
+            if ($this->participants) {
+                foreach ($participantids as $id) {
+                    $groupids = json_decode($this->participants[$id]->groupids);
+
+                    if (isset($groupids) && $this->instance->activephase != 1 && !in_array($groupids[$this->instance->activephase - 2], $formergroupids)) {
+                        array_push($formergroupids, $groupids[$this->instance->activephase - 2]);
+                    }
+                }
+
+                $formersubmissions = array();
+
+                foreach ($formergroupids as $groupid) {
+                    array_push($formersubmissions, $DB->get_record('discourse_submissions', array('discourse' => $this->instance->id, 'groupid' => $groupid)));
+                }
+
+                $group->formersubmissions = $formersubmissions;
+            } else {
+                $group->formersubmissions = false;
+            }
+
+
             if (stripos($group->idnumber, 'phase_1')) {
                 $group->phase = 1;
+                $group->formersubmissions = false;
                 array_push($this->groups->phaseone, $group);
             } else if (stripos($group->idnumber, 'phase_2')) {
                 $group->phase = 2;
@@ -300,10 +329,10 @@ class discourse {
 
         // Groups for 2nd group phase.
         for ($i = 5; $i <= 6; $i ++) {
-            $groupdata->name = get_string('phasethree', 'mod_discourse') . ' ' . $this->instance->name . ' ' . get_string('group', 'mod_discourse') . ' ' . $i;
+            $groupdata->name = get_string('phasethree', 'mod_discourse') . ' ' . $this->instance->name . ' ' . get_string('group', 'mod_discourse') . ' ' . ($i - 4);
             $groupdata->description = get_string('groupfor', 'mod_discourse', get_string('phasethree', 'mod_discourse'));
             $groupdata->enablemessaging = true;
-            $groupdata->idnumber = 'discourse_' . $this->instance->id . '_phase_' . 3 . '_group_' . $i;
+            $groupdata->idnumber = 'discourse_' . $this->instance->id . '_phase_' . 3 . '_group_' . ($i - 4);
 
             $groupid = groups_create_group($groupdata);
             groups_assign_grouping($groupingid, $groupid);

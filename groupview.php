@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Prints an instance of mod_discourse.
+ * Prints the group view of mod_discourse.
  *
  * @package     mod_discourse
  * @copyright   2021 coactum GmbH
@@ -100,10 +100,33 @@ if ($fromform = $mform->get_data()) {
 
     $group = $discourse->get_group($groupid);
 
-    // Set default data (if any).
-    if (isset($group->submission) && $group->submission) {
+    if (isset($group->formersubmissions) && $group->formersubmissions) {
+        $formersubmission = new stdClass();
+        $formersubmission->text = '';
+        $formersubmission->format = 1;
+
+        foreach ($group->formersubmissions as $submission) {
+
+            if (isset($submission) && $submission) {
+                $groupname = groups_get_group_name($submission->groupid);
+
+                $formersubmission->text .= '<strong>' . $groupname . '</strong><br>' . $submission->submission . '<br>';
+                $formersubmission->format = $submission->format;
+            }
+
+        }
+
+        var_dump($formersubmission->format);
+
+    }
+
+    // Set default data.
+    if (isset($group->submission) && $group->submission) { // Default data if group has made submission.
         $mform->set_data(array('id' => $id, 'group' => $groupid, 'submissionid' => $group->submission->id,
         'submission' => ['text' => $group->submission->submission, 'format' => $group->submission->format]));
+    } else if (isset($formersubmission)) { // Default data if group has merged submissions from former groups of the participants.
+        $mform->set_data(array('id' => $id, 'group' => $groupid, 'submissionid' => 0,
+        'submission' => ['text' => $formersubmission->text, 'format' => $formersubmission->format]));
     } else {
         $mform->set_data(array('id' => $id, 'group' => $groupid, 'submissionid' => 0));
     }
