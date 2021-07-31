@@ -121,7 +121,7 @@ class discourse {
             $group->submission = $DB->get_record('discourse_submissions', array('groupid' => $group->id));
 
             // Former submissions of all participants groups from previous phases.
-            if ($this->participants) {
+            if ($this->participants && groups_get_grouping($this->instance->groupingid)) {
                 foreach ($participantids as $id) {
                     $groupids = json_decode($this->participants[$id]->groupids);
 
@@ -140,7 +140,6 @@ class discourse {
             } else {
                 $group->formersubmissions = false;
             }
-
 
             if (stripos($group->idnumber, 'phase_1')) {
                 $group->phase = 1;
@@ -411,5 +410,4 @@ class discourse {
         $participants = $this->subscribe_users($users);
 
     }
-
 }

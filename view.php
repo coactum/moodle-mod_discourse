@@ -23,6 +23,7 @@
  */
 
 use mod_discourse\output\discourse_view;
+use core\output\notification;
 
 require(__DIR__.'/../../config.php');
 require_once(__DIR__.'/lib.php');
@@ -162,6 +163,10 @@ if (time() > $moduleinstance->deadlinephasetwo && $moduleinstance->activephase =
     $shouldswitchphase = 4;
 } else {
     $shouldswitchphase = false;
+}
+
+if (!groups_get_grouping($moduleinstance->groupingid)) {
+    echo $OUTPUT->notification(get_string('groupingmaybedeleted', 'mod_discourse'), notification::NOTIFY_ERROR);
 }
 
 $page = new discourse_view($cm->id, $discourse->get_groups(), $moduleinstance->autoswitch, $activephaseone, $activephasetwo,

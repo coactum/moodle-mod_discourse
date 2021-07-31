@@ -51,6 +51,7 @@ $string['nonewmodules'] = 'No new modules';
 
 // lib.php
 $string['deletealluserdata'] = 'Delete all user data';
+$string['resetting_data'] = 'Participants and submissions deleted';
 
 // locallib.php
 $string['groupingdescription'] = 'Grouping for discourse activity {$a}';
@@ -102,12 +103,24 @@ $string['discourse:switchphase'] = 'Toogle discourse phase';
 $string['discourse:viewallgroups'] = 'View all groups';
 $string['discourse:viewgroupparticipants'] = 'View group participants';
 
+// errors
+$string['groupinvalid'] = 'Group not found';
+$string['groupingmaybedeleted'] = 'The grouping of the discourse was deleted or is invalid. All course groups (from other discourses or activities as well) will be displayed.';
+
 // task
 $string['task_switchphases'] = 'Automatic phase switch';
 
 // privacy
-$string['privacy:metadata:discourse_participants'] = 'Contains the personal data of all discourse participants.';
-$string['privacy:metadata:discourse_submissions'] = 'Contains all data related to discourse submissions.';
-$string['privacy:metadata:discourse_participants:discourse'] = 'Id of the discourse activity the participant belongs to';
-$string['privacy:metadata:discourse_submissions:discourse'] = 'Id of the discourse activity the submission belongs to';
-$string['privacy:metadata:core_message'] = 'The discourse plugin sends messages to users and saves their content in the database.';
+$string['privacy:metadata:discourse_participants'] = 'Contains the groups of all discourse participants.';
+$string['privacy:metadata:discourse_submissions'] = 'Contains data of all discourse submissions.';
+$string['privacy:metadata:discourse_participants:userid'] = 'User ID of the participant';
+$string['privacy:metadata:discourse_participants:discourse'] = 'ID of the discourse of the participant';
+$string['privacy:metadata:discourse_participants:groupids'] = 'IDs of the discourse groups of the participant';
+$string['privacy:metadata:discourse_submissions:discourse'] = 'ID of the discourse in which the submission was made';
+$string['privacy:metadata:discourse_submissions:groupid'] = 'ID of the group from which the submission was made';
+$string['privacy:metadata:discourse_submissions:submission'] = 'Submission content';
+$string['privacy:metadata:discourse_submissions:currentversion'] = 'Current version of the submission';
+$string['privacy:metadata:discourse_submissions:format'] = 'Submission format';
+$string['privacy:metadata:discourse_submissions:timecreated'] = 'Date on which the submission was made';
+$string['privacy:metadata:discourse_submissions:timemodified'] = 'Time of the last revision of the submission';
+// $string['privacy:metadata:core_message'] = 'The discourse plugin sends messages to users and saves their content in the database.';

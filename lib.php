@@ -165,16 +165,38 @@ function discourse_reset_course_form_defaults($course) {
  */
 function discourse_reset_userdata($data) {
 
+    global $DB;
+
     $componentstr = get_string('modulenameplural', 'discourse');
     $status = array();
 
-    $params = array($data->courseid);
+    $params = array('course' => $data->courseid);
+
+    $rs = $DB->get_recordset('discourse', $params);
+
+    if ($rs->valid()) {
+
+        foreach ($rs as $record) {
+            if ($DB->record_exists('discourse_participants', array('discourse' => $record->id))) {
+                $DB->delete_records('discourse_participants', array('discourse' => $record->id));
+            }
+
+            if ($DB->record_exists('discourse_submissions', array('discourse' => $record->id))) {
+                $DB->delete_records('discourse_submissions', array('discourse' => $record->id));
+            }
+        }
+
+        $rs->close();
+
+        $status[] = array('component' => $componentstr, 'item' => get_string('resetting_data', 'discourse'), 'error' => false);
+    }
 
     // Updating dates - shift may be negative too.
     if ($data->timeshift) {
         // Any changes to the list of dates that needs to be rolled should be same during course restore and course reset.
-        shift_course_mod_dates('discourse', array('available', 'deadline'), $data->timeshift, $data->courseid);
-        $status[] = array('component' => $componentstr, 'item' => get_string('datechanged'), 'error' => false);
+        $shifterror = !shift_course_mod_dates('discourse', array('deadlinephaseone', 'deadlinephasetwo', 'deadlinephasethree', 'deadlinephasefour'),
+            $data->timeshift, $data->courseid);
+        $status[] = array('component' => $componentstr, 'item' => get_string('datechanged'), 'error' => $shifterror);
     }
 
     return $status;

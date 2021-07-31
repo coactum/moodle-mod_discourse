@@ -51,6 +51,7 @@ $string['nonewmodules'] = 'Keine neuen DisKurse';
 
 // lib.php
 $string['deletealluserdata'] = 'Alle Benutzerdaten löschen';
+$string['resetting_data'] = 'TeilnehmerInnen und Einreichungen gelöscht';
 
 // locallib.php
 $string['groupingdescription'] = 'Gruppierung für die DisKurs-Aktivität {$a}';
@@ -102,12 +103,24 @@ $string['discourse:switchphase'] = 'Diskurs-Phase umschalten';
 $string['discourse:viewallgroups'] = 'Alle Gruppen sehen';
 $string['discourse:viewgroupparticipants'] = 'Alle Gruppenteilnehmer einsehen';
 
+// errors
+$string['groupinvalid'] = 'Gruppe nicht vorhanden';
+$string['groupingmaybedeleted'] = 'Die zum Diskurs gehörende Gruppierung wurde gelöscht oder ist ungültig. Es werden sämtliche Kursgruppen (auch aus anderen Diskursen oder Aktivitäten) angezeigt.';
+
 // task
 $string['task_switchphases'] = 'Automatischer Phasenwechsel';
 
 // privacy
-$string['privacy:metadata:discourse_participants'] = 'Enthält die persönlichen Daten aller DisKurs Teilnehmenden.';
-$string['privacy:metadata:discourse_submissions'] = 'Enthält alle Daten zu DisKurs Einreichungen.';
-$string['privacy:metadata:discourse_participants:discourse'] = 'ID des DisKurses des Teilnehmers';
-$string['privacy:metadata:discourse_submissions:discourse'] = 'ID des DisKurses der Einreichung';
-$string['privacy:metadata:core_message'] = 'Das DisKurs Plugin sendet Nachrichten an Benutzer und speichert deren Inhalte in der Datenbank.';
+$string['privacy:metadata:discourse_participants'] = 'Enthält die Gruppen aller DisKurs Teilnehmenden.';
+$string['privacy:metadata:discourse_submissions'] = 'Enthält Informationen zu allen DisKurs Einreichungen.';
+$string['privacy:metadata:discourse_participants:userid'] = 'Benutzer-ID der oder des Teilnehmenden';
+$string['privacy:metadata:discourse_participants:discourse'] = 'ID des DisKurses der oder des Teilnehmenden';
+$string['privacy:metadata:discourse_participants:groupids'] = 'IDs der DisKurs-Gruppen der oder des Teilnehmenden';
+$string['privacy:metadata:discourse_submissions:discourse'] = 'ID des DisKurses in dem die Einreichung abgegeben wurde';
+$string['privacy:metadata:discourse_submissions:groupid'] = 'ID der Gruppe von der die Einreichung abgegeben wurde';
+$string['privacy:metadata:discourse_submissions:submission'] = 'Inhalt der Einreichung';
+$string['privacy:metadata:discourse_submissions:currentversion'] = 'Aktuelle Version der Einreichung';
+$string['privacy:metadata:discourse_submissions:format'] = 'Format der Einreichung';
+$string['privacy:metadata:discourse_submissions:timecreated'] = 'Zeitpunkt an dem die Einreichung abgegeben wurde';
+$string['privacy:metadata:discourse_submissions:timemodified'] = 'Zeitpunkt der letzten Überarbeitung der Einreichung';
+// $string['privacy:metadata:core_message'] = 'Das DisKurs Plugin sendet Nachrichten an Benutzer und speichert deren Inhalte in der Datenbank.';

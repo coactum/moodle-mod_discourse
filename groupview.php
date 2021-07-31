@@ -23,6 +23,7 @@
  */
 
 use mod_discourse\output\discourse_groupview;
+use core\output\notification;
 
 require(__DIR__.'/../../config.php');
 require_once(__DIR__.'/lib.php');
@@ -55,6 +56,12 @@ $PAGE->set_context($context);
 $PAGE->requires->js_call_amd('mod_discourse/groupview', 'init');
 
 $navbar = $PAGE->navbar->add(get_string('groupview', 'mod_discourse'), $PAGE->url);
+
+$group = $discourse->get_group($groupid);
+
+if (!$group) {
+    redirect(new moodle_url('/mod/discourse/view.php', array('id' => $id)), get_string('groupinvalid', 'mod_discourse'), null, notification::NOTIFY_ERROR);
+}
 
 echo $OUTPUT->header();
 echo $OUTPUT->heading(get_string('modulename', 'mod_discourse').': ' . format_string($moduleinstance->name), 3);
@@ -98,8 +105,6 @@ if ($fromform = $mform->get_data()) {
     // This branch is executed if the form is submitted but the data doesn't validate and the form should be redisplayed
     // or on the first display of the form.
 
-    $group = $discourse->get_group($groupid);
-
     if (isset($group->formersubmissions) && $group->formersubmissions) {
         $formersubmission = new stdClass();
         $formersubmission->text = '';
@@ -115,9 +120,6 @@ if ($fromform = $mform->get_data()) {
             }
 
         }
-
-        var_dump($formersubmission->format);
-
     }
 
     // Set default data.
