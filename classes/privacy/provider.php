@@ -238,6 +238,12 @@ class provider implements
 
                         foreach ($submissions as $submission) {
 
+                            if (isset($submission->timemodified)) {
+                                $timemodified = \core_privacy\local\request\transform::datetime($submission->timemodified);
+                            } else {
+                                $timemodified = null;
+                            }
+
                             $submissionsdata ['group ' . $submission->groupid] = [
                                 'discourse' => $submission->discourse,
                                 'groupid' => $submission->groupid,
@@ -245,7 +251,7 @@ class provider implements
                                 'currentversion' => $submission->currentversion,
                                 'format' => $submission->format,
                                 'timecreated' => \core_privacy\local\request\transform::datetime($submission->timecreated),
-                                'timemodified' => \core_privacy\local\request\transform::datetime($submission->timemodified),
+                                'timemodified' => $timemodified,
                             ];
                         }
 
