@@ -54,8 +54,8 @@ class backup_discourse_activity_task extends backup_activity_task {
     /**
      * Codes the transformations to perform in the activity in order to get transportable (encoded) links.
      *
-     * @param string $content.
-     * @return string content.
+     * @param string $content content.
+     * @return string $content content.
      */
     public static function encode_content_links($content) {
         global $CFG;

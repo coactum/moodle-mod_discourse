@@ -1,0 +1,42 @@
+.discourse_view th {
+    width: 25%;
+}
+
+.discourse_view .discourse-border-default {
+    border: 1px solid #dee2e6;
+}
+
+.discourse_view .discourse-border-success {
+    border: 1px solid #357a32 !important;
+}
+
+.discourse_view .discourse-btn-round {
+    width: 2rem !important;
+    height: 2rem !important;
+    border-radius: 50% !important;
+    padding: 0 !important;
+}
+
+.discourse_view .discourse-btn-round-small {
+    width: 1.6rem !important;
+    height: 1.6rem !important;
+    border-radius: 50% !important;
+    padding: 0 !important;
+}
+
+.discourse_view tr div.row span > i {
+    position: relative;
+    top: -4px;
+}
+
+.discourse_view .badge-pill {
+    border-radius: 10rem;
+    position: relative;
+    top: 2px;
+}
+
+.discourse_view .discourse-table-groups .badge-pill {
+    border-radius: 10rem;
+    position: relative;
+    top: -2px;
+}

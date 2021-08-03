@@ -58,18 +58,26 @@ class provider implements
      */
     public static function get_metadata(collection $items) : collection {
 
-        // The table 'discourse_participants' stores all discourse participants and their data.
+        // The table 'discourse_participants' stores all discourse participants and information about their groups.
         $items->add_database_table('discourse_participants', [
+            'userid' => 'privacy:metadata:discourse_participants:userid',
             'discourse' => 'privacy:metadata:discourse_participants:discourse',
+            'groupids' => 'privacy:metadata:discourse_participants:groupids',
         ], 'privacy:metadata:discourse_participants');
 
         // The table 'discourse_submissions' stores all group subbissions.
         $items->add_database_table('discourse_submissions', [
             'discourse' => 'privacy:metadata:discourse_submissions:discourse',
+            'groupid' => 'privacy:metadata:discourse_submissions:groupid',
+            'submission' => 'privacy:metadata:discourse_submissions:submission',
+            'currentversion' => 'privacy:metadata:discourse_submissions:currentversion',
+            'format' => 'privacy:metadata:discourse_submissions:format',
+            'timecreated' => 'privacy:metadata:discourse_submissions:timecreated',
+            'timemodified' => 'privacy:metadata:discourse_submissions:timemodified',
         ], 'privacy:metadata:discourse_submissions');
 
         // The discourse uses the messages subsystem that saves personal data.
-        $items->add_subsystem_link('core_message', [], 'privacy:metadata:core_message');
+        // $items->add_subsystem_link('core_message', [], 'privacy:metadata:core_message');
 
         // There are no user preferences in the discourse.
 
@@ -79,7 +87,7 @@ class provider implements
     /**
      * Get the list of contexts that contain user information for the specified user.
      *
-     * In this case of all discourses where a user is exam participant.
+     * In this case of all discourses where a user is discourse participant.
      *
      * @param   int         $userid     The user to search.
      * @return  contextlist $contextlist  The contextlist containing the list of contexts used in this plugin.
@@ -96,14 +104,14 @@ class provider implements
         // Select discourses of user.
 
         $sql;
-        /* $sql = "SELECT c.id
+        $sql = "SELECT c.id
                   FROM {context} c
                   JOIN {course_modules} cm ON cm.id = c.instanceid AND c.contextlevel = :contextlevel
                   JOIN {modules} m ON m.id = cm.module AND m.name = :modulename
-                  JOIN {exammanagement} e ON e.id = cm.instance
-                  JOIN {exammanagement_participants} p ON p.exammanagement = e.id
-                  WHERE p.moodleuserid = :userid
-        "; */
+                  JOIN {discourse} d ON d.id = cm.instance
+                  JOIN {discourse_participants} p ON p.discourse = d.id
+                  WHERE p.userid = :userid
+        ";
 
         $contextlist->add_from_sql($sql, $params);
 
@@ -118,9 +126,6 @@ class provider implements
     public static function get_users_in_context(userlist $userlist) {
         $context = $userlist->get_context();
 
-        $event = \discourse\event\log_variable::create(['other' => 'get_users_in_context: ' . 'userlist' .json_encode($userlist) .'context' . json_encode($context)]);
-        $event->trigger();
-
         if (!is_a($context, \context_module::class)) {
             return;
         }
@@ -132,12 +137,13 @@ class provider implements
 
         // Get users.
         $sql;
-        /* $sql = "SELECT p.moodleuserid
+        $sql = "SELECT p.userid
                   FROM {course_modules} cm
                   JOIN {modules} m ON m.id = cm.module AND m.name = :modulename
-                  JOIN {exammanagement} e ON e.id = cm.instance
-                  JOIN {exammanagement_participants} p ON p.exammanagement = e.id
-                 WHERE cm.id = :instanceid"; */
+                  JOIN {discourse} d ON d.id = cm.instance
+                  JOIN {discourse_participants} p ON p.discourse = d.id
+                 WHERE cm.id = :instanceid
+        ";
         $userlist->add_from_sql('userid', $sql, $params);
     }
 
@@ -160,23 +166,23 @@ class provider implements
 
         // Discourse participants data.
         $sql;
-        /* $sql = "SELECT
+        $sql = "SELECT
                     cm.id AS cmid,
-                    e.id AS exammanagement,
-                    e.name,
-                    e.timecreated,
-                    e.timemodified,
-                    p.moodleuserid AS moodleuserid,
-                    p.login
+                    d.id AS discourse,
+                    d.name,
+                    d.timecreated,
+                    d.timemodified,
+                    p.userid,
+                    p.groupids
                   FROM {context} c
                   JOIN {course_modules} cm ON cm.id = c.instanceid
-                  JOIN {exammanagement} e ON e.id = cm.instance
-                  JOIN {exammanagement_participants} p ON p.exammanagement = e.id
+                  JOIN {discourse} d ON d.id = cm.instance
+                  JOIN {discourse_participants} p ON p.discourse = d.id
                  WHERE (
-                    p.moodleuserid = :userid AND
+                    p.userid = :userid AND
                     c.id {$contextsql}
                 )
-        "; */
+        ";
 
         $params = $contextparams;
         $params['userid'] = $userid;
@@ -202,7 +208,55 @@ class provider implements
 
                     $discoursedata['user data:'] = [
                         'userid' => $discourse->userid,
+                        'groupids' => $discourse->groupids,
                     ];
+
+                    $groupids = implode(", ", json_decode($discourse->groupids));
+
+                    $sql;
+                    $submissions;
+                    $sql = "SELECT
+                                s.groupid,
+                                s.discourse,
+                                s.submission,
+                                s.currentversion,
+                                s.format,
+                                s.timecreated,
+                                s.timemodified
+                            FROM {discourse_submissions} s
+                            WHERE (
+                                s.groupid IN ($groupids)
+                            )
+                    ";
+
+                    $params['discourse'] = $discourse->discourse;
+                    $submissions = $DB->get_records_sql($sql, $params);
+
+                    if ($submissions) {
+                        $submissionsdata = array();
+                        unset($discoursedata['submissions:']);
+
+                        foreach ($submissions as $submission) {
+
+                            if (isset($submission->timemodified)) {
+                                $timemodified = \core_privacy\local\request\transform::datetime($submission->timemodified);
+                            } else {
+                                $timemodified = null;
+                            }
+
+                            $submissionsdata ['group ' . $submission->groupid] = [
+                                'discourse' => $submission->discourse,
+                                'groupid' => $submission->groupid,
+                                'submission' => $submission->submission,
+                                'currentversion' => $submission->currentversion,
+                                'format' => $submission->format,
+                                'timecreated' => \core_privacy\local\request\transform::datetime($submission->timecreated),
+                                'timemodified' => $timemodified,
+                            ];
+                        }
+
+                        $discoursedata['submissions:'] = $submissionsdata;
+                    }
 
                     self::export_discourse_data_for_user($discoursedata, $context, [], $user);
                 }

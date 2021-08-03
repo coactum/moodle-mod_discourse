@@ -74,6 +74,19 @@ function discourse_add_instance($discourse, mod_discourse_mod_form $mform = null
 }
 
 /**
+ * Creating initial grouping and groups and assigning participants to them after the creation of a discourse instance.
+ * This function is called by the course_module_created observer.
+ *
+ * @param object $context the discourse context
+ * @param stdClass $discourse The discourse object
+ * @return void
+ */
+function discourse_instance_created($context, $discourse) {
+    $enrolledusers = get_enrolled_users($context, 'mod/discourse:viewdiscoursestudent');
+    $discourse->create_groups_and_grouping($enrolledusers);
+}
+
+/**
  * Updates an instance of the mod_discourse in the database.
  *
  * Given an object containing all the necessary data (defined in mod_form.php),
@@ -105,20 +118,27 @@ function discourse_update_instance($discourse, mod_discourse_mod_form $mform = n
 function discourse_delete_instance($id) {
     global $DB;
 
-    $exists = $DB->get_record('discourse', array('id' => $id));
-    if (!$exists) {
+    if (!$DB->record_exists('discourse', array('id' => $id))) {
         return false;
     }
 
     $DB->delete_records('discourse', array('id' => $id));
 
+    if ($DB->record_exists('discourse_participants', array('discourse' => $id))) {
+        $DB->delete_records('discourse_participants', array('discourse' => $id));
+    }
+
+    if ($DB->record_exists('discourse_submissions', array('discourse' => $id))) {
+        $DB->delete_records('discourse_submissions', array('discourse' => $id));
+    }
+
     return true;
 }
 
 /**
- * Called by course/reset.php
+ * Called by course/reset.php.
  *
- * @param $mform form passed by reference.
+ * @param &$mform form passed by reference.
  */
 function discourse_reset_course_form_definition(&$mform) {
     $mform->addElement('header', 'discourseheader', get_string('modulenameplural', 'mod_discourse'));
@@ -130,7 +150,7 @@ function discourse_reset_course_form_definition(&$mform) {
  * Course reset form defaults.
  *
  * @param $course course object.
- * @return array
+ * @return array array.
  */
 function discourse_reset_course_form_defaults($course) {
     return array('reset_discourse_all' => 1);
@@ -140,21 +160,43 @@ function discourse_reset_course_form_defaults($course) {
  * This function is used by the reset_course_userdata function in moodlelib.
  * This function will remove all userdata from the specified discourse.
  *
- * @param $data the data submitted from the reset course.
- * @return array status array
+ * @param $data The data submitted from the reset course.
+ * @return array $status Status array.
  */
 function discourse_reset_userdata($data) {
+
+    global $DB;
 
     $componentstr = get_string('modulenameplural', 'discourse');
     $status = array();
 
-    $params = array($data->courseid);
+    $params = array('course' => $data->courseid);
+
+    $rs = $DB->get_recordset('discourse', $params);
+
+    if ($rs->valid()) {
+
+        foreach ($rs as $record) {
+            if ($DB->record_exists('discourse_participants', array('discourse' => $record->id))) {
+                $DB->delete_records('discourse_participants', array('discourse' => $record->id));
+            }
+
+            if ($DB->record_exists('discourse_submissions', array('discourse' => $record->id))) {
+                $DB->delete_records('discourse_submissions', array('discourse' => $record->id));
+            }
+        }
+
+        $rs->close();
+
+        $status[] = array('component' => $componentstr, 'item' => get_string('resetting_data', 'discourse'), 'error' => false);
+    }
 
     // Updating dates - shift may be negative too.
     if ($data->timeshift) {
         // Any changes to the list of dates that needs to be rolled should be same during course restore and course reset.
-        shift_course_mod_dates('discourse', array('available', 'deadline'), $data->timeshift, $data->courseid);
-        $status[] = array('component' => $componentstr, 'item' => get_string('datechanged'), 'error' => false);
+        $shifterror = !shift_course_mod_dates('discourse', array('deadlinephaseone', 'deadlinephasetwo', 'deadlinephasethree', 'deadlinephasefour'),
+            $data->timeshift, $data->courseid);
+        $status[] = array('component' => $componentstr, 'item' => get_string('datechanged'), 'error' => $shifterror);
     }
 
     return $status;
@@ -171,7 +213,7 @@ function discourse_reset_userdata($data) {
  * @param $user the user object.
  * @param $mod the modulename.
  * @param $discourse the plugin instance.
- * @return object A standard object with 2 variables: info and time (last modified)
+ * @return object $return A standard object with 2 variables: info and time (last modified).
  */
 function discourse_user_outline($course, $user, $mod, $discourse) {
     $return = new stdClass();
@@ -333,16 +375,6 @@ function discourse_pluginfile($course, $cm, $context, $filearea, $args, $forcedo
  * @param  context_course $coursecontext Course context
  */
 function discourse_extend_navigation_course($discoursenode, $course, $coursecontext) {
-    $modinfo = get_fast_modinfo($course); // Get mod_fast_modinfo from $course.
-    $index = 1; // Set index.
-    foreach ($modinfo->get_cms() as $cmid => $cm) { // Search existing course modules for this course.
-        if ($cm->modname == "discourse" && $cm->uservisible && $cm->available) { // Look if module exists, is uservisible and available.
-            $url = new moodle_url("/mod/" . $cm->modname . "/view.php", array("id" => $cmid)); // Set url for the link in the navigation node.
-            $node = navigation_node::create($cm->name.' ('.get_string('modulename', 'discourse').')', $url, navigation_node::TYPE_CUSTOM, null , null , null);
-            $discoursenode->add_node($node);
-        }
-        $index++;
-    }
 }
 
 /**

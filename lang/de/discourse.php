@@ -32,7 +32,8 @@ $string['modulename'] = 'DisKurs';
 $string['modulename_help'] = 'Die Aktivität DisKurs erlaubt die Durchführung einer besonderen Gruppendiskussion ... ';
 $string['pluginadministration'] = 'Administration des DisKurses';
 $string['phasecompletion'] = 'Phasen-Abschluss';
-$string['mode_autoswitch'] = 'Modus "Automatischer Phasenwechsel" aktivieren';
+$string['usedeadlines'] = 'Deadlines für Phasen nutzen';
+$string['modeautoswitch'] = 'Modus "Automatischer Phasenwechsel" aktivieren';
 $string['autoswitch'] = 'Die Phasen werden automatisch zu den im folgenden angegebenen Zeitpunkten gewechselt';
 $string['deadlinephaseone'] = 'Abschluss der Einzelphase';
 $string['deadlinephasetwo'] = 'Abschluss der 1. Gruppenphase';
@@ -50,18 +51,76 @@ $string['nonewmodules'] = 'Keine neuen DisKurse';
 
 // lib.php
 $string['deletealluserdata'] = 'Alle Benutzerdaten löschen';
+$string['resetting_data'] = 'TeilnehmerInnen und Einreichungen gelöscht';
+
+// locallib.php
+$string['groupingdescription'] = 'Gruppierung für die DisKurs-Aktivität {$a}';
+$string['phaseone'] = 'Einzelphase';
+$string['phasetwo'] = '1. Gruppenphase';
+$string['phasethree'] = '2. Gruppenphase';
+$string['phasefour'] = 'Gemeinschaftsphase';
+$string['groupfor'] = 'Gruppe für {$a}';
+$string['group'] = 'Gruppe';
+
+// discourse_view.mustache
+$string['activephase'] = 'Aktive Phase';
+$string['switchto'] = 'Wechseln zu';
+$string['hint'] = 'Hinweis';
+$string['sheduledstart'] = 'Geplanter Beginn';
+$string['toggleallgroups'] = 'Alle Gruppen der {$a} umschalten';
+$string['opengroup'] = 'Gruppe {$a} maximieren';
+$string['closegroup'] = 'Gruppe {$a} minimieren';
+$string['groupparticipants'] = 'TeilnehmerInnen';
+$string['submission'] = 'Einreichung';
+$string['nosubmission'] = 'Noch keine Einreichung';
+$string['submissionreceived'] = 'Einreichung abgegeben';
+$string['nogroups'] = 'Keine Gruppen vorhanden';
+$string['noautoswitch'] = 'Der automatische Phasenwechsel ist deaktiviert. Die Phasen müssen deshalb manuell gewechselt werden.';
+$string['shouldswitchphaseto'] = 'Der automatische Phasenwechsel ist deaktiviert. Die nächste Phase sollte aktiviert werden.';
+
+// view.php
+$string['view'] = 'Übersicht';
+
+// groupview.php
+$string['groupview'] = 'Gruppenansicht';
+$string['submissionstate'] = 'Status';
+$string['submittet'] = 'Abgegeben am';
+$string['notsubmittet'] = 'Noch nicht abgegeben';
+$string['updated'] = 'Aktualisiert am';
+$string['submitsubmission'] = 'Einreichung abgeben';
+$string['editsubmission'] = 'Einreichung bearbeiten';
+$string['currentversion'] = 'Aktuelle Version';
+$string['submissioncontent'] = 'Inhalt der Einreichung';
+$string['errfilloutfield'] = 'Bitte Feld ausfüllen';
 
 // capabilities
 $string['discourse:addinstance'] = 'Neuen DisKurs hinzufügen';
 $string['discourse:viewdiscourseteacher'] = 'DisKurs als Lehrender ansehen';
 $string['discourse:viewdiscoursestudent'] = 'DisKurs als Teilnehmer ansehen';
-$string['discourse:editgrouptext'] = 'Gruppentext einreichen oder bearbeiten';
+$string['discourse:editsubmission'] = 'Gruppentext einreichen oder bearbeiten';
+$string['discourse:editphase'] = 'Phaseninformationen bearbeiten';
 $string['discourse:switchphase'] = 'Diskurs-Phase umschalten';
+$string['discourse:viewallgroups'] = 'Alle Gruppen sehen';
+$string['discourse:viewgroupparticipants'] = 'Alle Gruppenteilnehmer einsehen';
+
+// errors
+$string['groupinvalid'] = 'Gruppe nicht vorhanden';
+$string['groupingmaybedeleted'] = 'Die zum Diskurs gehörende Gruppierung wurde gelöscht oder ist ungültig. Es werden sämtliche Kursgruppen (auch aus anderen Diskursen oder Aktivitäten) angezeigt.';
+
+// task
+$string['task_switchphases'] = 'Automatischer Phasenwechsel';
 
 // privacy
-$string['privacy:metadata:discourse_participants'] = 'Enthält die persönlichen Daten aller DisKurs Teilnehmenden.';
-$string['privacy:metadata:discourse_submissions'] = 'Enthält alle Daten zu DisKurs Einreichungen.';
-$string['privacy:metadata:discourse_participants:discourse'] = 'ID des DisKurses des Teilnehmers';
-$string['privacy:metadata:discourse_submissions:discourse'] = 'ID des DisKurses der Einreichung';
-$string['privacy:metadata:core_message'] = 'Das DisKurs Plugin sendet Nachrichten an Benutzer und speichert deren Inhalte in der Datenbank.';
-
+$string['privacy:metadata:discourse_participants'] = 'Enthält die Gruppen aller DisKurs Teilnehmenden.';
+$string['privacy:metadata:discourse_submissions'] = 'Enthält Informationen zu allen DisKurs Einreichungen.';
+$string['privacy:metadata:discourse_participants:userid'] = 'Benutzer-ID der oder des Teilnehmenden';
+$string['privacy:metadata:discourse_participants:discourse'] = 'ID des DisKurses der oder des Teilnehmenden';
+$string['privacy:metadata:discourse_participants:groupids'] = 'IDs der DisKurs-Gruppen der oder des Teilnehmenden';
+$string['privacy:metadata:discourse_submissions:discourse'] = 'ID des DisKurses in dem die Einreichung abgegeben wurde';
+$string['privacy:metadata:discourse_submissions:groupid'] = 'ID der Gruppe von der die Einreichung abgegeben wurde';
+$string['privacy:metadata:discourse_submissions:submission'] = 'Inhalt der Einreichung';
+$string['privacy:metadata:discourse_submissions:currentversion'] = 'Aktuelle Version der Einreichung';
+$string['privacy:metadata:discourse_submissions:format'] = 'Format der Einreichung';
+$string['privacy:metadata:discourse_submissions:timecreated'] = 'Zeitpunkt an dem die Einreichung abgegeben wurde';
+$string['privacy:metadata:discourse_submissions:timemodified'] = 'Zeitpunkt der letzten Überarbeitung der Einreichung';
+// $string['privacy:metadata:core_message'] = 'Das DisKurs Plugin sendet Nachrichten an Benutzer und speichert deren Inhalte in der Datenbank.';
