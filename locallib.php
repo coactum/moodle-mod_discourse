@@ -299,11 +299,13 @@ class discourse {
         $groupdata->courseid = $this->course->id;
         $groupdata->descriptionformat = FORMAT_HTML;
 
+        $i = 1;
+
         // Group for solo phase.
         foreach ($users as $user) {
-            $groupdata->name = get_string('phaseone', 'mod_discourse') . ' ' . $this->instance->name . ' ' . $user->firstname . " " . $user->lastname;
+            $groupdata->name = get_string('phaseone', 'mod_discourse') . ' ' . $this->instance->name . ' ' . get_string('group', 'mod_discourse') . ' ' . $i;
             $groupdata->description = get_string('groupfor', 'mod_discourse', get_string('phaseone', 'mod_discourse'));
-            $groupdata->idnumber = 'discourse_' . $this->instance->id . '_phase_' . 1 . '_participant_' . $user->id;
+            $groupdata->idnumber = 'discourse_' . $this->instance->id . '_phase_' . 1 . '_group_' . $i;
 
             $groupid = groups_create_group($groupdata);
             groups_assign_grouping($groupingid, $groupid);
@@ -311,6 +313,9 @@ class discourse {
             // Assign group members and set group ids for participants for solo phase.
             groups_add_member($groupid, $user);
             $user->groupids = array($groupid);
+
+            $i += 1;
+
         }
 
         // Groups for 1st group phase.

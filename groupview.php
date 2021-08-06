@@ -150,7 +150,7 @@ if ($fromform = $mform->get_data()) {
     }
 
     if (has_capability('mod/discourse:editsubmission', $context) && $moduleinstance->activephase == $group->phase
-        && array_search($userid, array_column($group->participants, 'id'))) {
+        && array_search($userid, array_column($group->participants, 'id')) !== false) {
 
         $caneditsubmission = true;
     } else {

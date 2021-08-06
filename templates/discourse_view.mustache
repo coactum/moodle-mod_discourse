@@ -115,6 +115,12 @@
                                     <span class="col-md-2"><button class="btn btn-secondary discourse-btn-round-small pull-right" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}closegroup, mod_discourse, {{name}}{{/str}}"><i class="fa fa-lg fa-caret-up"></i></button></span>
                                 </div>
                                 <br>
+                                {{#canviewgroupparticipants}}
+                                    <i class="fa fa-lg fa-user"></i> <strong>{{#str}}groupparticipants, mod_discourse{{/str}}:</strong>
+                                    <br>
+                                    {{#participants}} {{{profilelink}}}  <br> {{/participants}}
+                                    <br>
+                                {{/canviewgroupparticipants}}
                                 <div class="row">
                                     <span class="col-md-10"><i class="fa fa-lg fa-file-o"></i>
                                         {{#submission.id}}
