@@ -78,6 +78,8 @@ class discourse_view implements renderable, templatable {
     protected $canviewgroupparticipants;
     /** @var int */
     protected $shouldswitchphase;
+    /** @var int */
+    protected $userid;
     /**
      * Construct this renderable.
      * @param int $cmid The course module id
@@ -100,10 +102,11 @@ class discourse_view implements renderable, templatable {
      * @param bool $canviewallgroups If user can view all groups
      * @param bool $canviewgroupparticipants If user can view all groups
      * @param int $shouldswitchphase If user should switch phase manually
+     * @param int $userid ID of current user
      */
     public function __construct($cmid, $groups, $autoswitch, $activephaseone, $activephasetwo, $activephasethree, $activephasefour,
         $hintphaseone, $hintphasetwo, $hintphasethree, $hintphasefour, $deadlinephaseone, $deadlinephasetwo, $deadlinephasethree,
-        $deadlinephasefour, $caneditphase, $canswitchphase, $canviewallgroups, $canviewgroupparticipants, $shouldswitchphase) {
+        $deadlinephasefour, $caneditphase, $canswitchphase, $canviewallgroups, $canviewgroupparticipants, $shouldswitchphase, $userid) {
 
         $this->cmid = $cmid;
         $this->groups = $groups;
@@ -125,6 +128,7 @@ class discourse_view implements renderable, templatable {
         $this->canviewallgroups = $canviewallgroups;
         $this->canviewgroupparticipants = $canviewgroupparticipants;
         $this->shouldswitchphase = $shouldswitchphase;
+        $this->userid = $userid;
     }
 
     /**
@@ -155,6 +159,7 @@ class discourse_view implements renderable, templatable {
         $data->canviewallgroups = $this->canviewallgroups;
         $data->canviewgroupparticipants = $this->canviewgroupparticipants;
         $data->shouldswitchphase = $this->shouldswitchphase;
+        $data->userid = $this->userid;
         return $data;
     }
 }

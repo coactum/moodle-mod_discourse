@@ -105,6 +105,9 @@ $string['discourse:viewgroupparticipants'] = 'View group participants';
 
 // errors
 $string['groupinvalid'] = 'Group not found';
+$string['useridinvalid'] = 'User ID invalid';
+$string['nogroupmember'] = 'Not possible because not a group member';
+$string['submissionfaileddoubled'] = 'Submission failed. Another group member has already made a submission recently.';
 $string['groupingmaybedeleted'] = 'The grouping of the discourse was deleted or is invalid. All course groups (from other discourses or activities as well) will be displayed.';
 
 // task

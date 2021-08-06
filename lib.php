@@ -116,21 +116,38 @@ function discourse_update_instance($discourse, mod_discourse_mod_form $mform = n
  * @return bool True if successful, false on failure.
  */
 function discourse_delete_instance($id) {
-    global $DB;
+    global $DB, $CFG;
+
+    require_once("$CFG->dirroot/group/lib.php");
 
     if (!$DB->record_exists('discourse', array('id' => $id))) {
         return false;
+    } else {
+        $moduleinstance = $DB->get_record('discourse', array('id' => $id));
     }
 
-    $DB->delete_records('discourse', array('id' => $id));
+    // Delete discourse groups.
+    $groups = groups_get_all_groups($moduleinstance->course, 0, $moduleinstance->groupingid);
 
+    foreach ($groups as $group) {
+        groups_delete_group($group);
+    }
+
+    // Delete discourse grouping.
+    groups_delete_grouping($moduleinstance->groupingid);
+
+    // Delete discourse participants.
     if ($DB->record_exists('discourse_participants', array('discourse' => $id))) {
         $DB->delete_records('discourse_participants', array('discourse' => $id));
     }
 
+    // Delete discourse submissions.
     if ($DB->record_exists('discourse_submissions', array('discourse' => $id))) {
         $DB->delete_records('discourse_submissions', array('discourse' => $id));
     }
+
+    // Delete discourse instance.
+    $DB->delete_records('discourse', array('id' => $id));
 
     return true;
 }

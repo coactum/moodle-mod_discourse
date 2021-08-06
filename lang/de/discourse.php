@@ -105,6 +105,9 @@ $string['discourse:viewgroupparticipants'] = 'Alle Gruppenteilnehmer einsehen';
 
 // errors
 $string['groupinvalid'] = 'Gruppe nicht vorhanden';
+$string['useridinvalid'] = 'Benutzer-ID ungültig';
+$string['nogroupmember'] = 'Nicht möglich da kein Gruppenmitglied';
+$string['submissionfaileddoubled'] = 'Einreichung fehlgeschlagen. Ein weiteres Gruppenmitglied hat bereits kürzlich eine Einreichung abgegeben.';
 $string['groupingmaybedeleted'] = 'Die zum Diskurs gehörende Gruppierung wurde gelöscht oder ist ungültig. Es werden sämtliche Kursgruppen (auch aus anderen Diskursen oder Aktivitäten) angezeigt.';
 
 // task

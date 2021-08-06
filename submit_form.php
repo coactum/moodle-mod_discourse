@@ -51,6 +51,9 @@ class submit_form extends moodleform {
         $mform->addElement('hidden', 'group', null);
         $mform->setType('group', PARAM_INT);
 
+        $mform->addElement('hidden', 'userid', null);
+        $mform->setType('userid', PARAM_INT);
+
         $mform->addElement('hidden', 'submissionid', null);
         $mform->setType('submissionid', PARAM_INT);
 

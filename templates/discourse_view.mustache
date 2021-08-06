@@ -111,17 +111,17 @@
                         <td>
                             <div class="collapse {{#activephaseone}}show{{/activephaseone}} collapseGroupPhaseOne collapseGroup{{id}}">
                                 <div class="row">
-                                    <span class="col-md-10"><i class="fa fa-lg fa-group"></i> <strong><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}">{{name}}</a></strong></span>
+                                    <span class="col-md-10"><i class="fa fa-lg fa-group"></i> <strong><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}">{{name}}</a></strong></span>
                                     <span class="col-md-2"><button class="btn btn-secondary discourse-btn-round-small pull-right" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}closegroup, mod_discourse, {{name}}{{/str}}"><i class="fa fa-lg fa-caret-up"></i></button></span>
                                 </div>
                                 <br>
                                 <div class="row">
                                     <span class="col-md-10"><i class="fa fa-lg fa-file-o"></i>
                                         {{#submission.id}}
-                                            {{^submission.timemodified}} <a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><strong> {{#str}}submittet, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedate {{/str}}{{/userdate}} </strong></a>{{/submission.timemodified}}
-                                            {{#submission.timemodified}} <a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><strong> {{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedate {{/str}}{{/userdate}} </strong></a>{{/submission.timemodified}}
+                                            {{^submission.timemodified}} <a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><strong> {{#str}}submittet, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedate {{/str}}{{/userdate}} </strong></a>{{/submission.timemodified}}
+                                            {{#submission.timemodified}} <a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><strong> {{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedate {{/str}}{{/userdate}} </strong></a>{{/submission.timemodified}}
                                         {{/submission.id}}
-                                        {{^submission.id}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><strong>{{#str}}nosubmission, mod_discourse{{/str}}</strong></a>{{/submission.id}}
+                                        {{^submission.id}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><strong>{{#str}}nosubmission, mod_discourse{{/str}}</strong></a>{{/submission.id}}
                                     </span>
                                     <span class="col-md-2">
                                         {{#submission.timecreated}}<i class="fa fa-2x fa-check text-success pull-right" title="{{^submission.timemodified}}{{#str}}submittet, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}{{#submission.timemodified}}{{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}"></i>{{/submission.timecreated}}
@@ -131,11 +131,11 @@
                             </div>
                             <div class="collapse {{^activephaseone}}show{{/activephaseone}} collapseGroupPhaseOne collapseGroup{{id}}">
                                 <div class="row">
-                                    <strong class="col-md-9"><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}">{{name}}</a></strong>
+                                    <strong class="col-md-9"><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}">{{name}}</a></strong>
                                     <span class="col-md-3 p-0 p-r-1">
                                         <button class="btn btn-secondary discourse-btn-round-small pull-right" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}opengroup, mod_discourse, {{name}}{{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>
-                                        {{#submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><i class="fa fa-2x fa-check text-success" title="{{^submission.timemodified}}{{#str}}submittet, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}{{#submission.timemodified}}{{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}"></i></a>{{/submission.timecreated}}
-                                        {{^submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><i class="fa fa-2x fa-times text-danger" title="{{#str}}nosubmission, mod_discourse{{/str}}"></i></a>{{/submission.timecreated}}
+                                        {{#submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><i class="fa fa-2x fa-check text-success" title="{{^submission.timemodified}}{{#str}}submittet, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}{{#submission.timemodified}}{{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}"></i></a>{{/submission.timecreated}}
+                                        {{^submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><i class="fa fa-2x fa-times text-danger" title="{{#str}}nosubmission, mod_discourse{{/str}}"></i></a>{{/submission.timecreated}}
                                     </span>
                                 </div>
                             </div>
@@ -159,7 +159,7 @@
                             <div class="collapse {{#activephasetwo}}show{{/activephasetwo}} collapseGroupPhaseTwo collapseGroup{{id}}">
                                 {{#.}}
                                     <div class="row">
-                                        <span class="col-md-10"><i class="fa fa-lg fa-group"></i> <strong><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}">{{name}}</a></strong></span>
+                                        <span class="col-md-10"><i class="fa fa-lg fa-group"></i> <strong><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}">{{name}}</a></strong></span>
                                         <span class="col-md-2"><button class="btn btn-secondary discourse-btn-round-small pull-right" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}closegroup, mod_discourse, {{name}}{{/str}}"><i class="fa fa-lg fa-caret-up"></i></button></span>
                                     </div>
                                     <br>
@@ -173,10 +173,10 @@
                                 <div class="row">
                                     <span class="col-md-10"><i class="fa fa-lg fa-file-o"></i>
                                         {{#submission.id}}
-                                            {{^submission.timemodified}} <a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><strong> {{#str}}submittet, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedate {{/str}}{{/userdate}} </strong></a>{{/submission.timemodified}}
-                                            {{#submission.timemodified}} <a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><strong> {{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedate {{/str}}{{/userdate}} </strong></a>{{/submission.timemodified}}
+                                            {{^submission.timemodified}} <a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><strong> {{#str}}submittet, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedate {{/str}}{{/userdate}} </strong></a>{{/submission.timemodified}}
+                                            {{#submission.timemodified}} <a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><strong> {{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedate {{/str}}{{/userdate}} </strong></a>{{/submission.timemodified}}
                                         {{/submission.id}}
-                                        {{^submission.id}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><strong>{{#str}}nosubmission, mod_discourse{{/str}}</strong></a>{{/submission.id}}
+                                        {{^submission.id}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><strong>{{#str}}nosubmission, mod_discourse{{/str}}</strong></a>{{/submission.id}}
                                     </span>
                                     <span class="col-md-2">
                                         {{#submission.timecreated}}<i class="fa fa-2x fa-check text-success pull-right" title="{{^submission.timemodified}}{{#str}}submittet, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}{{#submission.timemodified}}{{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}"></i>{{/submission.timecreated}}
@@ -186,11 +186,11 @@
                             </div>
                             <div class="collapse {{^activephasetwo}}show{{/activephasetwo}} collapseGroupPhaseTwo collapseGroup{{id}}">
                                 <div class="row">
-                                    <strong class="col-md-9"><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}">{{name}}</a></strong>
+                                    <strong class="col-md-9"><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}">{{name}}</a></strong>
                                     <span class="col-md-3 p-0 p-r-1">
                                         <button class="btn btn-secondary discourse-btn-round-small pull-right" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}opengroup, mod_discourse, {{name}}{{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>
-                                        {{#submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><i class="fa fa-2x fa-check text-success" title="{{^submission.timemodified}}{{#str}}submittet, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}{{#submission.timemodified}}{{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}"></i></a>{{/submission.timecreated}}
-                                        {{^submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><i class="fa fa-2x fa-times text-danger" title="{{#str}}nosubmission, mod_discourse{{/str}}"></i></a>{{/submission.timecreated}}
+                                        {{#submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><i class="fa fa-2x fa-check text-success" title="{{^submission.timemodified}}{{#str}}submittet, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}{{#submission.timemodified}}{{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}"></i></a>{{/submission.timecreated}}
+                                        {{^submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><i class="fa fa-2x fa-times text-danger" title="{{#str}}nosubmission, mod_discourse{{/str}}"></i></a>{{/submission.timecreated}}
                                     </span>
                                 </div>
                             </div>
@@ -215,7 +215,7 @@
                             <div class="collapse {{#activephasethree}}show{{/activephasethree}} collapseGroupPhaseThree collapseGroup{{id}}">
                                 {{#.}}
                                     <div class="row">
-                                        <span class="col-md-10"><i class="fa fa-lg fa-group"></i> <strong><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}">{{name}}</a></strong></span>
+                                        <span class="col-md-10"><i class="fa fa-lg fa-group"></i> <strong><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}">{{name}}</a></strong></span>
                                         <span class="col-md-2"><button class="btn btn-secondary discourse-btn-round-small pull-right" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}closegroup, mod_discourse, {{name}}{{/str}}"><i class="fa fa-lg fa-caret-up"></i></button></span>
                                     </div>
                                     <br>
@@ -229,10 +229,10 @@
                                 <div class="row">
                                     <span class="col-md-10"><i class="fa fa-lg fa-file-o"></i>
                                         {{#submission.id}}
-                                            {{^submission.timemodified}} <a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><strong> {{#str}}submittet, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedate {{/str}}{{/userdate}} </strong></a>{{/submission.timemodified}}
-                                            {{#submission.timemodified}} <a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><strong> {{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedate {{/str}}{{/userdate}} </strong></a>{{/submission.timemodified}}
+                                            {{^submission.timemodified}} <a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><strong> {{#str}}submittet, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedate {{/str}}{{/userdate}} </strong></a>{{/submission.timemodified}}
+                                            {{#submission.timemodified}} <a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><strong> {{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedate {{/str}}{{/userdate}} </strong></a>{{/submission.timemodified}}
                                         {{/submission.id}}
-                                        {{^submission.id}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><strong>{{#str}}nosubmission, mod_discourse{{/str}}</strong></a>{{/submission.id}}
+                                        {{^submission.id}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><strong>{{#str}}nosubmission, mod_discourse{{/str}}</strong></a>{{/submission.id}}
                                     </span>
                                     <span class="col-md-2">
                                         {{#submission.timecreated}}<i class="fa fa-2x fa-check text-success pull-right" title="{{^submission.timemodified}}{{#str}}submittet, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}{{#submission.timemodified}}{{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}"></i>{{/submission.timecreated}}
@@ -242,11 +242,11 @@
                             </div>
                             <div class="collapse {{^activephasethree}}show{{/activephasethree}} collapseGroupPhaseThree collapseGroup{{id}}">
                                 <div class="row">
-                                    <strong class="col-md-9"><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}">{{name}}</a></strong>
+                                    <strong class="col-md-9"><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}">{{name}}</a></strong>
                                     <span class="col-md-3 p-0 p-r-1">
                                         <button class="btn btn-secondary discourse-btn-round-small pull-right" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}opengroup, mod_discourse, {{name}}{{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>
-                                        {{#submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><i class="fa fa-2x fa-check text-success" title="{{^submission.timemodified}}{{#str}}submittet, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}{{#submission.timemodified}}{{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}"></i></a>{{/submission.timecreated}}
-                                        {{^submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><i class="fa fa-2x fa-times text-danger" title="{{#str}}nosubmission, mod_discourse{{/str}}"></i></a>{{/submission.timecreated}}
+                                        {{#submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><i class="fa fa-2x fa-check text-success" title="{{^submission.timemodified}}{{#str}}submittet, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}{{#submission.timemodified}}{{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}"></i></a>{{/submission.timecreated}}
+                                        {{^submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><i class="fa fa-2x fa-times text-danger" title="{{#str}}nosubmission, mod_discourse{{/str}}"></i></a>{{/submission.timecreated}}
                                     </span>
                                 </div>
                             </div>
@@ -271,7 +271,7 @@
                             <div class="collapse {{#activephasefour}}show{{/activephasefour}} collapseGroupPhaseFour collapseGroup{{id}}">
                                 {{#.}}
                                     <div class="row">
-                                        <span class="col-md-10"><i class="fa fa-lg fa-group"></i> <strong><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}">{{name}}</a></strong></span>
+                                        <span class="col-md-10"><i class="fa fa-lg fa-group"></i> <strong><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}">{{name}}</a></strong></span>
                                         <span class="col-md-2"><button class="btn btn-secondary discourse-btn-round-small pull-right" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}closegroup, mod_discourse, {{name}}{{/str}}"><i class="fa fa-lg fa-caret-up"></i></button></span>
                                     </div>
                                     <br>
@@ -285,10 +285,10 @@
                                 <div class="row">
                                     <span class="col-md-10"><i class="fa fa-lg fa-file-o"></i>
                                         {{#submission.id}}
-                                            {{^submission.timemodified}} <a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><strong> {{#str}}submittet, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedate {{/str}}{{/userdate}} </strong></a>{{/submission.timemodified}}
-                                            {{#submission.timemodified}} <a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><strong> {{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedate {{/str}}{{/userdate}} </strong></a>{{/submission.timemodified}}
+                                            {{^submission.timemodified}} <a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><strong> {{#str}}submittet, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedate {{/str}}{{/userdate}} </strong></a>{{/submission.timemodified}}
+                                            {{#submission.timemodified}} <a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><strong> {{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedate {{/str}}{{/userdate}} </strong></a>{{/submission.timemodified}}
                                         {{/submission.id}}
-                                        {{^submission.id}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><strong>{{#str}}nosubmission, mod_discourse{{/str}}</strong></a>{{/submission.id}}
+                                        {{^submission.id}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><strong>{{#str}}nosubmission, mod_discourse{{/str}}</strong></a>{{/submission.id}}
                                     </span>
                                     <span class="col-md-2">
                                         {{#submission.timecreated}}<i class="fa fa-2x fa-check text-success pull-right" title="{{^submission.timemodified}}{{#str}}submittet, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}{{#submission.timemodified}}{{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}"></i>{{/submission.timecreated}}
@@ -298,11 +298,11 @@
                             </div>
                             <div class="collapse {{^activephasefour}}show{{/activephasefour}} collapseGroupPhaseFour collapseGroup{{id}}">
                                 <div class="row">
-                                    <strong class="col-md-9"><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}">{{name}}</a></strong>
+                                    <strong class="col-md-9"><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}">{{name}}</a></strong>
                                     <span class="col-md-3 p-0 p-r-1">
                                         <button class="btn btn-secondary discourse-btn-round-small pull-right" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}opengroup, mod_discourse, {{name}}{{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>
-                                        {{#submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><i class="fa fa-2x fa-check text-success" title="{{^submission.timemodified}}{{#str}}submittet, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}{{#submission.timemodified}}{{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}"></i></a>{{/submission.timecreated}}
-                                        {{^submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><i class="fa fa-2x fa-times text-danger" title="{{#str}}nosubmission, mod_discourse{{/str}}"></i></a>{{/submission.timecreated}}
+                                        {{#submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><i class="fa fa-2x fa-check text-success" title="{{^submission.timemodified}}{{#str}}submittet, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}{{#submission.timemodified}}{{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}"></i></a>{{/submission.timecreated}}
+                                        {{^submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><i class="fa fa-2x fa-times text-danger" title="{{#str}}nosubmission, mod_discourse{{/str}}"></i></a>{{/submission.timecreated}}
                                     </span>
                                 </div>
                             </div>
