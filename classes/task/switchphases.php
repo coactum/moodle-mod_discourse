@@ -85,7 +85,5 @@ class switchphases extends \core\task\scheduled_task {
         }
 
         mtrace('Task finished');
-
-        \core\task\manager::clear_static_caches(); // Restart cron after running the task because it made many DB updates and clear cron cache.
     }
 }
