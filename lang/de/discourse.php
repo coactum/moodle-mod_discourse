@@ -131,4 +131,3 @@ $string['privacy:metadata:discourse_submissions:currentversion'] = 'Aktuelle Ver
 $string['privacy:metadata:discourse_submissions:format'] = 'Format der Einreichung';
 $string['privacy:metadata:discourse_submissions:timecreated'] = 'Zeitpunkt an dem die Einreichung abgegeben wurde';
 $string['privacy:metadata:discourse_submissions:timemodified'] = 'Zeitpunkt der letzten Überarbeitung der Einreichung';
-// $string['privacy:metadata:core_message'] = 'Das DisKurs Plugin sendet Nachrichten an Benutzer und speichert deren Inhalte in der Datenbank.';

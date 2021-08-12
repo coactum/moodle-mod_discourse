@@ -131,4 +131,3 @@ $string['privacy:metadata:discourse_submissions:currentversion'] = 'Current vers
 $string['privacy:metadata:discourse_submissions:format'] = 'Submission format';
 $string['privacy:metadata:discourse_submissions:timecreated'] = 'Date on which the submission was made';
 $string['privacy:metadata:discourse_submissions:timemodified'] = 'Time of the last revision of the submission';
-// $string['privacy:metadata:core_message'] = 'The discourse plugin sends messages to users and saves their content in the database.';
