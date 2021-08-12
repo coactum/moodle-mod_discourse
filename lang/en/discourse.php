@@ -27,7 +27,6 @@ defined('MOODLE_INTERNAL') || die();
 
 $string['pluginname'] = 'Discourse';
 
-// mod_form.php
 $string['modulename'] = 'Discourse';
 $string['modulename_help'] = 'The activity DisCourse offers the possibility to conduct group discussions in a multi-step procedure.
 
@@ -50,15 +49,12 @@ $string['hintphasetwo'] = 'Note on the 1st group phase';
 $string['hintphasethree'] = 'Note on the 2nd group phase';
 $string['hintphasefour'] = 'Note on the collaborative phase';
 
-// index.php
 $string['modulenameplural'] = 'Discourses';
 $string['nonewmodules'] = 'No new modules';
 
-// lib.php
 $string['deletealluserdata'] = 'Delete all user data';
 $string['resetting_data'] = 'Participants and submissions deleted';
 
-// locallib.php
 $string['groupingdescription'] = 'Grouping for discourse activity {$a}';
 $string['phaseone'] = 'Solo phase';
 $string['phasetwo'] = '1st group phase';
@@ -67,7 +63,6 @@ $string['phasefour'] = 'Collaborative phase';
 $string['groupfor'] = 'Group for {$a}';
 $string['group'] = 'Group';
 
-// discourse_view.mustache
 $string['activephase'] = 'Active phase';
 $string['switchto'] = 'Switch to';
 $string['hint'] = 'Hint';
@@ -83,10 +78,8 @@ $string['nogroups'] = 'No groups available';
 $string['noautoswitch'] = 'The automatic phase switch is deactivated. The phases must therefore be changed manually.';
 $string['shouldswitchphaseto'] = 'The automatic phase switch is deactivated. The next phase should be activated by now.';
 
-// view.php
 $string['view'] = 'Overview';
 
-// groupview.php
 $string['groupview'] = 'Group view';
 $string['submissionstate'] = 'State';
 $string['submittet'] = 'Submittet at';
@@ -99,7 +92,6 @@ $string['submissioncontent'] = 'Content of submission';
 $string['errfilloutfield'] = 'Please fill out this field';
 $string['backtooverview'] = 'Back to overview';
 
-// capabilities
 $string['discourse:addinstance'] = 'Add new discourse';
 $string['discourse:potentialparticipant'] = 'Enter discourse as participant';
 $string['discourse:editsubmission'] = 'Submit or edit group text';
@@ -108,17 +100,14 @@ $string['discourse:switchphase'] = 'Toogle discourse phase';
 $string['discourse:viewallgroups'] = 'View all groups';
 $string['discourse:viewgroupparticipants'] = 'View group participants';
 
-// errors
 $string['groupinvalid'] = 'Group not found';
 $string['useridinvalid'] = 'User ID invalid';
 $string['nogroupmember'] = 'Not possible because not a group member';
 $string['submissionfaileddoubled'] = 'Submission failed. Another group member has already made a submission recently.';
 $string['groupingmaybedeleted'] = 'The grouping of the discourse was deleted or is invalid. All course groups (from other discourses or activities as well) will be displayed.';
 
-// task
 $string['task_switchphases'] = 'Automatic phase switch';
 
-// privacy
 $string['privacy:metadata:discourse_participants'] = 'Contains the groups of all discourse participants.';
 $string['privacy:metadata:discourse_submissions'] = 'Contains data of all discourse submissions.';
 $string['privacy:metadata:discourse_participants:userid'] = 'User ID of the participant';
