@@ -31,7 +31,7 @@ require_once("$CFG->libdir/formslib.php");
  * Form for submissions.
  *
  * @package   mod_discourse
- * @copyright   2021 coactum GmbH
+ * @copyright 2021 coactum GmbH
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL Juv3 or later
  */
 class submit_form extends moodleform {

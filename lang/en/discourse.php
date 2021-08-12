@@ -63,7 +63,7 @@ $string['groupingdescription'] = 'Grouping for discourse activity {$a}';
 $string['phaseone'] = 'Solo phase';
 $string['phasetwo'] = '1st group phase';
 $string['phasethree'] = '2nd group phase';
-$string['phasefour'] = 'Collaborative phas';
+$string['phasefour'] = 'Collaborative phase';
 $string['groupfor'] = 'Group for {$a}';
 $string['group'] = 'Group';
 
@@ -71,7 +71,7 @@ $string['group'] = 'Group';
 $string['activephase'] = 'Active phase';
 $string['switchto'] = 'Switch to';
 $string['hint'] = 'Hint';
-$string['sheduledstart'] = 'Sheduled start';
+$string['sheduledend'] = 'Sheduled end';
 $string['toggleallgroups'] = 'Toggle all groups in phase {$a}';
 $string['opengroup'] = 'Maximize group {$a}';
 $string['closegroup'] = 'Minimize group {$a}';
@@ -97,11 +97,11 @@ $string['editsubmission'] = 'Edit submission';
 $string['currentversion'] = 'Current version';
 $string['submissioncontent'] = 'Content of submission';
 $string['errfilloutfield'] = 'Please fill out this field';
+$string['backtooverview'] = 'Back to overview';
 
 // capabilities
 $string['discourse:addinstance'] = 'Add new discourse';
-$string['discourse:viewdiscourseteacher'] = 'View disocurse as teacher';
-$string['discourse:viewdiscoursestudent'] = 'View disocurse as student';
+$string['discourse:potentialparticipant'] = 'Enter discourse as participant';
 $string['discourse:editsubmission'] = 'Submit or edit group text';
 $string['discourse:editphase'] = 'Edit phase information';
 $string['discourse:switchphase'] = 'Toogle discourse phase';

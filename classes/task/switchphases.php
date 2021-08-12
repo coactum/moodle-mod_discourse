@@ -53,9 +53,9 @@ class switchphases extends \core\task\scheduled_task {
 
         $select = "autoswitch = 1";
         $select .= " AND activephase != 4";
-        $select .= " AND (" . time() . " > deadlinephasetwo AND activephase = 1";
-        $select .= " OR " . time() . " > deadlinephasethree AND activephase = 2";
-        $select .= " OR " . time() . " > deadlinephasefour AND activephase = 3)";
+        $select .= " AND (" . time() . " > deadlinephaseone AND activephase = 1";
+        $select .= " OR " . time() . " > deadlinephasetwo AND activephase = 2";
+        $select .= " OR " . time() . " > deadlinephasethree AND activephase = 3)";
 
         $rs = $DB->get_recordset_select('discourse', $select);
 

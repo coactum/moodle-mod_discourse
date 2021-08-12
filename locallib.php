@@ -91,6 +91,18 @@ class discourse {
 
         $groups = groups_get_activity_allowed_groups($this->cm);
 
+        /**
+         * Helper callback function to compare group objects and sort them by name.
+         *
+         * @param object $a group object to compare
+         * @param object $b second group object
+         */
+        function compare($a, $b) {
+            return strnatcmp($a->name, $b->name);
+        }
+
+        usort($groups, "compare");
+
         $this->groups = new stdClass();
         $this->groups->phaseone = array();
         $this->groups->phasetwo = array();

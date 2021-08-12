@@ -71,7 +71,7 @@ $string['group'] = 'Gruppe';
 $string['activephase'] = 'Aktive Phase';
 $string['switchto'] = 'Wechseln zu';
 $string['hint'] = 'Hinweis';
-$string['sheduledstart'] = 'Geplanter Beginn';
+$string['sheduledend'] = 'Geplantes Ende';
 $string['toggleallgroups'] = 'Alle Gruppen der {$a} umschalten';
 $string['opengroup'] = 'Gruppe {$a} maximieren';
 $string['closegroup'] = 'Gruppe {$a} minimieren';
@@ -97,11 +97,11 @@ $string['editsubmission'] = 'Einreichung bearbeiten';
 $string['currentversion'] = 'Aktuelle Version';
 $string['submissioncontent'] = 'Inhalt der Einreichung';
 $string['errfilloutfield'] = 'Bitte Feld ausfüllen';
+$string['backtooverview'] = 'Zurück zur Übersicht';
 
 // capabilities
 $string['discourse:addinstance'] = 'Neuen DisKurs hinzufügen';
-$string['discourse:viewdiscourseteacher'] = 'DisKurs als Lehrender ansehen';
-$string['discourse:viewdiscoursestudent'] = 'DisKurs als Teilnehmer ansehen';
+$string['discourse:potentialparticipant'] = 'DisKurs als Teilnehmer beitreten';
 $string['discourse:editsubmission'] = 'Gruppentext einreichen oder bearbeiten';
 $string['discourse:editphase'] = 'Phaseninformationen bearbeiten';
 $string['discourse:switchphase'] = 'Diskurs-Phase umschalten';

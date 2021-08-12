@@ -82,7 +82,7 @@ function discourse_add_instance($discourse, mod_discourse_mod_form $mform = null
  * @return void
  */
 function discourse_instance_created($context, $discourse) {
-    $enrolledusers = get_enrolled_users($context, 'mod/discourse:viewdiscoursestudent');
+    $enrolledusers = get_enrolled_users($context, 'mod/discourse:potentialparticipant');
     $discourse->create_groups_and_grouping($enrolledusers);
 }
 

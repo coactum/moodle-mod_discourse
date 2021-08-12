@@ -29,7 +29,7 @@ $tasks = array(
     [
         'classname' => 'mod_discourse\task\switchphases',
         'blocking' => 0,
-        'minute' => '29',
+        'minute' => '*',
         'hour' => '*',
         'day' => '*',
         'month' => '*',

@@ -26,13 +26,13 @@ In this way, this activity enables the course participants to work together to d
 
 ## Quick installation instructions ##
 
-### Install from git
+### Install from git ###
 - Navigate to Moodle root folder.
-- **git clone git://github.com/drachels/moodle-mod_diary.git mod/discourse**
+- **git clone https://github.com/coactum/moodle-mod-discourse.git mod/discourse**
 
-### Install from a compressed file
+### Install from a compressed file ###
 - Extract the compressed file data.
-- Rename the main folder to discourses.
+- Rename the main folder to discourse.
 - Copy to the Moodle mod/ folder.
 - Click the 'Notifications' link on the frontpage administration block.
 

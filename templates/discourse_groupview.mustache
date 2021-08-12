@@ -15,14 +15,10 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
+    @copyright   2021 coactum GmbH
     @template discourse/discourse_view
 
     Group view.
-
-    Example context (json):
-    {
-        "comment": "Example comment for the context"
-    }
 }}
 
 {{#js}}
@@ -42,13 +38,13 @@
                     {{#caneditsubmission}}<th scope="col"></th>{{/caneditsubmission}}
                 </thead>
                 <tbody><tr>
-                    {{#canviewgroupparticipants}}<td>
-                        {{#participants}} {{{profilelink}}}  <br> {{/participants}}
+                    {{#canviewgroupparticipants}}<td class="w-50">
+                        {{#participants}} {{{profilelink}}},  {{/participants}}
                     </td>{{/canviewgroupparticipants}}
                     <td>
                         {{#submission.timecreated}}
-                            {{^submission.timemodified}}{{#str}}submittet, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}
-                            {{#submission.timemodified}}{{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}
+                            {{^submission.timemodified}}{{#str}}submittet, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}}{{/submission.timemodified}}
+                            {{#submission.timemodified}}{{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}}{{/submission.timemodified}}
                         {{/submission.timecreated}}
                         {{^submission.timecreated}}{{#str}}notsubmittet, mod_discourse{{/str}} {{/submission.timecreated}}
                     </td>
@@ -77,4 +73,8 @@
             {{{form}}}
         </div>
     {{/caneditsubmission}}
+
+    <div class="d-flex justify-content-center">
+        <a href="view.php?id={{cmid}}" role="button" class="btn btn-primary collapse show collapseSubmissionForm">{{#str}}backtooverview, mod_discourse{{/str}}</a>
+    </div>
 </div>
