@@ -156,11 +156,11 @@ if (has_capability('mod/discourse:viewallgroups', $context) || groups_get_activi
     $canviewallgroups = false;
 }
 
-if (time() > $moduleinstance->deadlinephasetwo && $moduleinstance->activephase == 1) {
+if (time() > $moduleinstance->deadlinephaseone && $moduleinstance->activephase == 1) {
     $shouldswitchphase = 2;
-} else if (time() > $moduleinstance->deadlinephasethree && $moduleinstance->activephase == 2) {
+} else if (time() > $moduleinstance->deadlinephasetwo && $moduleinstance->activephase == 2) {
     $shouldswitchphase = 3;
-} else if (time() > $moduleinstance->deadlinephasefour && $moduleinstance->activephase == 3) {
+} else if (time() > $moduleinstance->deadlinephasethree && $moduleinstance->activephase == 3) {
     $shouldswitchphase = 4;
 } else {
     $shouldswitchphase = false;
