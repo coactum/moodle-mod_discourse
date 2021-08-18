@@ -43,10 +43,10 @@
                     </td>{{/canviewgroupparticipants}}
                     <td>
                         {{#submission.timecreated}}
-                            {{^submission.timemodified}}{{#str}}submittet, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}}{{/submission.timemodified}}
+                            {{^submission.timemodified}}{{#str}}submitted, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}}{{/submission.timemodified}}
                             {{#submission.timemodified}}{{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}}{{/submission.timemodified}}
                         {{/submission.timecreated}}
-                        {{^submission.timecreated}}{{#str}}notsubmittet, mod_discourse{{/str}} {{/submission.timecreated}}
+                        {{^submission.timecreated}}{{#str}}notsubmitted, mod_discourse{{/str}} {{/submission.timecreated}}
                     </td>
                     <td>
                         {{#submission.id}}{{submission.currentversion}}{{/submission.id}}

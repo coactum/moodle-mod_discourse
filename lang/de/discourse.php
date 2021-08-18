@@ -89,8 +89,8 @@ $string['view'] = 'Übersicht';
 // groupview.php
 $string['groupview'] = 'Gruppenansicht';
 $string['submissionstate'] = 'Status';
-$string['submittet'] = 'Abgegeben am';
-$string['notsubmittet'] = 'Noch nicht abgegeben';
+$string['submitted'] = 'Abgegeben am';
+$string['notsubmitted'] = 'Noch nicht abgegeben';
 $string['updated'] = 'Aktualisiert am';
 $string['submitsubmission'] = 'Einreichung abgeben';
 $string['editsubmission'] = 'Einreichung bearbeiten';

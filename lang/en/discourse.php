@@ -28,9 +28,9 @@ defined('MOODLE_INTERNAL') || die();
 $string['pluginname'] = 'Discourse';
 
 $string['modulename'] = 'Discourse';
-$string['modulename_help'] = 'The activity DisCourse offers the possibility to conduct group discussions in a multi-step procedure.
+$string['modulename_help'] = 'The DisCourse activity allows you to conduct group discussions in a multi-step procedure.
 
-Based on the concept of the pyramid discussion, the participants of the course initially write their own text on the topic discussed in the course in a first phase. In the next two phases, they then combine their own position with those of other participants and thus develop more differentiated texts incorporating other points of view. Finally, in the last phase, all course participants collaborate to develop a final position on the discussed topic based on their previous results.
+Based on the concept of the pyramid discussion, the participants of the course write down an initial individual position on the topic discussed in the course in a first phase. In the next two phases, they then combine their own position with those of other participants and thus develop more differentiated positions incorporating other points of view. Finally, in the last phase, all course participants collaborate to develop a final position on the discussed topic based on their previous results.
 
 In this way, this activity enables the course participants to work together to develop arguments and perspectives on a topic and to weigh them against and with each other in order to develop differentiated positions on a complex topic in a reflexive exchange.';
 $string['modulename_link'] = 'mod/discourse/view';
@@ -82,8 +82,8 @@ $string['view'] = 'Overview';
 
 $string['groupview'] = 'Group view';
 $string['submissionstate'] = 'State';
-$string['submittet'] = 'Submittet at';
-$string['notsubmittet'] = 'Not submittet yet';
+$string['submitted'] = 'Submitted at';
+$string['notsubmitted'] = 'Not submitted yet';
 $string['updated'] = 'Updated at';
 $string['submitsubmission'] = 'Hand in submission';
 $string['editsubmission'] = 'Edit submission';
