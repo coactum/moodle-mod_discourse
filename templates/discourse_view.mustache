@@ -109,8 +109,8 @@
                         <td>
                             <div class="collapse {{#activephaseone}}show{{/activephaseone}} collapseGroupPhaseOne collapseGroup{{id}}">
                                 <div class="row">
-                                    <span class="col-md-10"><i class="fa fa-lg fa-group"></i> <strong><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}">{{name}}</a></strong></span>
-                                    <span class="col-md-2"><button class="btn btn-secondary discourse-btn-round-small pull-right" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}closegroup, mod_discourse, {{name}}{{/str}}"><i class="fa fa-lg fa-caret-up"></i></button></span>
+                                    <span class="col-md-10"><i class="fa fa-lg fa-group"></i> <strong><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}">{{shortenedname}}</a></strong></span>
+                                    <span class="col-md-2"><button class="btn btn-secondary discourse-btn-round-small pull-right" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}closegroup, mod_discourse, {{shortenedname}}{{/str}}"><i class="fa fa-lg fa-caret-up"></i></button></span>
                                 </div>
                                 <br>
                                 {{#canviewgroupparticipants}}
@@ -135,9 +135,9 @@
                             </div>
                             <div class="collapse {{^activephaseone}}show{{/activephaseone}} collapseGroupPhaseOne collapseGroup{{id}}">
                                 <div class="row">
-                                    <strong class="col-md-9"><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}">{{name}}</a></strong>
+                                    <strong class="col-md-9"><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}">{{shortenedname}}</a></strong>
                                     <span class="col-md-3 p-0 p-r-1">
-                                        <button class="btn btn-secondary discourse-btn-round-small pull-right" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}opengroup, mod_discourse, {{name}}{{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>
+                                        <button class="btn btn-secondary discourse-btn-round-small pull-right" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}opengroup, mod_discourse, {{shortenedname}}{{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>
                                         {{#submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><i class="fa fa-2x fa-check text-success" title="{{^submission.timemodified}}{{#str}}submitted, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}}{{/submission.timemodified}}{{#submission.timemodified}}{{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}}{{/submission.timemodified}}"></i></a>{{/submission.timecreated}}
                                         {{^submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><i class="fa fa-2x fa-times text-danger" title="{{#str}}nosubmission, mod_discourse{{/str}}"></i></a>{{/submission.timecreated}}
                                     </span>
@@ -163,8 +163,8 @@
                             <div class="collapse {{#activephasetwo}}show{{/activephasetwo}} collapseGroupPhaseTwo collapseGroup{{id}}">
                                 {{#.}}
                                     <div class="row">
-                                        <span class="col-md-10"><i class="fa fa-lg fa-group"></i> <strong><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}">{{name}}</a></strong></span>
-                                        <span class="col-md-2"><button class="btn btn-secondary discourse-btn-round-small pull-right" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}closegroup, mod_discourse, {{name}}{{/str}}"><i class="fa fa-lg fa-caret-up"></i></button></span>
+                                        <span class="col-md-10"><i class="fa fa-lg fa-group"></i> <strong><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}">{{shortenedname}}</a></strong></span>
+                                        <span class="col-md-2"><button class="btn btn-secondary discourse-btn-round-small pull-right" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}closegroup, mod_discourse, {{shortenedname}}{{/str}}"><i class="fa fa-lg fa-caret-up"></i></button></span>
                                     </div>
                                     <br>
                                     {{#canviewgroupparticipants}}
@@ -190,9 +190,9 @@
                             </div>
                             <div class="collapse {{^activephasetwo}}show{{/activephasetwo}} collapseGroupPhaseTwo collapseGroup{{id}}">
                                 <div class="row">
-                                    <strong class="col-md-9"><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}">{{name}}</a></strong>
+                                    <strong class="col-md-9"><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}">{{shortenedname}}</a></strong>
                                     <span class="col-md-3 p-0 p-r-1">
-                                        <button class="btn btn-secondary discourse-btn-round-small pull-right" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}opengroup, mod_discourse, {{name}}{{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>
+                                        <button class="btn btn-secondary discourse-btn-round-small pull-right" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}opengroup, mod_discourse, {{shortenedname}}{{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>
                                         {{#submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><i class="fa fa-2x fa-check text-success" title="{{^submission.timemodified}}{{#str}}submitted, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}}{{/submission.timemodified}}{{#submission.timemodified}}{{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}}{{/submission.timemodified}}"></i></a>{{/submission.timecreated}}
                                         {{^submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><i class="fa fa-2x fa-times text-danger" title="{{#str}}nosubmission, mod_discourse{{/str}}"></i></a>{{/submission.timecreated}}
                                     </span>
@@ -219,8 +219,8 @@
                             <div class="collapse {{#activephasethree}}show{{/activephasethree}} collapseGroupPhaseThree collapseGroup{{id}}">
                                 {{#.}}
                                     <div class="row">
-                                        <span class="col-md-10"><i class="fa fa-lg fa-group"></i> <strong><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}">{{name}}</a></strong></span>
-                                        <span class="col-md-2"><button class="btn btn-secondary discourse-btn-round-small pull-right" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}closegroup, mod_discourse, {{name}}{{/str}}"><i class="fa fa-lg fa-caret-up"></i></button></span>
+                                        <span class="col-md-10"><i class="fa fa-lg fa-group"></i> <strong><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}">{{shortenedname}}</a></strong></span>
+                                        <span class="col-md-2"><button class="btn btn-secondary discourse-btn-round-small pull-right" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}closegroup, mod_discourse, {{shortenedname}}{{/str}}"><i class="fa fa-lg fa-caret-up"></i></button></span>
                                     </div>
                                     <br>
                                     {{#canviewgroupparticipants}}
@@ -246,9 +246,9 @@
                             </div>
                             <div class="collapse {{^activephasethree}}show{{/activephasethree}} collapseGroupPhaseThree collapseGroup{{id}}">
                                 <div class="row">
-                                    <strong class="col-md-9"><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}">{{name}}</a></strong>
+                                    <strong class="col-md-9"><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}">{{shortenedname}}</a></strong>
                                     <span class="col-md-3 p-0 p-r-1">
-                                        <button class="btn btn-secondary discourse-btn-round-small pull-right" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}opengroup, mod_discourse, {{name}}{{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>
+                                        <button class="btn btn-secondary discourse-btn-round-small pull-right" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}opengroup, mod_discourse, {{shortenedname}}{{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>
                                         {{#submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><i class="fa fa-2x fa-check text-success" title="{{^submission.timemodified}}{{#str}}submitted, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}}{{/submission.timemodified}}{{#submission.timemodified}}{{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}}{{/submission.timemodified}}"></i></a>{{/submission.timecreated}}
                                         {{^submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><i class="fa fa-2x fa-times text-danger" title="{{#str}}nosubmission, mod_discourse{{/str}}"></i></a>{{/submission.timecreated}}
                                     </span>
@@ -275,8 +275,8 @@
                             <div class="collapse {{#activephasefour}}show{{/activephasefour}} collapseGroupPhaseFour collapseGroup{{id}}">
                                 {{#.}}
                                     <div class="row">
-                                        <span class="col-md-10"><i class="fa fa-lg fa-group"></i> <strong><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}">{{name}}</a></strong></span>
-                                        <span class="col-md-2"><button class="btn btn-secondary discourse-btn-round-small pull-right" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}closegroup, mod_discourse, {{name}}{{/str}}"><i class="fa fa-lg fa-caret-up"></i></button></span>
+                                        <span class="col-md-10"><i class="fa fa-lg fa-group"></i> <strong><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}">{{shortenedname}}</a></strong></span>
+                                        <span class="col-md-2"><button class="btn btn-secondary discourse-btn-round-small pull-right" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}closegroup, mod_discourse, {{shortenedname}}{{/str}}"><i class="fa fa-lg fa-caret-up"></i></button></span>
                                     </div>
                                     <br>
                                     {{#canviewgroupparticipants}}
@@ -302,9 +302,9 @@
                             </div>
                             <div class="collapse {{^activephasefour}}show{{/activephasefour}} collapseGroupPhaseFour collapseGroup{{id}}">
                                 <div class="row">
-                                    <strong class="col-md-9"><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}">{{name}}</a></strong>
+                                    <strong class="col-md-9"><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}">{{shortenedname}}</a></strong>
                                     <span class="col-md-3 p-0 p-r-1">
-                                        <button class="btn btn-secondary discourse-btn-round-small pull-right" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}opengroup, mod_discourse, {{name}}{{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>
+                                        <button class="btn btn-secondary discourse-btn-round-small pull-right" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}opengroup, mod_discourse, {{shortenedname}}{{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>
                                         {{#submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><i class="fa fa-2x fa-check text-success" title="{{^submission.timemodified}}{{#str}}submitted, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}}{{/submission.timemodified}}{{#submission.timemodified}}{{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}}{{/submission.timemodified}}"></i></a>{{/submission.timecreated}}
                                         {{^submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><i class="fa fa-2x fa-times text-danger" title="{{#str}}nosubmission, mod_discourse{{/str}}"></i></a>{{/submission.timecreated}}
                                     </span>

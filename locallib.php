@@ -118,6 +118,9 @@ class discourse {
             $groupurl = new moodle_url('/group/index.php', array('id' => $group->id[0], 'courseid' => $this->course->id));
             $group->profilelink = '<strong><a href="'.$groupurl.'">'.$group->name.'</a></strong>';
 
+            $group->shortenedname = explode($this->instance->name, $group->name)[1];
+            $group->shortenednametwo = explode($this->instance->name, $group->name)[0] . '-' . explode($this->instance->name, $group->name)[1];
+
             $group->participants = array();
 
             foreach (groups_get_members($group->id) as $participant) {
