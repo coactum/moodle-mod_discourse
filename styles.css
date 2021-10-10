@@ -1,7 +1,3 @@
-.discourse_view th {
-    width: 25%;
-}
-
 .discourse_view .discourse-border-default {
     border: 1px solid #dee2e6;
 }
@@ -22,6 +18,8 @@
     height: 1.6rem !important;
     border-radius: 50% !important;
     padding: 0 !important;
+    margin-right: 5px;
+    margin-bottom: 5px;
 }
 
 .discourse_view tr div.row span > i {
@@ -32,11 +30,13 @@
 .discourse_view .badge-pill {
     border-radius: 10rem;
     position: relative;
-    top: 2px;
+    top: 7px;
 }
 
-.discourse_view .discourse-table-groups .badge-pill {
-    border-radius: 10rem;
-    position: relative;
-    top: -2px;
+.discourse_view th .fa-toggle-off {
+    padding-top: 8px;
+}
+
+.discourse_view .phaseinformation {
+    height: 220px;
 }
