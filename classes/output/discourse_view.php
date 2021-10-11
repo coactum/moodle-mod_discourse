@@ -60,6 +60,14 @@ class discourse_view implements renderable, templatable {
     protected $hintphasethree;
     /** @var string */
     protected $hintphasefour;
+    /** @var bool */
+    protected $hintphaseoneshortened;
+    /** @var bool */
+    protected $hintphasetwoshortened;
+    /** @var bool */
+    protected $hintphasethreeshortened;
+    /** @var bool */
+    protected $hintphasefourshortened;
     /** @var int */
     protected $deadlinephaseone;
     /** @var int */
@@ -93,6 +101,10 @@ class discourse_view implements renderable, templatable {
      * @param string $hintphasetwo Hint for phase two
      * @param string $hintphasethree Hint for phase three
      * @param string $hintphasefour Hint for phase four
+     * @param bool $hintphaseoneshortened If hint for phase one is shortened
+     * @param bool $hintphasetwoshortened If hint for phase one is shortened
+     * @param bool $hintphasethreeshortened If hint for phase one is shortened
+     * @param bool $hintphasefourshortened If hint for phase one is shortened
      * @param int $deadlinephaseone Deadline for phase one
      * @param int $deadlinephasetwo Deadline for phase two
      * @param int $deadlinephasethree Deadline for phase three
@@ -105,8 +117,9 @@ class discourse_view implements renderable, templatable {
      * @param int $userid ID of current user
      */
     public function __construct($cmid, $groups, $autoswitch, $activephaseone, $activephasetwo, $activephasethree, $activephasefour,
-        $hintphaseone, $hintphasetwo, $hintphasethree, $hintphasefour, $deadlinephaseone, $deadlinephasetwo, $deadlinephasethree,
-        $deadlinephasefour, $caneditphase, $canswitchphase, $canviewallgroups, $canviewgroupparticipants, $shouldswitchphase, $userid) {
+        $hintphaseone, $hintphasetwo, $hintphasethree, $hintphasefour, $hintphaseoneshortened, $hintphasetwoshortened, $hintphasethreeshortened,
+        $hintphasefourshortened, $deadlinephaseone, $deadlinephasetwo, $deadlinephasethree, $deadlinephasefour, $caneditphase, $canswitchphase,
+        $canviewallgroups, $canviewgroupparticipants, $shouldswitchphase, $userid) {
 
         $this->cmid = $cmid;
         $this->groups = $groups;
@@ -119,6 +132,10 @@ class discourse_view implements renderable, templatable {
         $this->hintphasetwo = $hintphasetwo;
         $this->hintphasethree = $hintphasethree;
         $this->hintphasefour = $hintphasefour;
+        $this->hintphaseoneshortened = $hintphaseoneshortened;
+        $this->hintphasetwoshortened = $hintphasetwoshortened;
+        $this->hintphasethreeshortened = $hintphasethreeshortened;
+        $this->hintphasefourshortened = $hintphasefourshortened;
         $this->deadlinephaseone = $deadlinephaseone;
         $this->deadlinephasetwo = $deadlinephasetwo;
         $this->deadlinephasethree = $deadlinephasethree;
@@ -150,6 +167,10 @@ class discourse_view implements renderable, templatable {
         $data->hintphasetwo = $this->hintphasetwo;
         $data->hintphasethree = $this->hintphasethree;
         $data->hintphasefour = $this->hintphasefour;
+        $data->hintphaseoneshortened = $this->hintphaseoneshortened;
+        $data->hintphasetwoshortened = $this->hintphasetwoshortened;
+        $data->hintphasethreeshortened = $this->hintphasethreeshortened;
+        $data->hintphasefourshortened = $this->hintphasefourshortened;
         $data->deadlinephaseone = $this->deadlinephaseone;
         $data->deadlinephasetwo = $this->deadlinephasetwo;
         $data->deadlinephasethree = $this->deadlinephasethree;

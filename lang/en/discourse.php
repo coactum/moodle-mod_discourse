@@ -66,6 +66,7 @@ $string['group'] = 'Group';
 $string['activephase'] = 'Active phase';
 $string['switchto'] = 'Switch to';
 $string['hint'] = 'Hint';
+$string['openhint'] = 'Open or close hint for {$a}';
 $string['sheduledend'] = 'Sheduled end';
 $string['toggleallgroups'] = 'Toggle all groups in phase {$a}';
 $string['opengroup'] = 'Maximize {$a}';
@@ -77,6 +78,7 @@ $string['submissionreceived'] = 'Submission handed in';
 $string['nogroups'] = 'No groups available';
 $string['noautoswitch'] = 'The automatic phase switch is deactivated. The phases must therefore be changed manually.';
 $string['shouldswitchphaseto'] = 'The automatic phase switch is deactivated. The next phase should be activated by now.';
+$string['phaseswitched'] = 'Phase switched.';
 
 $string['view'] = 'Overview';
 

@@ -71,6 +71,7 @@ $string['group'] = 'Gruppe';
 $string['activephase'] = 'Aktive Phase';
 $string['switchto'] = 'Wechseln zu';
 $string['hint'] = 'Hinweis';
+$string['openhint'] = 'Hinweis für {$a} öffnen oder verstecken';
 $string['sheduledend'] = 'Geplantes Ende';
 $string['toggleallgroups'] = 'Alle Gruppen der {$a} umschalten';
 $string['opengroup'] = '{$a} maximieren';
@@ -82,6 +83,7 @@ $string['submissionreceived'] = 'Einreichung abgegeben';
 $string['nogroups'] = 'Keine Gruppen vorhanden';
 $string['noautoswitch'] = 'Der automatische Phasenwechsel ist deaktiviert. Die Phasen müssen deshalb manuell gewechselt werden.';
 $string['shouldswitchphaseto'] = 'Der automatische Phasenwechsel ist deaktiviert. Die nächste Phase sollte aktiviert werden.';
+$string['phaseswitched'] = 'Phase gewechselt.';
 
 // view.php
 $string['view'] = 'Übersicht';

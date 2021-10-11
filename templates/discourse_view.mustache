@@ -50,8 +50,15 @@
                                 <br><br>
                             {{/deadlinephaseone}}
                             {{#hintphaseone}}
+                                {{#hintphaseoneshortened}}<button class="btn btn-secondary discourse-btn-round-small" data-toggle="collapse" data-target=".collapseHintPhaseOne" aria-expanded="false" aria-controls="collapseHintPhaseOne" title="{{#str}}openhint, mod_discourse, {{#str}}phaseone, mod_discourse{{/str}}{{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>{{/hintphaseoneshortened}}
                                 <strong> {{#str}}hint, mod_discourse{{/str}}: </strong>
-                                <span class="pull-right"><p> {{#shortentext}} 210, {{hintphaseone}} {{/shortentext}}</p></span>
+                                {{#hintphaseoneshortened}}
+                                    <span class="pull-right collapse collapseHintPhaseOne"><p> {{hintphaseone}}</p></span>
+                                    <span class="pull-right collapse show collapseHintPhaseOne"><p> {{#shortentext}} 250, {{hintphaseone}} {{/shortentext}}</p></span>
+                                {{/hintphaseoneshortened}}
+                                {{^hintphaseoneshortened}}
+                                    <span class="pull-right"><p> {{hintphaseone}}</p></span>
+                                {{/hintphaseoneshortened}}
                             {{/hintphaseone}}
                         </td>
                     </tr>
@@ -107,7 +114,17 @@
                                 <span class="pull-right">{{#userdate}}{{deadlinephasetwo}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}}</span>
                                 <br><br>
                             {{/deadlinephasetwo}}
-                            {{#hintphasetwo}}<strong> {{#str}}hint, mod_discourse{{/str}}: </strong><span class="pull-right"><p> {{#shortentext}} 210, {{hintphasetwo}} {{/shortentext}}</p>{{/hintphasetwo}} </span>
+                            {{#hintphasetwo}}
+                                {{#hintphasetwoshortened}}<button class="btn btn-secondary discourse-btn-round-small" data-toggle="collapse" data-target=".collapseHintPhaseTwo" aria-expanded="false" aria-controls="collapseHintPhaseTwo" title="{{#str}}openhint, mod_discourse, {{#str}}phasetwo, mod_discourse{{/str}}{{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>{{/hintphasetwoshortened}}
+                                <strong> {{#str}}hint, mod_discourse{{/str}}: </strong>
+                                {{#hintphasetwoshortened}}
+                                    <span class="pull-right collapse collapseHintPhaseTwo"><p> {{hintphasetwo}}</p></span>
+                                    <span class="pull-right collapse show collapseHintPhaseTwo"><p> {{#shortentext}} 250, {{hintphasetwo}} {{/shortentext}}</p></span>
+                                {{/hintphasetwoshortened}}
+                                {{^hintphasetwoshortened}}
+                                    <span class="pull-right"><p> {{hintphasetwo}}</p></span>
+                                {{/hintphasetwoshortened}}
+                            {{/hintphasetwo}}
                         </td>
                     </tr>
                     {{#groups.phasetwo}} <tr>
@@ -165,7 +182,17 @@
                                 <span class="pull-right">{{#userdate}}{{deadlinephasethree}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}}</span>
                                 <br><br>
                             {{/deadlinephasethree}}
-                            {{#hintphasethree}}<strong> {{#str}}hint, mod_discourse{{/str}}: </strong><span class="pull-right"><p> {{#shortentext}} 210, {{hintphasethree}} {{/shortentext}}</p>{{/hintphasethree}} </span>
+                            {{#hintphasethree}}
+                                {{#hintphasethreeshortened}}<button class="btn btn-secondary discourse-btn-round-small" data-toggle="collapse" data-target=".collapseHintPhaseThree" aria-expanded="false" aria-controls="collapseHintPhaseThree" title="{{#str}}openhint, mod_discourse, {{#str}}phasethree, mod_discourse{{/str}}{{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>{{/hintphasethreeshortened}}
+                                <strong> {{#str}}hint, mod_discourse{{/str}}: </strong>
+                                {{#hintphasethreeshortened}}
+                                    <span class="pull-right collapse collapseHintPhaseThree"><p> {{hintphasethree}}</p></span>
+                                    <span class="pull-right collapse show collapseHintPhaseThree"><p> {{#shortentext}} 250, {{hintphasethree}} {{/shortentext}}</p></span>
+                                {{/hintphasethreeshortened}}
+                                {{^hintphasethreeshortened}}
+                                    <span class="pull-right"><p> {{hintphasethree}}</p></span>
+                                {{/hintphasethreeshortened}}
+                            {{/hintphasethree}}
                         </td>
                     <tr>
                     {{#groups.phasethree}} <tr>
@@ -223,7 +250,17 @@
                                 <span class="pull-right">{{#userdate}}{{deadlinephasefour}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}}</span>
                                 <br><br>
                             {{/deadlinephasefour}}
-                            {{#hintphasefour}}<strong> {{#str}}hint, mod_discourse{{/str}}: </strong><span class="pull-right"><p> {{#shortentext}} 210, {{hintphasefour}} {{/shortentext}}</p>{{/hintphasefour}} </span>
+                            {{#hintphasefour}}
+                                {{#hintphasefourshortened}}<button class="btn btn-secondary discourse-btn-round-small" data-toggle="collapse" data-target=".collapseHintPhaseFour" aria-expanded="false" aria-controls="collapseHintPhaseFour" title="{{#str}}openhint, mod_discourse, {{#str}}phasefour, mod_discourse{{/str}}{{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>{{/hintphasefourshortened}}
+                                <strong> {{#str}}hint, mod_discourse{{/str}}: </strong>
+                                {{#hintphasefourshortened}}
+                                    <span class="pull-right collapse collapseHintPhaseFour"><p> {{hintphasefour}}</p></span>
+                                    <span class="pull-right collapse show collapseHintPhaseFour"><p> {{#shortentext}} 250, {{hintphasefour}} {{/shortentext}}</p></span>
+                                {{/hintphasefourshortened}}
+                                {{^hintphasefourshortened}}
+                                    <span class="pull-right"><p> {{hintphasefour}}</p></span>
+                                {{/hintphasefourshortened}}
+                            {{/hintphasefour}}
                         </td>
                     </tr>
                     {{#groups.phasefour}} <tr>
