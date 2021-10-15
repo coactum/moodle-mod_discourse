@@ -24,11 +24,11 @@
 {{#js}}
 {{/js}}
 
-<div class="discourse_view">
-    {{^autoswitch}}
+<div>
+    {{#canswitchphase}}{{^autoswitch}}
         {{^shouldswitchphase}}<div class="alert alert-warning alert-block fade in" role="alert"><button type="button" class="close" data-dismiss="alert">×</button>{{#str}}noautoswitch, mod_discourse{{/str}}</div>{{/shouldswitchphase}}
         {{#shouldswitchphase}}<div class="alert alert-danger alert-block fade in" role="alert"><button type="button" class="close" data-dismiss="alert">×</button>{{#str}}shouldswitchphaseto, mod_discourse{{/str}}</div>{{/shouldswitchphase}}
-    {{/autoswitch}}
+    {{/autoswitch}}{{/canswitchphase}}
 
     <div class="row">
         <div class="discourse-table-groups discourse-table-phaseone col-lg-3 p-0">

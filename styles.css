@@ -1,19 +1,19 @@
-.discourse_view .discourse-border-default {
+#page-mod-discourse-view .discourse-border-default {
     border: 1px solid #dee2e6;
 }
 
-.discourse_view .discourse-border-success {
+#page-mod-discourse-view .discourse-border-success {
     border: 1px solid #357a32 !important;
 }
 
-.discourse_view .discourse-btn-round {
+#page-mod-discourse-view .discourse-btn-round {
     width: 2rem !important;
     height: 2rem !important;
     border-radius: 50% !important;
     padding: 0 !important;
 }
 
-.discourse_view .discourse-btn-round-small {
+#page-mod-discourse-view .discourse-btn-round-small {
     width: 1.6rem !important;
     height: 1.6rem !important;
     border-radius: 50% !important;
@@ -22,21 +22,33 @@
     margin-bottom: 5px;
 }
 
-.discourse_view tr div.row span > i {
+#page-mod-discourse-view tr div.row span > i {
     position: relative;
     top: -4px;
 }
 
-.discourse_view .badge-pill {
+#page-mod-discourse-view .badge-pill {
     border-radius: 10rem;
     position: relative;
     top: 7px;
 }
 
-.discourse_view th .fa-toggle-off {
+#page-mod-discourse-view th .fa-toggle-off {
     padding-top: 8px;
 }
 
-.discourse_view .phaseinformation {
-    height: 230px;
+#page-mod-discourse-view .phaseinformation {
+    height: 250px;
+}
+
+@media (max-width: 767px) {
+    #page-mod-discourse-groupview .formersubmissions {
+        flex: 100%;
+    }
+}
+
+@media (min-width: 767px) {
+    #page-mod-discourse-groupview .formersubmissions {
+        flex: 50%;
+    }
 }

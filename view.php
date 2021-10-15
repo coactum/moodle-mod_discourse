@@ -56,7 +56,7 @@ $event->add_record_snapshot('discourse', $moduleinstance);
 $event->trigger();
 
 $PAGE->set_url('/mod/discourse/view.php', array('id' => $cm->id));
-$PAGE->set_title(format_string($moduleinstance->name));
+$PAGE->set_title(format_string($moduleinstance->name) . ' - ' . get_string('view', 'mod_discourse'));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($context);
 $PAGE->force_settings_menu();
@@ -183,8 +183,9 @@ $hintphasefourshortened = (strlen($moduleinstance->hintphasefour) >= 250) ? true
 
 $page = new discourse_view($cm->id, $discourse->get_groups(), $moduleinstance->autoswitch, $activephaseone, $activephasetwo,
     $activephasethree, $activephasefour, $moduleinstance->hintphaseone, $moduleinstance->hintphasetwo, $moduleinstance->hintphasethree,
-    $moduleinstance->hintphasefour, $hintphaseoneshortened, $hintphasetwoshortened, $hintphasethreeshortened, $hintphasefourshortened, $moduleinstance->deadlinephaseone, $moduleinstance->deadlinephasetwo, $moduleinstance->deadlinephasethree,
-    $moduleinstance->deadlinephasefour, $caneditphase, $canswitchphase, $canviewallgroups, $canviewgroupparticipants, $shouldswitchphase, $userid);
+    $moduleinstance->hintphasefour, $hintphaseoneshortened, $hintphasetwoshortened, $hintphasethreeshortened, $hintphasefourshortened,
+    $moduleinstance->deadlinephaseone, $moduleinstance->deadlinephasetwo, $moduleinstance->deadlinephasethree, $moduleinstance->deadlinephasefour,
+    $caneditphase, $canswitchphase, $canviewallgroups, $canviewgroupparticipants, $shouldswitchphase, $userid);
 
 echo $OUTPUT->render($page);
 

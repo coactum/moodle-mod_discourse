@@ -90,6 +90,7 @@ $string['view'] = 'Übersicht';
 
 // groupview.php
 $string['groupview'] = 'Gruppenansicht';
+$string['phasehint'] = 'Phasenhinweis';
 $string['submissionstate'] = 'Status';
 $string['submitted'] = 'Abgegeben am';
 $string['notsubmitted'] = 'Noch nicht abgegeben';
@@ -97,6 +98,8 @@ $string['updated'] = 'Aktualisiert am';
 $string['submitsubmission'] = 'Einreichung abgeben';
 $string['editsubmission'] = 'Einreichung bearbeiten';
 $string['currentversion'] = 'Aktuelle Version';
+$string['positionsfromlastphase'] = 'Positionen der letzten Phase';
+$string['currentsubmission'] = 'Aktuelle Einreichung';
 $string['submissioncontent'] = 'Inhalt der Einreichung';
 $string['errfilloutfield'] = 'Bitte Feld ausfüllen';
 $string['backtooverview'] = 'Zurück zur Übersicht';

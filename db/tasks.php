@@ -18,7 +18,7 @@
  * Sheduled tasks for mod_discourse.
  *
  * @package     mod_discourse
- * @category    tasks
+ * @category    task
  * @copyright   2021 coactum GmbH
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

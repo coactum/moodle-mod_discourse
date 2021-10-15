@@ -52,7 +52,7 @@ $cm = $discourse->get_course_module();
 require_login($course, true, $cm);
 
 $PAGE->set_url('/mod/discourse/groupview.php', array('id' => $cm->id, 'group' => $groupid, 'userid' => $userid));
-$PAGE->set_title(format_string($moduleinstance->name));
+$PAGE->set_title(format_string($moduleinstance->name). ' - ' . get_string('groupview', 'mod_discourse'));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($context);
 
@@ -125,10 +125,10 @@ if ($fromform = $mform->get_data()) {
 
         foreach ($group->formersubmissions as $submission) {
 
-            if (isset($submission) && $submission) {
+            if (isset($submission->submission) && $submission->submission) {
                 $groupname = groups_get_group_name($submission->groupid);
 
-                $formersubmission->text .= '<strong>' . $groupname . '</strong><br>' . $submission->submission . '<br>';
+                $formersubmission->text .= $submission->submission;
                 $formersubmission->format = $submission->format;
             }
 
@@ -162,7 +162,23 @@ if ($fromform = $mform->get_data()) {
 
     $canviewgroupparticipants = has_capability('mod/discourse:viewgroupparticipants', $context);
 
-    $page = new discourse_groupview($cm->id, $group, $form, $caneditsubmission, $canviewgroupparticipants);
+    switch ($group->phase) {
+        case 1:
+            $phasehint = $moduleinstance->hintphaseone;
+            break;
+
+        case 2:
+            $phasehint = $moduleinstance->hintphasetwo;
+            break;
+        case 3:
+            $phasehint = $moduleinstance->hintphasethree;
+            break;
+        case 4:
+            $phasehint = $moduleinstance->hintphasefour;
+            break;
+    }
+
+    $page = new discourse_groupview($cm->id, $phasehint, $group, $form, $caneditsubmission, $canviewgroupparticipants);
 
     // Render page and display the form.
     echo $OUTPUT->render($page);

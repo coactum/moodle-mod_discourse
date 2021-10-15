@@ -109,19 +109,48 @@ class discourse {
         $this->groups->phasethree = array();
         $this->groups->phasefour = array();
 
+        $canviewallgroups = has_capability('mod/discourse:viewallgroups', $context);
+
         foreach ($groups as $group) {
 
-            // For retrieving former submissions.
-            $participantids = array();
-            $formergroupids = array();
+            // Define phase of group.
+            if (stripos($group->idnumber, 'phase_1')) {
+                $group->phase = 1;
+            } else if (stripos($group->idnumber, 'phase_2')) {
+                $group->phase = 2;
+            } else if (stripos($group->idnumber, 'phase_3')) {
+                $group->phase = 3;
+            } else if (stripos($group->idnumber, 'phase_4')) {
+                $group->phase = 4;
+            }
 
+            // Get submission of group.
+            $group->submission = $DB->get_record('discourse_submissions', array('groupid' => $group->id));
+
+            // Get profile link and shortened groupnames.
             $groupurl = new moodle_url('/group/index.php', array('id' => $group->id[0], 'courseid' => $this->course->id));
             $group->profilelink = '<strong><a href="'.$groupurl.'">'.$group->name.'</a></strong>';
 
-            $group->shortenedname = explode($this->instance->name, $group->name)[1];
-            $group->shortenednametwo = explode($this->instance->name, $group->name)[0] . '-' . explode($this->instance->name, $group->name)[1];
+            if ($this->instance->name && isset($group->name[0]) && isset($group->name[1])) {
+                $group->shortenedname = explode($this->instance->name, $group->name)[1];
+                $group->shortenednametwo = explode($this->instance->name, $group->name)[0] . '-' . explode($this->instance->name, $group->name)[1];
+            }
 
             $group->participants = array();
+            $formergroupids = array(); // For retrieving former submissions.
+            $group->formersubmissions = false;
+
+            if ($group->phase != 1) {
+                $group->canhaveformersubmissions = true;
+            } else {
+                $group->canhaveformersubmissions = false;
+            }
+
+            if ($canviewallgroups || ($this->instance->activephase >= $group->phase)) {
+                $group->canviewformersubmissions = true;
+            } else {
+                $group->canviewformersubmissions = false;
+            }
 
             foreach (groups_get_members($group->id) as $participant) {
                 $profileurl = new moodle_url('/user/view.php', array('id' => $participant->id, 'course' => $this->course->id));
@@ -130,47 +159,49 @@ class discourse {
 
                 array_push($group->participants, $participant);
 
-                array_push($participantids, $participant->id);
-            }
-
-            $group->submission = $DB->get_record('discourse_submissions', array('groupid' => $group->id));
-
-            // Former submissions of all participants groups from previous phases.
-            if ($this->participants && groups_get_grouping($this->instance->groupingid)) {
-                foreach ($participantids as $id) {
-                    $groupids = json_decode($this->participants[$id]->groupids);
-
-                    if (isset($groupids) && $this->instance->activephase != 1 && !in_array($groupids[$this->instance->activephase - 2], $formergroupids)) {
-                        array_push($formergroupids, $groupids[$this->instance->activephase - 2]);
-                    }
+                if ($group->phase != 1 && $this->participants && !in_array(json_decode($this->participants[$participant->id]->groupids)[$group->phase - 2], $formergroupids)) {
+                    array_push($formergroupids, json_decode($this->participants[$participant->id]->groupids)[$group->phase - 2]);
                 }
 
+            }
+
+            // Former submissions of all participants groups from previous phases.
+            if (!empty($formergroupids)) {
                 $formersubmissions = array();
 
-                foreach ($formergroupids as $groupid) {
-                    array_push($formersubmissions, $DB->get_record('discourse_submissions', array('discourse' => $this->instance->id, 'groupid' => $groupid)));
+                foreach ($formergroupids as $formergroupid) {
+
+                    $formergroupname = groups_get_group_name($formergroupid);
+
+                    if (!$formersubmission = $DB->get_record('discourse_submissions', array('discourse' => $this->instance->id, 'groupid' => $formergroupid))) {
+                        $formersubmission = new stdClass();
+                        $formersubmission->submission = false;
+                    }
+
+                    $formersubmission->groupname = explode($this->instance->name, $formergroupname)[0] . '-' . explode($this->instance->name, $formergroupname)[1];
+
+                    $formersubmission->participants = implode(', ', array_column(groups_get_members($formergroupid), 'firstname', 'lastname'));
+                    array_push($formersubmissions, $formersubmission);
+
                 }
 
                 $group->formersubmissions = $formersubmissions;
-            } else {
-                $group->formersubmissions = false;
             }
 
-            if (stripos($group->idnumber, 'phase_1')) {
-                $group->phase = 1;
-                $group->formersubmissions = false;
-                array_push($this->groups->phaseone, $group);
-            } else if (stripos($group->idnumber, 'phase_2')) {
-                $group->phase = 2;
-                array_push($this->groups->phasetwo, $group);
-            } else if (stripos($group->idnumber, 'phase_3')) {
-                $group->phase = 3;
-                array_push($this->groups->phasethree, $group);
-            } else if (stripos($group->idnumber, 'phase_4')) {
-                $group->phase = 4;
-                array_push($this->groups->phasefour, $group);
+            switch ($group->phase) {
+                case 1:
+                    array_push($this->groups->phaseone, $group);
+                    break;
+                case 2:
+                    array_push($this->groups->phasetwo, $group);
+                    break;
+                case 3:
+                    array_push($this->groups->phasethree, $group);
+                    break;
+                case 4:
+                    array_push($this->groups->phasefour, $group);
+                    break;
             }
-
         }
     }
 

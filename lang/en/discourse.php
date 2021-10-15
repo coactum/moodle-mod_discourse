@@ -83,6 +83,7 @@ $string['phaseswitched'] = 'Phase switched.';
 $string['view'] = 'Overview';
 
 $string['groupview'] = 'Group view';
+$string['phasehint'] = 'Phase hint';
 $string['submissionstate'] = 'State';
 $string['submitted'] = 'Submitted at';
 $string['notsubmitted'] = 'Not submitted yet';
@@ -90,6 +91,8 @@ $string['updated'] = 'Updated at';
 $string['submitsubmission'] = 'Hand in submission';
 $string['editsubmission'] = 'Edit submission';
 $string['currentversion'] = 'Current version';
+$string['positionsfromlastphase'] = 'Positions from the last phase';
+$string['currentsubmission'] = 'Current submission';
 $string['submissioncontent'] = 'Content of submission';
 $string['errfilloutfield'] = 'Please fill out this field';
 $string['backtooverview'] = 'Back to overview';
