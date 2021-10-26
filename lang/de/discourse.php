@@ -31,7 +31,7 @@ $string['pluginname'] = 'DisKurs';
 $string['modulename'] = 'DisKurs';
 $string['modulename_help'] = 'Die Aktivität DisKurs bietet die Möglichkeit, in einem mehrschrittigen Verfahren Gruppendiskussionen durchzuführen.
 
-Basierend auf dem Konzept der Pyramidendiskussion verfassen die Teilnehmenden des Kurses in einer ersten Phase zunächst einen eigenen Text zu dem im Kurs diskutierten Thema. In den nächsten beiden Phasen kombinieren sie ihre eigene Position dann mit denen anderer Teilnehmender und erarbeiten so differenziertere Texte unter Einbezug anderer Standpunkte. In der letzten Phase entwickeln schließlich alle Kursteilnehmenden gemeinsam auf Basis ihrer bisherigen Ergebnisse eine finale Position zum diskutierten Thema.
+Basierend auf dem Konzept der Pyramidendiskussion verfassen die Teilnehmenden des Kurses in einer ersten Phase zunächst einen eigenen Text zum diskutierten Thema. In den nächsten beiden Phasen kombinieren sie ihre eigene Position dann mit denen anderer Teilnehmender und erarbeiten so differenziertere Texte unter Einbezug anderer Standpunkte. In der letzten Phase entwickeln schließlich alle Kursteilnehmenden gemeinsam auf Basis ihrer bisherigen Ergebnisse eine finale Position zum diskutierten Thema.
 
 Auf diese Weise ermöglicht diese Aktivität den Kursteilnehmenden, gemeinsam Argumente und Perspektiven zu einem Thema zu erarbeiten und diese gegen- und miteinander abzuwägen, um in einem reflexiven Austausch differenzierte Positionen zu einem komplexen Thema zu entwickeln.';
 $string['modulename_link'] = 'mod/discourse/view';
