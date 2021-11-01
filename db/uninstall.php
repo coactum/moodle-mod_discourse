@@ -30,5 +30,26 @@ defined('MOODLE_INTERNAL') || die();
  */
 function xmldb_discourse_uninstall() {
 
+    // Deleting groups created by discourse activity with idnumber discourse_X_phase_x_group_X to prevent problems with already existing idsnumbers after reinstallation of plugin.
+    global $DB, $CFG;
+
+    require_once("$CFG->dirroot/group/lib.php");
+
+    $select = "idnumber LIKE '%discourse%'";
+    $select .= "AND idnumber LIKE '%phase%'";
+    $select .= "AND idnumber LIKE '%group%'";
+
+    $discoursegroups = $DB->get_recordset_select('groups', $select);
+
+    if ($discoursegroups->valid()) {
+        foreach ($discoursegroups as $group) {
+            if ($group->id) {
+                groups_delete_group($group->id);
+            }
+        }
+
+        $discoursegroups->close();
+    }
+
     return true;
 }

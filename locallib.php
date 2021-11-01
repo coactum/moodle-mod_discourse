@@ -133,7 +133,7 @@ class discourse {
             $groupurl = new moodle_url('/group/index.php', array('id' => $group->id[0], 'courseid' => $this->course->id));
             $group->profilelink = '<strong><a href="'.$groupurl.'">'.$group->name.'</a></strong>';
 
-            if ($this->instance->name && stripos($group->name, $this->instance->name)) {
+            if ($this->instance->name && strpos($group->name, $this->instance->name)) {
                 $group->shortenedname = explode($this->instance->name, $group->name)[1];
                 $group->shortenednametwo = explode($this->instance->name, $group->name)[0] . '-' . explode($this->instance->name, $group->name)[1];
             }
