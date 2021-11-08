@@ -15,21 +15,19 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
+    @copyright   2021 coactum GmbH
     @template discourse/discourse_view
 
-    Example context (json):
-    {
-        "comment": "Example comment for the context"
-    }
+    Group view.
 }}
 
 {{#js}}
 {{/js}}
 
-<div class="discourse-groupview container-fluid">
+<div class="container-fluid">
     {{#group}}
         <div class="row">
-            <h3 class="col-md-12 text-center">{{name}}</h3>
+            <h3 class="col-md-12 text-center">{{shortenednametwo}}</h3>
         </div>
         <div class="table-responsive">
             <table class="table table-striped table-hover generaltable generalbox">
@@ -40,15 +38,15 @@
                     {{#caneditsubmission}}<th scope="col"></th>{{/caneditsubmission}}
                 </thead>
                 <tbody><tr>
-                    {{#canviewgroupparticipants}}<td>
-                        {{#participants}} {{{profilelink}}}  <br> {{/participants}}
+                    {{#canviewgroupparticipants}}<td class="w-50">
+                        {{#participants}} {{{profilelink}}},  {{/participants}}
                     </td>{{/canviewgroupparticipants}}
                     <td>
                         {{#submission.timecreated}}
-                            {{^submission.timemodified}}{{#str}}submittet, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}
-                            {{#submission.timemodified}}{{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}
+                            {{^submission.timemodified}}{{#str}}submitted, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}}{{/submission.timemodified}}
+                            {{#submission.timemodified}}{{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}}{{/submission.timemodified}}
                         {{/submission.timecreated}}
-                        {{^submission.timecreated}}{{#str}}notsubmittet, mod_discourse{{/str}} {{/submission.timecreated}}
+                        {{^submission.timecreated}}{{#str}}notsubmitted, mod_discourse{{/str}} {{/submission.timecreated}}
                     </td>
                     <td>
                         {{#submission.id}}{{submission.currentversion}}{{/submission.id}}
@@ -61,12 +59,31 @@
                 </tr></tbody>
             </table>
         </div>
-        {{#submission.id}}<div class="row collapse show collapseSubmissionForm">
-            <strong class="col-md-4 p-l-3">{{#str}}submission, mod_discourse{{/str}}:</strong>
-            <span class="col-md-8">
-                {{{submission.submission}}}
-            </span>
-        </div>
+        {{#phasehint}}
+            <h4 class="text-center"> {{#str}}phasehint, mod_discourse{{/str}}: </h4>
+            <div class="w-100">{{phasehint}} </div><br>
+        {{/phasehint}}
+        {{#group.canviewformersubmissions}}
+            {{#group.canhaveformersubmissions}}
+                <h4 class="text-center"> {{#str}}positionsfromlastphase, mod_discourse{{/str}}: </h4>
+                <div class="d-flex flex-wrap w-100 p-b-2">
+                    {{#group.formersubmissions}}
+                        <div class="formersubmissions border border-secondary p-1">
+                            <strong class="text-center">{{{groupname}}} ({{{participants}}}):</strong><br><br>
+                            {{#submission}}<span>{{{submission}}}</span>{{/submission}}
+                            {{^submission}}<strong class="text-danger">{{#str}}nosubmission, mod_discourse{{/str}}</strong>{{/submission}}
+                        </div>
+                    {{/group.formersubmissions}}
+                </div>
+            {{/group.canhaveformersubmissions}}
+        {{/group.canviewformersubmissions}}
+        {{#submission.id}}
+            <h4 class="text-center">{{#str}}currentsubmission, mod_discourse{{/str}}:</h4>
+            <div class="collapse show collapseSubmissionForm">
+                <div class="w-100">
+                    {{{submission.submission}}}
+                </div>
+            </div>
         {{/submission.id}}
     {{/group}}
 
@@ -75,4 +92,8 @@
             {{{form}}}
         </div>
     {{/caneditsubmission}}
+
+    <div class="d-flex justify-content-center">
+        <a href="view.php?id={{cmid}}" role="button" class="btn btn-primary collapse show collapseSubmissionForm">{{#str}}backtooverview, mod_discourse{{/str}}</a>
+    </div>
 </div>

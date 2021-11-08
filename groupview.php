@@ -39,6 +39,9 @@ $d  = optional_param('d', null, PARAM_INT);
 // ID of the group to be viewed.
 $groupid  = required_param('group', PARAM_INT);
 
+// ID of the user viewing (for unique draft savings).
+$userid  = required_param('userid', PARAM_INT);
+
 $discourse = discourse::get_discourse_instance($id, $d);
 
 $moduleinstance = $discourse->get_module_instance();
@@ -48,8 +51,8 @@ $cm = $discourse->get_course_module();
 
 require_login($course, true, $cm);
 
-$PAGE->set_url('/mod/discourse/groupview.php', array('id' => $cm->id, 'group' => $groupid));
-$PAGE->set_title(format_string($moduleinstance->name));
+$PAGE->set_url('/mod/discourse/groupview.php', array('id' => $cm->id, 'group' => $groupid, 'userid' => $userid));
+$PAGE->set_title(format_string($moduleinstance->name). ' - ' . get_string('groupview', 'mod_discourse'));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($context);
 
@@ -61,6 +64,8 @@ $group = $discourse->get_group($groupid);
 
 if (!$group) {
     redirect(new moodle_url('/mod/discourse/view.php', array('id' => $id)), get_string('groupinvalid', 'mod_discourse'), null, notification::NOTIFY_ERROR);
+} else if ($userid != $USER->id) {
+    redirect(new moodle_url('/mod/discourse/view.php', array('id' => $id)), get_string('useridinvalid', 'mod_discourse'), null, notification::NOTIFY_ERROR);
 }
 
 echo $OUTPUT->header();
@@ -71,35 +76,43 @@ $mform = new submit_form();
 
 if ($fromform = $mform->get_data()) {
     // In this case you process validated data. $mform->get_data() returns data posted in form.
+    if (array_search($userid, array_column($group->participants, 'id')) !== false) { // Check if submitting user is a group member.
+        global $DB;
 
-    global $DB;
+        if (isset($fromform->submissionid)) {
+            if ($fromform->submissionid !== 0) { // Update existing submission.
+                $submission = $DB->get_record('discourse_submissions', array('discourse' => $moduleinstance->id, 'groupid' => $fromform->group, 'id' => $fromform->submissionid));
+                $submission->submission = $fromform->submission['text'];
+                $submission->currentversion += 1;
+                $submission->format = (int) $fromform->submission['format'];
+                $submission->timemodified = time();
 
-    if (isset($fromform->submissionid) && $fromform->submissionid === 0) {
+                $DB->update_record('discourse_submissions', $submission);
+            } else if ($fromform->submissionid === 0) { // New submission.
+                if (!$DB->get_record('discourse_submissions',
+                    array('discourse' => $moduleinstance->id, 'groupid' => $fromform->group))) { // No submission made yet.
+                    $submission = new stdClass();
+                    $submission->discourse = (int) $moduleinstance->id;
+                    $submission->groupid = $fromform->group;
+                    $submission->submission = $fromform->submission['text'];
+                    $submission->currentversion = 1;
+                    $submission->format = (int) $fromform->submission['format'];
+                    $submission->timecreated = time();
+                    $submission->timemodified = null;
 
-        $submission = new stdClass();
-        $submission->discourse = (int) $moduleinstance->id;
-        $submission->groupid = $fromform->group;
-        $submission->submission = $fromform->submission['text'];
-        $submission->editlock = 0;
-        $submission->currentversion = 1;
-        $submission->format = (int) $fromform->submission['format'];
-        $submission->timecreated = time();
-        $submission->timemodified = null;
+                    $DB->insert_record('discourse_submissions', $submission);
+                } else {
+                    redirect(new moodle_url('/mod/discourse/groupview.php', array('id' => $id, 'group' => $fromform->group, 'userid' => $userid)),
+                        get_string('submissionfaileddoubled', 'mod_discourse'), null, notification::NOTIFY_ERROR );
+                }
+            }
 
-        $DB->insert_record('discourse_submissions', $submission);
-
-    } else if (isset($fromform->submissionid)) {
-        $submission = $DB->get_record('discourse_submissions', array('discourse' => $moduleinstance->id, 'groupid' => $fromform->group, 'id' => $fromform->submissionid));
-        $submission->submission = $fromform->submission['text'];
-        $submission->editlock = 0;
-        $submission->currentversion += 1;
-        $submission->format = (int) $fromform->submission['format'];
-        $submission->timemodified = time();
-
-        $DB->update_record('discourse_submissions', $submission);
+            redirect(new moodle_url('/mod/discourse/groupview.php', array('id' => $id, 'group' => $fromform->group, 'userid' => $userid)));
+        }
+    } else {
+        redirect(new moodle_url('/mod/discourse/groupview.php', array('id' => $id, 'group' => $fromform->group, 'userid' => $userid)),
+            get_string('nogroupmember', 'mod_discourse'), null, notification::NOTIFY_ERROR);
     }
-
-    redirect(new moodle_url('/mod/discourse/groupview.php', array('id' => $id, 'group' => $fromform->group)));
 
 } else {
     // This branch is executed if the form is submitted but the data doesn't validate and the form should be redisplayed
@@ -112,10 +125,10 @@ if ($fromform = $mform->get_data()) {
 
         foreach ($group->formersubmissions as $submission) {
 
-            if (isset($submission) && $submission) {
+            if (isset($submission->submission) && $submission->submission) {
                 $groupname = groups_get_group_name($submission->groupid);
 
-                $formersubmission->text .= '<strong>' . $groupname . '</strong><br>' . $submission->submission . '<br>';
+                $formersubmission->text .= $submission->submission;
                 $formersubmission->format = $submission->format;
             }
 
@@ -125,15 +138,17 @@ if ($fromform = $mform->get_data()) {
     // Set default data.
     if (isset($group->submission) && $group->submission) { // Default data if group has made submission.
         $mform->set_data(array('id' => $id, 'group' => $groupid, 'submissionid' => $group->submission->id,
-        'submission' => ['text' => $group->submission->submission, 'format' => $group->submission->format]));
+            'submission' => ['text' => $group->submission->submission, 'format' => $group->submission->format], 'userid' => $userid));
     } else if (isset($formersubmission)) { // Default data if group has merged submissions from former groups of the participants.
         $mform->set_data(array('id' => $id, 'group' => $groupid, 'submissionid' => 0,
-        'submission' => ['text' => $formersubmission->text, 'format' => $formersubmission->format]));
+            'submission' => ['text' => $formersubmission->text, 'format' => $formersubmission->format], 'userid' => $userid));
     } else {
-        $mform->set_data(array('id' => $id, 'group' => $groupid, 'submissionid' => 0));
+        $mform->set_data(array('id' => $id, 'group' => $groupid, 'submissionid' => 0, 'userid' => $userid));
     }
 
-    if (has_capability('mod/discourse:editsubmission', $context) && $moduleinstance->activephase == $group->phase) {
+    if (has_capability('mod/discourse:editsubmission', $context) && $moduleinstance->activephase == $group->phase
+        && array_search($userid, array_column($group->participants, 'id')) !== false) {
+
         $caneditsubmission = true;
     } else {
         $caneditsubmission = false;
@@ -147,7 +162,23 @@ if ($fromform = $mform->get_data()) {
 
     $canviewgroupparticipants = has_capability('mod/discourse:viewgroupparticipants', $context);
 
-    $page = new discourse_groupview($cm->id, $group, $form, $caneditsubmission, $canviewgroupparticipants);
+    switch ($group->phase) {
+        case 1:
+            $phasehint = $moduleinstance->hintphaseone;
+            break;
+
+        case 2:
+            $phasehint = $moduleinstance->hintphasetwo;
+            break;
+        case 3:
+            $phasehint = $moduleinstance->hintphasethree;
+            break;
+        case 4:
+            $phasehint = $moduleinstance->hintphasefour;
+            break;
+    }
+
+    $page = new discourse_groupview($cm->id, $phasehint, $group, $form, $caneditsubmission, $canviewgroupparticipants);
 
     // Render page and display the form.
     echo $OUTPUT->render($page);

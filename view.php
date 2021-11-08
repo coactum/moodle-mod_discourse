@@ -56,7 +56,7 @@ $event->add_record_snapshot('discourse', $moduleinstance);
 $event->trigger();
 
 $PAGE->set_url('/mod/discourse/view.php', array('id' => $cm->id));
-$PAGE->set_title(format_string($moduleinstance->name));
+$PAGE->set_title(format_string($moduleinstance->name) . ' - ' . get_string('view', 'mod_discourse'));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($context);
 $PAGE->force_settings_menu();
@@ -70,7 +70,9 @@ if ($moduleinstance->intro) {
     echo $OUTPUT->box(format_module_intro('discourse', $moduleinstance, $cm->id), 'generalbox mod_introbox', 'newmoduleintro');
 }
 
-if (isset($newphase)) {
+$canswitchphase = has_capability('mod/discourse:switchphase', $context);
+
+if (isset($newphase) && $canswitchphase) {
     global $DB;
     switch ($newphase) {
         case 1:
@@ -110,6 +112,9 @@ if (isset($newphase)) {
     }
 
     $DB->update_record('discourse', $moduleinstance);
+
+    redirect(new moodle_url('/mod/discourse/view.php', array('id' => $id)), get_string('phaseswitched', 'mod_discourse'), null, notification::NOTIFY_SUCCESS);
+
 } else {
     switch ($moduleinstance->activephase) {
         case 1:
@@ -146,7 +151,6 @@ if (isset($newphase)) {
 }
 
 $caneditphase = has_capability('mod/discourse:editphase', $context);
-$canswitchphase = has_capability('mod/discourse:switchphase', $context);
 $canviewgroupparticipants = has_capability('mod/discourse:viewgroupparticipants', $context);
 
 if (has_capability('mod/discourse:viewallgroups', $context) || groups_get_activity_groupmode($cm, $course) == 2) {
@@ -155,11 +159,11 @@ if (has_capability('mod/discourse:viewallgroups', $context) || groups_get_activi
     $canviewallgroups = false;
 }
 
-if (time() > $moduleinstance->deadlinephasetwo && $moduleinstance->activephase == 1) {
+if (time() > $moduleinstance->deadlinephaseone && $moduleinstance->activephase == 1) {
     $shouldswitchphase = 2;
-} else if (time() > $moduleinstance->deadlinephasethree && $moduleinstance->activephase == 2) {
+} else if (time() > $moduleinstance->deadlinephasetwo && $moduleinstance->activephase == 2) {
     $shouldswitchphase = 3;
-} else if (time() > $moduleinstance->deadlinephasefour && $moduleinstance->activephase == 3) {
+} else if (time() > $moduleinstance->deadlinephasethree && $moduleinstance->activephase == 3) {
     $shouldswitchphase = 4;
 } else {
     $shouldswitchphase = false;
@@ -169,10 +173,19 @@ if (!groups_get_grouping($moduleinstance->groupingid)) {
     echo $OUTPUT->notification(get_string('groupingmaybedeleted', 'mod_discourse'), notification::NOTIFY_ERROR);
 }
 
+global $USER;
+$userid = $USER->id;
+
+$hintphaseoneshortened = (strlen($moduleinstance->hintphaseone) >= 250) ? true : false;
+$hintphasetwoshortened = (strlen($moduleinstance->hintphasetwo) >= 250) ? true : false;
+$hintphasethreeshortened = (strlen($moduleinstance->hintphasethree) >= 250) ? true : false;
+$hintphasefourshortened = (strlen($moduleinstance->hintphasefour) >= 250) ? true : false;
+
 $page = new discourse_view($cm->id, $discourse->get_groups(), $moduleinstance->autoswitch, $activephaseone, $activephasetwo,
     $activephasethree, $activephasefour, $moduleinstance->hintphaseone, $moduleinstance->hintphasetwo, $moduleinstance->hintphasethree,
-    $moduleinstance->hintphasefour, $moduleinstance->deadlinephaseone, $moduleinstance->deadlinephasetwo, $moduleinstance->deadlinephasethree,
-    $moduleinstance->deadlinephasefour, $caneditphase, $canswitchphase, $canviewallgroups, $canviewgroupparticipants, $shouldswitchphase);
+    $moduleinstance->hintphasefour, $hintphaseoneshortened, $hintphasetwoshortened, $hintphasethreeshortened, $hintphasefourshortened,
+    $moduleinstance->deadlinephaseone, $moduleinstance->deadlinephasetwo, $moduleinstance->deadlinephasethree, $moduleinstance->deadlinephasefour,
+    $caneditphase, $canswitchphase, $canviewallgroups, $canviewgroupparticipants, $shouldswitchphase, $userid);
 
 echo $OUTPUT->render($page);
 

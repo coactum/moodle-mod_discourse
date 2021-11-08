@@ -41,8 +41,6 @@ function discourse_supports($feature) {
             return true;
         case FEATURE_SHOW_DESCRIPTION:
             return true;
-        case FEATURE_BACKUP_MOODLE2:
-            return true;
         case FEATURE_GROUPS:
             return true;
         case FEATURE_GROUPINGS:
@@ -82,7 +80,7 @@ function discourse_add_instance($discourse, mod_discourse_mod_form $mform = null
  * @return void
  */
 function discourse_instance_created($context, $discourse) {
-    $enrolledusers = get_enrolled_users($context, 'mod/discourse:viewdiscoursestudent');
+    $enrolledusers = get_enrolled_users($context, 'mod/discourse:potentialparticipant');
     $discourse->create_groups_and_grouping($enrolledusers);
 }
 
@@ -116,21 +114,38 @@ function discourse_update_instance($discourse, mod_discourse_mod_form $mform = n
  * @return bool True if successful, false on failure.
  */
 function discourse_delete_instance($id) {
-    global $DB;
+    global $DB, $CFG;
+
+    require_once("$CFG->dirroot/group/lib.php");
 
     if (!$DB->record_exists('discourse', array('id' => $id))) {
         return false;
+    } else {
+        $moduleinstance = $DB->get_record('discourse', array('id' => $id));
     }
 
-    $DB->delete_records('discourse', array('id' => $id));
+    // Delete discourse groups.
+    $groups = groups_get_all_groups($moduleinstance->course, 0, $moduleinstance->groupingid);
 
+    foreach ($groups as $group) {
+        groups_delete_group($group);
+    }
+
+    // Delete discourse grouping.
+    groups_delete_grouping($moduleinstance->groupingid);
+
+    // Delete discourse participants.
     if ($DB->record_exists('discourse_participants', array('discourse' => $id))) {
         $DB->delete_records('discourse_participants', array('discourse' => $id));
     }
 
+    // Delete discourse submissions.
     if ($DB->record_exists('discourse_submissions', array('discourse' => $id))) {
         $DB->delete_records('discourse_submissions', array('discourse' => $id));
     }
+
+    // Delete discourse instance.
+    $DB->delete_records('discourse', array('id' => $id));
 
     return true;
 }
@@ -138,7 +153,7 @@ function discourse_delete_instance($id) {
 /**
  * Called by course/reset.php.
  *
- * @param &$mform form passed by reference.
+ * @param object $mform Form passed by reference.
  */
 function discourse_reset_course_form_definition(&$mform) {
     $mform->addElement('header', 'discourseheader', get_string('modulenameplural', 'mod_discourse'));
@@ -149,8 +164,8 @@ function discourse_reset_course_form_definition(&$mform) {
 /**
  * Course reset form defaults.
  *
- * @param $course course object.
- * @return array array.
+ * @param object $course course object.
+ * @return array array Array with the default values.
  */
 function discourse_reset_course_form_defaults($course) {
     return array('reset_discourse_all' => 1);
@@ -160,7 +175,7 @@ function discourse_reset_course_form_defaults($course) {
  * This function is used by the reset_course_userdata function in moodlelib.
  * This function will remove all userdata from the specified discourse.
  *
- * @param $data The data submitted from the reset course.
+ * @param object $data The data submitted from the reset course.
  * @return array $status Status array.
  */
 function discourse_reset_userdata($data) {
@@ -203,95 +218,6 @@ function discourse_reset_userdata($data) {
 }
 
 /**
- * Returns a small object with summary information about what a
- * user has done with a given particular instance of this module
- * Used for user activity reports.
- * $return->time = the time they did it
- * $return->info = a short text description
- *
- * @param $course the course object.
- * @param $user the user object.
- * @param $mod the modulename.
- * @param $discourse the plugin instance.
- * @return object $return A standard object with 2 variables: info and time (last modified).
- */
-function discourse_user_outline($course, $user, $mod, $discourse) {
-    $return = new stdClass();
-    $return->time = time();
-    $return->info = '';
-    return $return;
-}
-
-/**
- * Prints a detailed representation of what a user has done with
- * a given particular instance of this module, for user activity reports.
- *
- * @param stdClass $course
- *            the current course record
- * @param stdClass $user
- *            the record of the user we are generating report for
- * @param cm_info $mod
- *            course module info
- * @param stdClass $discourse
- *            the module instance record
- * @return void, is supposed to echp directly
- */
-function discourse_user_complete($course, $user, $mod, $discourse) {
-}
-
-/**
- * Given a course and a time, this module should find recent activity
- * that has occurred in discourse activities and print it out.
- * Return true if there was output, or false is there was none.
- * @param object $course
- * @param bool $viewfullnames capability
- * @param int $timestart
- * @return boolean
- */
-function discourse_print_recent_activity($course, $viewfullnames, $timestart) {
-    return false; // True if anything was printed, otherwise false.
-}
-
-/**
- * Prepares the recent activity data
- *
- * This callback function is supposed to populate the passed array with
- * custom activity records. These records are then rendered into HTML via
- * discourse_print_recent_mod_activity().
- *
- * @param array $activities
- *            sequentially indexed array of objects with the 'cmid' property
- * @param int $index
- *            the index in the $activities to use for the next record
- * @param int $timestart
- *            append activity since this time
- * @param int $courseid
- *            the id of the course we produce the report for
- * @param int $cmid
- *            course module id
- * @param int $userid
- *            check for a particular user's activity only, defaults to 0 (all users)
- * @param int $groupid
- *            check for a particular group's activity only, defaults to 0 (all groups)
- * @return void adds items into $activities and increases $index
- */
-function discourse_get_recent_mod_activity(&$activities, &$index, $timestart, $courseid, $cmid, $userid = 0, $groupid = 0) {
-}
-
-/**
- * Prints single activity item prepared by {@see discourse_get_recent_mod_activity()}
- *
- * @param object $activity      the activity object the discourse resides in
- * @param int    $courseid      the id of the course the discourse resides in
- * @param bool   $detail        not used, but required for compatibilty with other modules
- * @param int    $modnames      not used, but required for compatibilty with other modules
- * @param bool   $viewfullnames not used, but required for compatibilty with other modules
- */
-function discourse_print_recent_mod_activity($activity, $courseid, $detail, $modnames, $viewfullnames) {
-}
-
-
-/**
  * Returns all other caps from other modules or sub systems used in the module
  *
  * @return array array()
@@ -299,7 +225,6 @@ function discourse_print_recent_mod_activity($activity, $courseid, $detail, $mod
 function discourse_get_extra_capabilities() {
     return array();
 }
-
 
 /**
  * Returns the lists of all browsable file areas within the given module context.
@@ -310,9 +235,9 @@ function discourse_get_extra_capabilities() {
  * @package     mod_discourse
  * @category    files
  *
- * @param stdClass $course.
- * @param stdClass $cm.
- * @param stdClass $context.
+ * @param stdClass $course The course.
+ * @param stdClass $cm The Course module.
+ * @param stdClass $context The context.
  * @return string[].
  */
 function discourse_get_file_areas($course, $cm, $context) {
@@ -325,15 +250,15 @@ function discourse_get_file_areas($course, $cm, $context) {
  * @package     mod_discourse
  * @category    files
  *
- * @param file_browser $browser.
- * @param array $areas.
- * @param stdClass $course.
- * @param stdClass $cm.
- * @param stdClass $context.
- * @param string $filearea.
- * @param int $itemid.
- * @param string $filepath.
- * @param string $filename.
+ * @param file_browser $browser The Browser.
+ * @param array $areas Areas.
+ * @param stdClass $course The course.
+ * @param stdClass $cm The course module.
+ * @param stdClass $context The context.
+ * @param string $filearea Filearea.
+ * @param int $itemid Item id.
+ * @param string $filepath File path.
+ * @param string $filename File name.
  * @return file_info Instance or null if not found.
  */
 function discourse_get_file_info($browser, $areas, $course, $cm, $context, $filearea, $itemid, $filepath, $filename) {
@@ -363,28 +288,4 @@ function discourse_pluginfile($course, $cm, $context, $filearea, $args, $forcedo
 
     require_login($course, true, $cm);
     send_file_not_found();
-}
-
-/**
- * Extends the global navigation tree by adding mod_discourse nodes if there is a relevant content.
- *
- * This can be called by an AJAX request so do not rely on $PAGE as it might not be set up properly.
- *
- * @param navigation_node $discoursenode An object representing the navigation tree node.
- * @param  stdClass $course Course object
- * @param  context_course $coursecontext Course context
- */
-function discourse_extend_navigation_course($discoursenode, $course, $coursecontext) {
-}
-
-/**
- * Extends the settings navigation with the mod_discourse settings.
- *
- * This function is called when the context for the page is a mod_discourse module.
- * This is not called by AJAX so it is safe to rely on the $PAGE.
- *
- * @param settings_navigation $settingsnav
- * @param navigation_node $discoursenode
- */
-function discourse_extend_settings_navigation($settingsnav, $discoursenode = null) {
 }

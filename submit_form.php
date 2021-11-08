@@ -31,7 +31,7 @@ require_once("$CFG->libdir/formslib.php");
  * Form for submissions.
  *
  * @package   mod_discourse
- * @copyright   2021 coactum GmbH
+ * @copyright 2021 coactum GmbH
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL Juv3 or later
  */
 class submit_form extends moodleform {
@@ -50,6 +50,9 @@ class submit_form extends moodleform {
 
         $mform->addElement('hidden', 'group', null);
         $mform->setType('group', PARAM_INT);
+
+        $mform->addElement('hidden', 'userid', null);
+        $mform->setType('userid', PARAM_INT);
 
         $mform->addElement('hidden', 'submissionid', null);
         $mform->setType('submissionid', PARAM_INT);

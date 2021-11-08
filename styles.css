@@ -1,42 +1,54 @@
-.discourse_view th {
-    width: 25%;
-}
-
-.discourse_view .discourse-border-default {
+#page-mod-discourse-view .discourse-border-default {
     border: 1px solid #dee2e6;
 }
 
-.discourse_view .discourse-border-success {
-    border: 1px solid #357a32 !important;
+#page-mod-discourse-view .discourse-border-success {
+    border: 1px solid #357a32;
 }
 
-.discourse_view .discourse-btn-round {
-    width: 2rem !important;
-    height: 2rem !important;
-    border-radius: 50% !important;
-    padding: 0 !important;
+#page-mod-discourse-view .discourse-btn-round {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    padding: 0;
 }
 
-.discourse_view .discourse-btn-round-small {
-    width: 1.6rem !important;
-    height: 1.6rem !important;
-    border-radius: 50% !important;
-    padding: 0 !important;
+#page-mod-discourse-view .discourse-btn-round-small {
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 50%;
+    padding: 0;
+    margin-right: 5px;
+    margin-bottom: 5px;
 }
 
-.discourse_view tr div.row span > i {
+#page-mod-discourse-view tr div.row span > i {
     position: relative;
     top: -4px;
 }
 
-.discourse_view .badge-pill {
+#page-mod-discourse-view .badge-pill {
     border-radius: 10rem;
     position: relative;
-    top: 2px;
+    top: 7px;
 }
 
-.discourse_view .discourse-table-groups .badge-pill {
-    border-radius: 10rem;
-    position: relative;
-    top: -2px;
+#page-mod-discourse-view th .fa-toggle-off {
+    padding-top: 8px;
+}
+
+#page-mod-discourse-view .phaseinformation {
+    height: 250px;
+}
+
+@media (max-width: 767px) {
+    #page-mod-discourse-groupview .formersubmissions {
+        flex: 100%;
+    }
+}
+
+@media (min-width: 767px) {
+    #page-mod-discourse-groupview .formersubmissions {
+        flex: 50%;
+    }
 }

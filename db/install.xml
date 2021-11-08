@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-  <XMLDB PATH="mod/discourse/db" VERSION="20210530" COMMENT="XMLDB file for Moodle mod/discourse"
+  <XMLDB PATH="mod/discourse/db" VERSION="20211025" COMMENT="XMLDB file for Moodle mod/discourse"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
   >
@@ -52,7 +52,6 @@
           <FIELD NAME="discourse" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Id of discourse"/>
           <FIELD NAME="groupid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Group id of submission"/>
           <FIELD NAME="submission" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Text of submission"/>
-          <FIELD NAME="editlock" TYPE="int" LENGTH="1" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="Flag if group text is edited"/>
           <FIELD NAME="currentversion" TYPE="int" LENGTH="3" NOTNULL="false" SEQUENCE="false" COMMENT="Version of submission"/>
           <FIELD NAME="format" TYPE="int" LENGTH="2" NOTNULL="false" SEQUENCE="false" COMMENT="Format of submission"/>
           <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>

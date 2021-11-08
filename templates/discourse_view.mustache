@@ -15,129 +15,80 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
+    @copyright   2021 coactum GmbH
     @template discourse/discourse_view
 
-    Example context (json):
-    {
-        "comment": "Example comment for the context"
-    }
+    Overview.
 }}
 
 {{#js}}
 {{/js}}
 
-<div class="discourse_view">
-    {{^autoswitch}}
+<div>
+    {{#canswitchphase}}{{^autoswitch}}
         {{^shouldswitchphase}}<div class="alert alert-warning alert-block fade in" role="alert"><button type="button" class="close" data-dismiss="alert">×</button>{{#str}}noautoswitch, mod_discourse{{/str}}</div>{{/shouldswitchphase}}
         {{#shouldswitchphase}}<div class="alert alert-danger alert-block fade in" role="alert"><button type="button" class="close" data-dismiss="alert">×</button>{{#str}}shouldswitchphaseto, mod_discourse{{/str}}</div>{{/shouldswitchphase}}
-    {{/autoswitch}}
-    <div class="table-responsive discourse-table-phases">
-        <table class="table table-striped table-hover generaltable generalbox">
-            <thead>
-                <th scope="col" class="{{#activephaseone}}discourse-border-success{{/activephaseone}}{{^activephaseone}}discourse-border-default border-right-0{{/activephaseone}}">
-                    {{#str}}phaseone, mod_discourse{{/str}}
-                    {{#activephaseone}}<span class="badge badge-pill badge-success pull-right"><span class="d-none d-xl-inline">{{#str}}activephase, mod_discourse{{/str}}</span> <i class="fa fa-lg fa-check" title="{{#str}}activephase, mod_discourse{{/str}}"></i></span>{{/activephaseone}}
-                    {{^activephaseone}}{{#canswitchphase}}<a href="view.php?id={{cmid}}&newphase=1"><i class="fa fa-lg fa-toggle-off pull-right" title="{{#str}}switchto, mod_discourse{{/str}} {{#str}}phaseone, mod_discourse{{/str}}"></i></a>{{/canswitchphase}}{{/activephaseone}}
-                </th>
-                <th scope="col" class="{{#activephasetwo}}discourse-border-success{{/activephasetwo}}{{^activephasetwo}}discourse-border-default border-right-0{{/activephasetwo}}">
-                    {{#str}}phasetwo, mod_discourse{{/str}}
-                    {{#activephasetwo}}<span class="badge badge-pill badge-success pull-right"><span class="d-none d-xl-inline">{{#str}}activephase, mod_discourse{{/str}}</span> <i class="fa fa-lg fa-check" title="{{#str}}activephase, mod_discourse{{/str}}"></i></span>{{/activephasetwo}}
-                    {{^activephasetwo}}{{#canswitchphase}}<a href="view.php?id={{cmid}}&newphase=2"><i class="fa fa-lg fa-toggle-off pull-right" title="{{#str}}switchto, mod_discourse{{/str}} {{#str}}phasetwo, mod_discourse{{/str}}"></i></a>{{/canswitchphase}}{{/activephasetwo}}
-                </th>
-                <th scope="col" class="{{#activephasethree}}discourse-border-success{{/activephasethree}}{{^activephasethree}}discourse-border-default border-right-0{{/activephasethree}}">
-                    {{#str}}phasethree, mod_discourse{{/str}}
-                    {{#activephasethree}}<span class="badge badge-pill badge-success pull-right"><span class="d-none d-xl-inline">{{#str}}activephase, mod_discourse{{/str}}</span> <i class="fa fa-lg fa-check" title="{{#str}}activephase, mod_discourse{{/str}}"></i></span>{{/activephasethree}}
-                    {{^activephasethree}}{{#canswitchphase}}<a href="view.php?id={{cmid}}&newphase=3"><i class="fa fa-lg fa-toggle-off pull-right" title="{{#str}}switchto, mod_discourse{{/str}} {{#str}}phasethree, mod_discourse{{/str}}"></i></a>{{/canswitchphase}}{{/activephasethree}}
-                </th>
-                <th scope="col" class="{{#activephasefour}}discourse-border-success{{/activephasefour}}{{^activephasefour}}discourse-border-default{{/activephasefour}}">
-                    {{#str}}phasefour, mod_discourse{{/str}}
-                    {{#activephasefour}}<span class="badge badge-pill badge-success pull-right"><span class="d-none d-xl-inline">{{#str}}activephase, mod_discourse{{/str}}</span> <i class="fa fa-lg fa-check" title="{{#str}}activephase, mod_discourse{{/str}}"></i></span>{{/activephasefour}}
-                    {{^activephasefour}}{{#canswitchphase}}<a href="view.php?id={{cmid}}&newphase=4"><i class="fa fa-lg fa-toggle-off pull-right" title="{{#str}}switchto, mod_discourse{{/str}} {{#str}}phasefour, mod_discourse{{/str}}"></i></a>{{/canswitchphase}}{{/activephasefour}}
-                </th>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="{{#activephaseone}}discourse-border-success{{/activephaseone}}{{^activephaseone}}discourse-border-default border-right-0{{/activephaseone}}">
-                        {{#deadlinephaseone}}
-                            <strong> {{#str}}sheduledstart, mod_discourse{{/str}}:</strong>
-                            <span class="pull-right">{{#userdate}}{{deadlinephaseone}}, {{#str}} strftimedate {{/str}}{{/userdate}}</span>
-                            <br><br>
-                        {{/deadlinephaseone}}
-                        {{#hintphaseone}}
-                            <strong> {{#str}}hint, mod_discourse{{/str}}: </strong>
-                            <span class="pull-right"><p> {{#shortentext}} 210, {{hintphaseone}} {{/shortentext}}</p></span>
-                        {{/hintphaseone}}
-                    </td>
-                    <td class="{{#activephasetwo}}discourse-border-success{{/activephasetwo}}{{^activephasetwo}}discourse-border-default border-right-0{{/activephasetwo}}">
-                        {{#deadlinephasetwo}}
-                            <strong> {{#str}}sheduledstart, mod_discourse{{/str}}:</strong>
-                            <span class="pull-right">{{#userdate}}{{deadlinephasetwo}}, {{#str}} strftimedate {{/str}}{{/userdate}}</span>
-                            <br><br>
-                        {{/deadlinephasetwo}}
-                        {{#hintphasetwo}}<strong> {{#str}}hint, mod_discourse{{/str}}: </strong><span class="pull-right"><p> {{#shortentext}} 210, {{hintphasetwo}} {{/shortentext}}</p>{{/hintphasetwo}} </span>
-                    </td>
-                    <td class="{{#activephasethree}}discourse-border-success{{/activephasethree}}{{^activephasethree}}discourse-border-default border-right-0{{/activephasethree}}">
-                        {{#deadlinephasethree}}
-                            <strong> {{#str}}sheduledstart, mod_discourse{{/str}}:</strong>
-                            <span class="pull-right">{{#userdate}}{{deadlinephasethree}}, {{#str}} strftimedate {{/str}}{{/userdate}}</span>
-                            <br><br>
-                        {{/deadlinephasethree}}
-                        {{#hintphasethree}}<strong> {{#str}}hint, mod_discourse{{/str}}: </strong><span class="pull-right"><p> {{#shortentext}} 210, {{hintphasethree}} {{/shortentext}}</p>{{/hintphasethree}} </span>
-                     </td>
-                    <td class="{{#activephasefour}}discourse-border-success{{/activephasefour}}{{^activephasefour}}discourse-border-default{{/activephasefour}}">
-                        {{#deadlinephasefour}}
-                            <strong> {{#str}}sheduledstart, mod_discourse{{/str}}:</strong>
-                            <span class="pull-right">{{#userdate}}{{deadlinephasefour}}, {{#str}} strftimedate {{/str}}{{/userdate}}</span>
-                            <br><br>
-                        {{/deadlinephasefour}}
-                        {{#hintphasefour}}<strong> {{#str}}hint, mod_discourse{{/str}}: </strong><span class="pull-right"><p> {{#shortentext}} 210, {{hintphasefour}} {{/shortentext}}</p>{{/hintphasefour}} </span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    {{/autoswitch}}{{/canswitchphase}}
 
     <div class="row">
-        <div class="table-responsive discourse-table-groups discourse-table-phaseone col-md-3 pl-3 pr-0">
+        <div class="discourse-table-groups discourse-table-phaseone col-lg-3 p-0">
             <table class="table table-striped table-hover generaltable generalbox {{#activephaseone}}discourse-border-success{{/activephaseone}}{{^activephaseone}}discourse-border-default{{/activephaseone}}">
                 <thead>
-                    <th scope="col">
-                        {{#str}}phaseone, mod_discourse{{/str}} {{#activephaseone}} <span class="badge badge-pill badge-success {{^canviewallgroups}}pull-right{{/canviewallgroups}}"><span class="d-none d-xl-inline">{{#str}}activephase, mod_discourse{{/str}} </span><i class="fa fa-lg fa-check" title="{{#str}}activephase, mod_discourse{{/str}}"></i></span>{{/activephaseone}}
-                        {{#canviewallgroups}}<button class="btn btn-secondary discourse-btn-round pull-right" data-toggle="collapse" data-target=".collapseGroupPhaseOne" aria-expanded="false" aria-controls="collapseGroupPhaseOne" title="{{#str}} toggleallgroups, mod_discourse, {{#str}} phaseone, mod_discourse {{/str}} {{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>{{/canviewallgroups}}
+                    <th scope="col" class="{{#activephaseone}}discourse-border-success{{/activephaseone}}{{^activephaseone}}discourse-border-default border-right-0{{/activephaseone}}">
+                        {{#canviewallgroups}}<button class="btn btn-secondary discourse-btn-round m-r-1" data-toggle="collapse" data-target=".collapseGroupPhaseOne" aria-expanded="false" aria-controls="collapseGroupPhaseOne" title="{{#str}} toggleallgroups, mod_discourse, {{#str}} phaseone, mod_discourse {{/str}} {{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>{{/canviewallgroups}}
+                        {{#str}}phaseone, mod_discourse{{/str}}
+                        {{#activephaseone}}<span class="badge badge-pill badge-success pull-right"><span class="d-none d-xl-inline">{{#str}}activephase, mod_discourse{{/str}}</span> <i class="fa fa-lg fa-check" title="{{#str}}activephase, mod_discourse{{/str}}"></i></span>{{/activephaseone}}
+                        {{^activephaseone}}{{#canswitchphase}}<a href="view.php?id={{cmid}}&newphase=1"><i class="fa fa-lg fa-toggle-off pull-right" title="{{#str}}switchto, mod_discourse{{/str}} {{#str}}phaseone, mod_discourse{{/str}}"></i></a>{{/canswitchphase}}{{/activephaseone}}
                     </th>
                 </thead>
                 <tbody>
+                    <tr class="phaseinformation">
+                        <td class="{{#activephaseone}}discourse-border-success{{/activephaseone}}{{^activephaseone}}discourse-border-default border-right-0{{/activephaseone}}">
+                            {{#deadlinephaseone}}
+                                <strong> {{#str}}sheduledend, mod_discourse{{/str}}:</strong>
+                                <span class="pull-right">{{#userdate}}{{deadlinephaseone}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}}</span>
+                                <br><br>
+                            {{/deadlinephaseone}}
+                            {{#hintphaseone}}
+                                {{#hintphaseoneshortened}}<button class="btn btn-secondary discourse-btn-round-small" data-toggle="collapse" data-target=".collapseHintPhaseOne" aria-expanded="false" aria-controls="collapseHintPhaseOne" title="{{#str}}openhint, mod_discourse, {{#str}}phaseone, mod_discourse{{/str}}{{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>{{/hintphaseoneshortened}}
+                                <strong> {{#str}}hint, mod_discourse{{/str}}: </strong>
+                                {{#hintphaseoneshortened}}
+                                    <span class="pull-right collapse collapseHintPhaseOne"><p> {{hintphaseone}}</p></span>
+                                    <span class="pull-right collapse show collapseHintPhaseOne"><p> {{#shortentext}} 250, {{hintphaseone}} {{/shortentext}}</p></span>
+                                {{/hintphaseoneshortened}}
+                                {{^hintphaseoneshortened}}
+                                    <span class="pull-right"><p> {{hintphaseone}}</p></span>
+                                {{/hintphaseoneshortened}}
+                            {{/hintphaseone}}
+                        </td>
+                    </tr>
                     {{#groups.phaseone}} <tr>
                         <td>
                             <div class="collapse {{#activephaseone}}show{{/activephaseone}} collapseGroupPhaseOne collapseGroup{{id}}">
-                                <div class="row">
-                                    <span class="col-md-10"><i class="fa fa-lg fa-group"></i> <strong><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}">{{name}}</a></strong></span>
-                                    <span class="col-md-2"><button class="btn btn-secondary discourse-btn-round-small pull-right" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}closegroup, mod_discourse, {{name}}{{/str}}"><i class="fa fa-lg fa-caret-up"></i></button></span>
-                                </div>
+                                <button class="btn btn-secondary discourse-btn-round-small" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}closegroup, mod_discourse, {{shortenedname}}{{/str}}"><i class="fa fa-lg fa-caret-up"></i></button><strong><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}">{{shortenedname}}</a></strong>
                                 <br>
-                                <div class="row">
-                                    <span class="col-md-10"><i class="fa fa-lg fa-file-o"></i>
-                                        {{#submission.id}}
-                                            {{^submission.timemodified}} <a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><strong> {{#str}}submittet, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedate {{/str}}{{/userdate}} </strong></a>{{/submission.timemodified}}
-                                            {{#submission.timemodified}} <a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><strong> {{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedate {{/str}}{{/userdate}} </strong></a>{{/submission.timemodified}}
-                                        {{/submission.id}}
-                                        {{^submission.id}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><strong>{{#str}}nosubmission, mod_discourse{{/str}}</strong></a>{{/submission.id}}
-                                    </span>
-                                    <span class="col-md-2">
-                                        {{#submission.timecreated}}<i class="fa fa-2x fa-check text-success pull-right" title="{{^submission.timemodified}}{{#str}}submittet, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}{{#submission.timemodified}}{{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}"></i>{{/submission.timecreated}}
-                                        {{^submission.timecreated}}<i class="fa fa-2x fa-times pull-right text-danger" title="{{#str}}nosubmission, mod_discourse{{/str}}"></i>{{/submission.timecreated}}
-                                    </span>
-                                </div>
+                                {{#canviewgroupparticipants}}
+                                    <br>
+                                    {{#participants}} {{{profilelink}}}  <br> {{/participants}}
+                                    <br>
+                                {{/canviewgroupparticipants}}
+                                {{#submission.id}}
+                                    {{^submission.timemodified}} <a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><strong> {{#str}}submitted, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}} </strong></a>{{/submission.timemodified}}
+                                    {{#submission.timemodified}} <a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><strong> {{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}} </strong></a>{{/submission.timemodified}}
+                                {{/submission.id}}
+                                {{^submission.id}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><strong>{{#str}}nosubmission, mod_discourse{{/str}}</strong></a>{{/submission.id}}
+
+                                {{#submission.timecreated}}<i class="fa fa-2x fa-check text-success pull-right" title="{{^submission.timemodified}}{{#str}}submitted, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}}{{/submission.timemodified}}{{#submission.timemodified}}{{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}}{{/submission.timemodified}}"></i>{{/submission.timecreated}}
+                                {{^submission.timecreated}}<i class="fa fa-2x fa-times pull-right text-danger" title="{{#str}}nosubmission, mod_discourse{{/str}}"></i>{{/submission.timecreated}}
                             </div>
                             <div class="collapse {{^activephaseone}}show{{/activephaseone}} collapseGroupPhaseOne collapseGroup{{id}}">
-                                <div class="row">
-                                    <strong class="col-md-9"><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}">{{name}}</a></strong>
-                                    <span class="col-md-3 p-0 p-r-1">
-                                        <button class="btn btn-secondary discourse-btn-round-small pull-right" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}opengroup, mod_discourse, {{name}}{{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>
-                                        {{#submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><i class="fa fa-2x fa-check text-success" title="{{^submission.timemodified}}{{#str}}submittet, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}{{#submission.timemodified}}{{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}"></i></a>{{/submission.timecreated}}
-                                        {{^submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><i class="fa fa-2x fa-times text-danger" title="{{#str}}nosubmission, mod_discourse{{/str}}"></i></a>{{/submission.timecreated}}
-                                    </span>
-                                </div>
+                                <strong>
+                                    <button class="btn btn-secondary discourse-btn-round-small" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}opengroup, mod_discourse, {{shortenedname}}{{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>
+                                    <a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}">{{shortenedname}}</a>
+                                </strong>
+
+                                {{#submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}" class="pull-right"><i class="fa fa-2x fa-check text-success" title="{{^submission.timemodified}}{{#str}}submitted, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}}{{/submission.timemodified}}{{#submission.timemodified}}{{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}}{{/submission.timemodified}}"></i></a>{{/submission.timecreated}}
+                                {{^submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}" class="pull-right"><i class="fa fa-2x fa-times text-danger" title="{{#str}}nosubmission, mod_discourse{{/str}}"></i></a>{{/submission.timecreated}}
                             </div>
                         </td>
                     </tr>{{/groups.phaseone}}
@@ -145,54 +96,67 @@
                 </tbody>
             </table>
         </div>
-        <div class="table-responsive discourse-table-groups discourse-table-phasetwo col-md-3 p-0">
+        <div class="discourse-table-groups discourse-table-phasetwo col-lg-3 p-0">
             <table class="table table-striped table-hover generaltable generalbox {{#activephasetwo}}discourse-border-success{{/activephasetwo}}{{^activephasetwo}}discourse-border-default{{/activephasetwo}}">
                 <thead>
-                    <th scope="col">
-                        {{#str}}phasetwo, mod_discourse{{/str}} {{#activephasetwo}} <span class="badge badge-pill badge-success {{^canviewallgroups}}pull-right{{/canviewallgroups}}"><span class="d-none d-xl-inline">{{#str}}activephase, mod_discourse{{/str}} </span><i class="fa fa-lg fa-check" title="{{#str}}activephase, mod_discourse{{/str}}"></i></span>{{/activephasetwo}}
-                        {{#canviewallgroups}}<button class="btn btn-secondary discourse-btn-round pull-right" data-toggle="collapse" data-target=".collapseGroupPhaseTwo" aria-expanded="false" aria-controls="collapseGroupPhaseTwo" title="{{#str}} toggleallgroups, mod_discourse, {{#str}} phasetwo, mod_discourse {{/str}} {{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>{{/canviewallgroups}}
+                    <th scope="col" class="{{#activephasetwo}}discourse-border-success{{/activephasetwo}}{{^activephasetwo}}discourse-border-default border-right-0{{/activephasetwo}}">
+                        {{#canviewallgroups}}<button class="btn btn-secondary discourse-btn-round m-r-1" data-toggle="collapse" data-target=".collapseGroupPhaseTwo" aria-expanded="false" aria-controls="collapseGroupPhaseTwo" title="{{#str}} toggleallgroups, mod_discourse, {{#str}} phasetwo, mod_discourse {{/str}} {{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>{{/canviewallgroups}}
+                        {{#str}}phasetwo, mod_discourse{{/str}}
+                        {{#activephasetwo}}<span class="badge badge-pill badge-success pull-right"><span class="d-none d-xl-inline">{{#str}}activephase, mod_discourse{{/str}}</span> <i class="fa fa-lg fa-check" title="{{#str}}activephase, mod_discourse{{/str}}"></i></span>{{/activephasetwo}}
+                        {{^activephasetwo}}{{#canswitchphase}}<a href="view.php?id={{cmid}}&newphase=2"><i class="fa fa-lg fa-toggle-off pull-right" title="{{#str}}switchto, mod_discourse{{/str}} {{#str}}phasetwo, mod_discourse{{/str}}"></i></a>{{/canswitchphase}}{{/activephasetwo}}
                     </th>
                 </thead>
                 <tbody>
+                    <tr class="phaseinformation">
+                        <td class="{{#activephasetwo}}discourse-border-success{{/activephasetwo}}{{^activephasetwo}}discourse-border-default border-right-0{{/activephasetwo}}">
+                            {{#deadlinephasetwo}}
+                                <strong> {{#str}}sheduledend, mod_discourse{{/str}}:</strong>
+                                <span class="pull-right">{{#userdate}}{{deadlinephasetwo}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}}</span>
+                                <br><br>
+                            {{/deadlinephasetwo}}
+                            {{#hintphasetwo}}
+                                {{#hintphasetwoshortened}}<button class="btn btn-secondary discourse-btn-round-small" data-toggle="collapse" data-target=".collapseHintPhaseTwo" aria-expanded="false" aria-controls="collapseHintPhaseTwo" title="{{#str}}openhint, mod_discourse, {{#str}}phasetwo, mod_discourse{{/str}}{{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>{{/hintphasetwoshortened}}
+                                <strong> {{#str}}hint, mod_discourse{{/str}}: </strong>
+                                {{#hintphasetwoshortened}}
+                                    <span class="pull-right collapse collapseHintPhaseTwo"><p> {{hintphasetwo}}</p></span>
+                                    <span class="pull-right collapse show collapseHintPhaseTwo"><p> {{#shortentext}} 250, {{hintphasetwo}} {{/shortentext}}</p></span>
+                                {{/hintphasetwoshortened}}
+                                {{^hintphasetwoshortened}}
+                                    <span class="pull-right"><p> {{hintphasetwo}}</p></span>
+                                {{/hintphasetwoshortened}}
+                            {{/hintphasetwo}}
+                        </td>
+                    </tr>
                     {{#groups.phasetwo}} <tr>
                         <td>
                             <div class="collapse {{#activephasetwo}}show{{/activephasetwo}} collapseGroupPhaseTwo collapseGroup{{id}}">
                                 {{#.}}
-                                    <div class="row">
-                                        <span class="col-md-10"><i class="fa fa-lg fa-group"></i> <strong><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}">{{name}}</a></strong></span>
-                                        <span class="col-md-2"><button class="btn btn-secondary discourse-btn-round-small pull-right" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}closegroup, mod_discourse, {{name}}{{/str}}"><i class="fa fa-lg fa-caret-up"></i></button></span>
-                                    </div>
+                                    <button class="btn btn-secondary discourse-btn-round-small" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}closegroup, mod_discourse, {{shortenedname}}{{/str}}"><i class="fa fa-lg fa-caret-up"></i></button><strong><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}">{{shortenedname}}</a></strong>
+                                    <br>
                                     <br>
                                     {{#canviewgroupparticipants}}
-                                        <i class="fa fa-lg fa-user"></i> <strong>{{#str}}groupparticipants, mod_discourse{{/str}}:</strong>
-                                        <br>
                                         {{#participants}} {{{profilelink}}}  <br> {{/participants}}
                                         <br>
                                     {{/canviewgroupparticipants}}
                                 {{/.}}
-                                <div class="row">
-                                    <span class="col-md-10"><i class="fa fa-lg fa-file-o"></i>
-                                        {{#submission.id}}
-                                            {{^submission.timemodified}} <a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><strong> {{#str}}submittet, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedate {{/str}}{{/userdate}} </strong></a>{{/submission.timemodified}}
-                                            {{#submission.timemodified}} <a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><strong> {{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedate {{/str}}{{/userdate}} </strong></a>{{/submission.timemodified}}
-                                        {{/submission.id}}
-                                        {{^submission.id}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><strong>{{#str}}nosubmission, mod_discourse{{/str}}</strong></a>{{/submission.id}}
-                                    </span>
-                                    <span class="col-md-2">
-                                        {{#submission.timecreated}}<i class="fa fa-2x fa-check text-success pull-right" title="{{^submission.timemodified}}{{#str}}submittet, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}{{#submission.timemodified}}{{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}"></i>{{/submission.timecreated}}
-                                        {{^submission.timecreated}}<i class="fa fa-2x fa-times pull-right text-danger" title="{{#str}}nosubmission, mod_discourse{{/str}}"></i>{{/submission.timecreated}}
-                                    </span>
-                                </div>
+
+                                {{#submission.id}}
+                                    {{^submission.timemodified}} <a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><strong> {{#str}}submitted, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}} </strong></a>{{/submission.timemodified}}
+                                    {{#submission.timemodified}} <a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><strong> {{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}} </strong></a>{{/submission.timemodified}}
+                                {{/submission.id}}
+                                {{^submission.id}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><strong>{{#str}}nosubmission, mod_discourse{{/str}}</strong></a>{{/submission.id}}
+
+                                {{#submission.timecreated}}<i class="fa fa-2x fa-check text-success pull-right" title="{{^submission.timemodified}}{{#str}}submitted, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}}{{/submission.timemodified}}{{#submission.timemodified}}{{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}}{{/submission.timemodified}}"></i>{{/submission.timecreated}}
+                                {{^submission.timecreated}}<i class="fa fa-2x fa-times pull-right text-danger" title="{{#str}}nosubmission, mod_discourse{{/str}}"></i>{{/submission.timecreated}}
                             </div>
                             <div class="collapse {{^activephasetwo}}show{{/activephasetwo}} collapseGroupPhaseTwo collapseGroup{{id}}">
-                                <div class="row">
-                                    <strong class="col-md-9"><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}">{{name}}</a></strong>
-                                    <span class="col-md-3 p-0 p-r-1">
-                                        <button class="btn btn-secondary discourse-btn-round-small pull-right" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}opengroup, mod_discourse, {{name}}{{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>
-                                        {{#submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><i class="fa fa-2x fa-check text-success" title="{{^submission.timemodified}}{{#str}}submittet, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}{{#submission.timemodified}}{{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}"></i></a>{{/submission.timecreated}}
-                                        {{^submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><i class="fa fa-2x fa-times text-danger" title="{{#str}}nosubmission, mod_discourse{{/str}}"></i></a>{{/submission.timecreated}}
-                                    </span>
-                                </div>
+                                <strong>
+                                    <button class="btn btn-secondary discourse-btn-round-small" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}opengroup, mod_discourse, {{shortenedname}}{{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>
+                                    <a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}">{{shortenedname}}</a>
+                                </strong>
+
+                                {{#submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}" class="pull-right"><i class="fa fa-2x fa-check text-success" title="{{^submission.timemodified}}{{#str}}submitted, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}}{{/submission.timemodified}}{{#submission.timemodified}}{{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}}{{/submission.timemodified}}"></i></a>{{/submission.timecreated}}
+                                {{^submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}" class="pull-right"><i class="fa fa-2x fa-times text-danger" title="{{#str}}nosubmission, mod_discourse{{/str}}"></i></a>{{/submission.timecreated}}
                             </div>
                         </td>
                     </tr>{{/groups.phasetwo}}
@@ -201,54 +165,66 @@
             </table>
         </div>
 
-        <div class="table-responsive discourse-table-groups discourse-table-phasethree col-md-3 p-0">
+        <div class="discourse-table-groups discourse-table-phasethree col-lg-3 p-0">
             <table class="table table-striped table-hover generaltable generalbox {{#activephasethree}}discourse-border-success{{/activephasethree}}{{^activephasethree}}discourse-border-default{{/activephasethree}}">
                 <thead>
-                    <th scope="col">
-                        {{#str}}phasethree, mod_discourse{{/str}} {{#activephasethree}}<span class="badge badge-pill badge-success {{^canviewallgroups}}pull-right{{/canviewallgroups}}"><span class="d-none d-xl-inline">{{#str}}activephase, mod_discourse{{/str}} </span><i class="fa fa-lg fa-check" title="{{#str}}activephase, mod_discourse{{/str}}"></i></span>{{/activephasethree}}
-                        {{#canviewallgroups}}<button class="btn btn-secondary discourse-btn-round pull-right" data-toggle="collapse" data-target=".collapseGroupPhaseThree" aria-expanded="false" aria-controls="collapseGroupPhaseThree" title="{{#str}} toggleallgroups, mod_discourse, {{#str}} phasethree, mod_discourse {{/str}} {{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>{{/canviewallgroups}}
+                    <th scope="col" class="{{#activephasethree}}discourse-border-success{{/activephasethree}}{{^activephasethree}}discourse-border-default border-right-0{{/activephasethree}}">
+                        {{#canviewallgroups}}<button class="btn btn-secondary discourse-btn-round m-r-1" data-toggle="collapse" data-target=".collapseGroupPhaseThree" aria-expanded="false" aria-controls="collapseGroupPhaseThree" title="{{#str}} toggleallgroups, mod_discourse, {{#str}} phasethree, mod_discourse {{/str}} {{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>{{/canviewallgroups}}
+                        {{#str}}phasethree, mod_discourse{{/str}}
+                        {{#activephasethree}}<span class="badge badge-pill badge-success pull-right"><span class="d-none d-xl-inline">{{#str}}activephase, mod_discourse{{/str}}</span> <i class="fa fa-lg fa-check" title="{{#str}}activephase, mod_discourse{{/str}}"></i></span>{{/activephasethree}}
+                        {{^activephasethree}}{{#canswitchphase}}<a href="view.php?id={{cmid}}&newphase=3"><i class="fa fa-lg fa-toggle-off pull-right" title="{{#str}}switchto, mod_discourse{{/str}} {{#str}}phasethree, mod_discourse{{/str}}"></i></a>{{/canswitchphase}}{{/activephasethree}}
                     </th>
-                </thead>
                 <tbody>
+                    <tr class="phaseinformation">
+                        <td class="{{#activephasethree}}discourse-border-success{{/activephasethree}}{{^activephasethree}}discourse-border-default border-right-0{{/activephasethree}}">
+                            {{#deadlinephasethree}}
+                                <strong> {{#str}}sheduledend, mod_discourse{{/str}}:</strong>
+                                <span class="pull-right">{{#userdate}}{{deadlinephasethree}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}}</span>
+                                <br><br>
+                            {{/deadlinephasethree}}
+                            {{#hintphasethree}}
+                                {{#hintphasethreeshortened}}<button class="btn btn-secondary discourse-btn-round-small" data-toggle="collapse" data-target=".collapseHintPhaseThree" aria-expanded="false" aria-controls="collapseHintPhaseThree" title="{{#str}}openhint, mod_discourse, {{#str}}phasethree, mod_discourse{{/str}}{{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>{{/hintphasethreeshortened}}
+                                <strong> {{#str}}hint, mod_discourse{{/str}}: </strong>
+                                {{#hintphasethreeshortened}}
+                                    <span class="pull-right collapse collapseHintPhaseThree"><p> {{hintphasethree}}</p></span>
+                                    <span class="pull-right collapse show collapseHintPhaseThree"><p> {{#shortentext}} 250, {{hintphasethree}} {{/shortentext}}</p></span>
+                                {{/hintphasethreeshortened}}
+                                {{^hintphasethreeshortened}}
+                                    <span class="pull-right"><p> {{hintphasethree}}</p></span>
+                                {{/hintphasethreeshortened}}
+                            {{/hintphasethree}}
+                        </td>
+                    <tr>
                     {{#groups.phasethree}} <tr>
                         <td>
                             <div class="collapse {{#activephasethree}}show{{/activephasethree}} collapseGroupPhaseThree collapseGroup{{id}}">
                                 {{#.}}
-                                    <div class="row">
-                                        <span class="col-md-10"><i class="fa fa-lg fa-group"></i> <strong><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}">{{name}}</a></strong></span>
-                                        <span class="col-md-2"><button class="btn btn-secondary discourse-btn-round-small pull-right" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}closegroup, mod_discourse, {{name}}{{/str}}"><i class="fa fa-lg fa-caret-up"></i></button></span>
-                                    </div>
+                                    <button class="btn btn-secondary discourse-btn-round-small" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}closegroup, mod_discourse, {{shortenedname}}{{/str}}"><i class="fa fa-lg fa-caret-up"></i></button><strong><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}">{{shortenedname}}</a></strong>
+                                    <br>
                                     <br>
                                     {{#canviewgroupparticipants}}
-                                        <i class="fa fa-lg fa-user"></i> <strong>{{#str}}groupparticipants, mod_discourse{{/str}}:</strong>
-                                        <br>
                                         {{#participants}} {{{profilelink}}}  <br> {{/participants}}
                                         <br>
                                     {{/canviewgroupparticipants}}
                                 {{/.}}
-                                <div class="row">
-                                    <span class="col-md-10"><i class="fa fa-lg fa-file-o"></i>
-                                        {{#submission.id}}
-                                            {{^submission.timemodified}} <a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><strong> {{#str}}submittet, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedate {{/str}}{{/userdate}} </strong></a>{{/submission.timemodified}}
-                                            {{#submission.timemodified}} <a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><strong> {{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedate {{/str}}{{/userdate}} </strong></a>{{/submission.timemodified}}
-                                        {{/submission.id}}
-                                        {{^submission.id}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><strong>{{#str}}nosubmission, mod_discourse{{/str}}</strong></a>{{/submission.id}}
-                                    </span>
-                                    <span class="col-md-2">
-                                        {{#submission.timecreated}}<i class="fa fa-2x fa-check text-success pull-right" title="{{^submission.timemodified}}{{#str}}submittet, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}{{#submission.timemodified}}{{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}"></i>{{/submission.timecreated}}
-                                        {{^submission.timecreated}}<i class="fa fa-2x fa-times pull-right text-danger" title="{{#str}}nosubmission, mod_discourse{{/str}}"></i>{{/submission.timecreated}}
-                                    </span>
-                                </div>
+
+                                {{#submission.id}}
+                                    {{^submission.timemodified}} <a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><strong> {{#str}}submitted, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}} </strong></a>{{/submission.timemodified}}
+                                    {{#submission.timemodified}} <a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><strong> {{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}} </strong></a>{{/submission.timemodified}}
+                                {{/submission.id}}
+                                {{^submission.id}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><strong>{{#str}}nosubmission, mod_discourse{{/str}}</strong></a>{{/submission.id}}
+
+                                {{#submission.timecreated}}<i class="fa fa-2x fa-check text-success pull-right" title="{{^submission.timemodified}}{{#str}}submitted, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}}{{/submission.timemodified}}{{#submission.timemodified}}{{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}}{{/submission.timemodified}}"></i>{{/submission.timecreated}}
+                                {{^submission.timecreated}}<i class="fa fa-2x fa-times pull-right text-danger" title="{{#str}}nosubmission, mod_discourse{{/str}}"></i>{{/submission.timecreated}}
                             </div>
                             <div class="collapse {{^activephasethree}}show{{/activephasethree}} collapseGroupPhaseThree collapseGroup{{id}}">
-                                <div class="row">
-                                    <strong class="col-md-9"><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}">{{name}}</a></strong>
-                                    <span class="col-md-3 p-0 p-r-1">
-                                        <button class="btn btn-secondary discourse-btn-round-small pull-right" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}opengroup, mod_discourse, {{name}}{{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>
-                                        {{#submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><i class="fa fa-2x fa-check text-success" title="{{^submission.timemodified}}{{#str}}submittet, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}{{#submission.timemodified}}{{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}"></i></a>{{/submission.timecreated}}
-                                        {{^submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><i class="fa fa-2x fa-times text-danger" title="{{#str}}nosubmission, mod_discourse{{/str}}"></i></a>{{/submission.timecreated}}
-                                    </span>
-                                </div>
+                                <strong>
+                                    <button class="btn btn-secondary discourse-btn-round-small" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}opengroup, mod_discourse, {{shortenedname}}{{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>
+                                    <a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}">{{shortenedname}}</a>
+                                </strong>
+
+                                {{#submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}" class="pull-right"><i class="fa fa-2x fa-check text-success" title="{{^submission.timemodified}}{{#str}}submitted, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}}{{/submission.timemodified}}{{#submission.timemodified}}{{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}}{{/submission.timemodified}}"></i></a>{{/submission.timecreated}}
+                                {{^submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}" class="pull-right"><i class="fa fa-2x fa-times text-danger" title="{{#str}}nosubmission, mod_discourse{{/str}}"></i></a>{{/submission.timecreated}}
                             </div>
                         </td>
                     </tr>{{/groups.phasethree}}
@@ -257,54 +233,65 @@
             </table>
         </div>
 
-        <div class="table-responsive discourse-table-groups discourse-table-phasefour col-md-3 p-0">
+        <div class="discourse-table-groups discourse-table-phasefour col-lg-3 p-0">
             <table class="table table-striped table-hover generaltable generalbox {{#activephasefour}}discourse-border-success{{/activephasefour}}{{^activephasefour}}discourse-border-default{{/activephasefour}}">
                 <thead>
-                    <th scope="col">
-                        {{#str}}phasefour, mod_discourse{{/str}} {{#activephasefour}}<span class="badge badge-pill badge-success {{^canviewallgroups}}pull-right{{/canviewallgroups}}"><span class="d-none d-xl-inline">{{#str}}activephase, mod_discourse{{/str}} </span><i class="fa fa-lg fa-check" title="{{#str}}activephase, mod_discourse{{/str}}"></i></span>{{/activephasefour}}
-                        {{#canviewallgroups}}<button class="btn btn-secondary discourse-btn-round pull-right" data-toggle="collapse" data-target=".collapseGroupPhaseFour" aria-expanded="false" aria-controls="collapseGroupPhaseFour" title="{{#str}} toggleallgroups, mod_discourse, {{#str}} phasefour, mod_discourse {{/str}} {{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>{{/canviewallgroups}}
+                    <th scope="col" class="{{#activephasefour}}discourse-border-success{{/activephasefour}}{{^activephasefour}}discourse-border-default{{/activephasefour}}">
+                        {{#canviewallgroups}}<button class="btn btn-secondary discourse-btn-round m-r-1" data-toggle="collapse" data-target=".collapseGroupPhaseFour" aria-expanded="false" aria-controls="collapseGroupPhaseFour" title="{{#str}} toggleallgroups, mod_discourse, {{#str}} phasefour, mod_discourse {{/str}} {{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>{{/canviewallgroups}}
+                        {{#str}}phasefour, mod_discourse{{/str}}
+                        {{#activephasefour}}<span class="badge badge-pill badge-success pull-right"><span class="d-none d-xl-inline">{{#str}}activephase, mod_discourse{{/str}}</span> <i class="fa fa-lg fa-check" title="{{#str}}activephase, mod_discourse{{/str}}"></i></span>{{/activephasefour}}
+                        {{^activephasefour}}{{#canswitchphase}}<a href="view.php?id={{cmid}}&newphase=4"><i class="fa fa-lg fa-toggle-off pull-right" title="{{#str}}switchto, mod_discourse{{/str}} {{#str}}phasefour, mod_discourse{{/str}}"></i></a>{{/canswitchphase}}{{/activephasefour}}
                     </th>
-                </thead>
                 <tbody>
+                    <tr class="phaseinformation">
+                        <td class="{{#activephasefour}}discourse-border-success{{/activephasefour}}{{^activephasefour}}discourse-border-default{{/activephasefour}}">
+                            {{#deadlinephasefour}}
+                                <strong> {{#str}}sheduledend, mod_discourse{{/str}}:</strong>
+                                <span class="pull-right">{{#userdate}}{{deadlinephasefour}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}}</span>
+                                <br><br>
+                            {{/deadlinephasefour}}
+                            {{#hintphasefour}}
+                                {{#hintphasefourshortened}}<button class="btn btn-secondary discourse-btn-round-small" data-toggle="collapse" data-target=".collapseHintPhaseFour" aria-expanded="false" aria-controls="collapseHintPhaseFour" title="{{#str}}openhint, mod_discourse, {{#str}}phasefour, mod_discourse{{/str}}{{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>{{/hintphasefourshortened}}
+                                <strong> {{#str}}hint, mod_discourse{{/str}}: </strong>
+                                {{#hintphasefourshortened}}
+                                    <span class="pull-right collapse collapseHintPhaseFour"><p> {{hintphasefour}}</p></span>
+                                    <span class="pull-right collapse show collapseHintPhaseFour"><p> {{#shortentext}} 250, {{hintphasefour}} {{/shortentext}}</p></span>
+                                {{/hintphasefourshortened}}
+                                {{^hintphasefourshortened}}
+                                    <span class="pull-right"><p> {{hintphasefour}}</p></span>
+                                {{/hintphasefourshortened}}
+                            {{/hintphasefour}}
+                        </td>
+                    </tr>
                     {{#groups.phasefour}} <tr>
                         <td>
                             <div class="collapse {{#activephasefour}}show{{/activephasefour}} collapseGroupPhaseFour collapseGroup{{id}}">
                                 {{#.}}
-                                    <div class="row">
-                                        <span class="col-md-10"><i class="fa fa-lg fa-group"></i> <strong><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}">{{name}}</a></strong></span>
-                                        <span class="col-md-2"><button class="btn btn-secondary discourse-btn-round-small pull-right" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}closegroup, mod_discourse, {{name}}{{/str}}"><i class="fa fa-lg fa-caret-up"></i></button></span>
-                                    </div>
+                                    <button class="btn btn-secondary discourse-btn-round-small" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}closegroup, mod_discourse, {{shortenedname}}{{/str}}"><i class="fa fa-lg fa-caret-up"></i></button><strong><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}">{{shortenedname}}</a></strong></span>
                                     <br>
                                     {{#canviewgroupparticipants}}
-                                        <i class="fa fa-lg fa-user"></i> <strong>{{#str}}groupparticipants, mod_discourse{{/str}}:</strong>
-                                        <br>
                                         {{#participants}} {{{profilelink}}}  <br> {{/participants}}
                                         <br>
                                     {{/canviewgroupparticipants}}
                                 {{/.}}
-                                <div class="row">
-                                    <span class="col-md-10"><i class="fa fa-lg fa-file-o"></i>
-                                        {{#submission.id}}
-                                            {{^submission.timemodified}} <a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><strong> {{#str}}submittet, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedate {{/str}}{{/userdate}} </strong></a>{{/submission.timemodified}}
-                                            {{#submission.timemodified}} <a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><strong> {{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedate {{/str}}{{/userdate}} </strong></a>{{/submission.timemodified}}
-                                        {{/submission.id}}
-                                        {{^submission.id}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><strong>{{#str}}nosubmission, mod_discourse{{/str}}</strong></a>{{/submission.id}}
-                                    </span>
-                                    <span class="col-md-2">
-                                        {{#submission.timecreated}}<i class="fa fa-2x fa-check text-success pull-right" title="{{^submission.timemodified}}{{#str}}submittet, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}{{#submission.timemodified}}{{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}"></i>{{/submission.timecreated}}
-                                        {{^submission.timecreated}}<i class="fa fa-2x fa-times pull-right text-danger" title="{{#str}}nosubmission, mod_discourse{{/str}}"></i>{{/submission.timecreated}}
-                                    </span>
-                                </div>
+
+                                {{#submission.id}}
+                                    {{^submission.timemodified}} <a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><strong> {{#str}}submitted, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}} </strong></a>{{/submission.timemodified}}
+                                    {{#submission.timemodified}} <a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><strong> {{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}} </strong></a>{{/submission.timemodified}}
+                                {{/submission.id}}
+                                {{^submission.id}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}"><strong>{{#str}}nosubmission, mod_discourse{{/str}}</strong></a>{{/submission.id}}
+
+                                {{#submission.timecreated}}<i class="fa fa-2x fa-check text-success pull-right" title="{{^submission.timemodified}}{{#str}}submitted, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}}{{/submission.timemodified}}{{#submission.timemodified}}{{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}}{{/submission.timemodified}}"></i>{{/submission.timecreated}}
+                                {{^submission.timecreated}}<i class="fa fa-2x fa-times pull-right text-danger" title="{{#str}}nosubmission, mod_discourse{{/str}}"></i>{{/submission.timecreated}}
                             </div>
                             <div class="collapse {{^activephasefour}}show{{/activephasefour}} collapseGroupPhaseFour collapseGroup{{id}}">
-                                <div class="row">
-                                    <strong class="col-md-9"><a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}">{{name}}</a></strong>
-                                    <span class="col-md-3 p-0 p-r-1">
-                                        <button class="btn btn-secondary discourse-btn-round-small pull-right" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}opengroup, mod_discourse, {{name}}{{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>
-                                        {{#submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><i class="fa fa-2x fa-check text-success" title="{{^submission.timemodified}}{{#str}}submittet, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}{{#submission.timemodified}}{{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedate {{/str}}{{/userdate}}{{/submission.timemodified}}"></i></a>{{/submission.timecreated}}
-                                        {{^submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}"><i class="fa fa-2x fa-times text-danger" title="{{#str}}nosubmission, mod_discourse{{/str}}"></i></a>{{/submission.timecreated}}
-                                    </span>
-                                </div>
+                                <strong>
+                                    <button class="btn btn-secondary discourse-btn-round-small" data-toggle="collapse" data-target=".collapseGroup{{id}}" aria-expanded="false" aria-controls="collapseGroup{{id}}" title="{{#str}}opengroup, mod_discourse, {{shortenedname}}{{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>
+                                    <a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}">{{shortenedname}}</a>
+                                </strong>
+
+                                {{#submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}" class="pull-right"><i class="fa fa-2x fa-check text-success" title="{{^submission.timemodified}}{{#str}}submitted, mod_discourse{{/str}} {{#userdate}}{{submission.timecreated}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}}{{/submission.timemodified}}{{#submission.timemodified}}{{#str}}updated, mod_discourse{{/str}} {{#userdate}}{{submission.timemodified}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}}{{/userdate}}{{/submission.timemodified}}"></i></a>{{/submission.timecreated}}
+                                {{^submission.timecreated}}<a href="/mod/discourse/groupview.php?id={{cmid}}&group={{id}}&userid={{userid}}" class="pull-right"><i class="fa fa-2x fa-times text-danger" title="{{#str}}nosubmission, mod_discourse{{/str}}"></i></a>{{/submission.timecreated}}
                             </div>
                         </td>
                     </tr>{{/groups.phasefour}}

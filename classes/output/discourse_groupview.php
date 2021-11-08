@@ -40,6 +40,8 @@ class discourse_groupview implements renderable, templatable {
 
     /** @var int */
     protected $cmid;
+    /** @var string */
+    protected $phasehint;
     /** @var array */
     protected $group;
     /** @var string */
@@ -51,13 +53,15 @@ class discourse_groupview implements renderable, templatable {
     /**
      * Construct this renderable.
      * @param int $cmid The course module id
+     * @param string $phasehint The hint for the phase of the group
      * @param array $group The group that should be viewed
      * @param string $form The form for submitting text
      * @param bool $caneditsubmission Boolean if user can edit the submission
      * @param bool $canviewgroupparticipants Boolean if user can see group participants
      */
-    public function __construct($cmid, $group, $form, $caneditsubmission, $canviewgroupparticipants) {
+    public function __construct($cmid, $phasehint, $group, $form, $caneditsubmission, $canviewgroupparticipants) {
         $this->cmid = $cmid;
+        $this->phasehint = $phasehint;
         $this->group = $group;
         $this->form = $form;
         $this->caneditsubmission = $caneditsubmission;
@@ -73,6 +77,7 @@ class discourse_groupview implements renderable, templatable {
     public function export_for_template(renderer_base $output) {
         $data = new stdClass();
         $data->cmid = $this->cmid;
+        $data->phasehint = $this->phasehint;
         $data->group = $this->group;
         $data->form = $this->form;
         $data->caneditsubmission = $this->caneditsubmission;
