@@ -76,8 +76,8 @@ class provider implements
             'timemodified' => 'privacy:metadata:discourse_submissions:timemodified',
         ], 'privacy:metadata:discourse_submissions');
 
-        // The discourse uses the messages subsystem that saves personal data.
-        // $items->add_subsystem_link('core_message', [], 'privacy:metadata:core_message');
+        // The discourse uses the groups subsystem that saves personal data.
+        $items->add_subsystem_link('core_group', [], 'privacy:metadata:core_group');
 
         // There are no user preferences in the discourse.
 

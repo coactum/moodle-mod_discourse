@@ -29,11 +29,30 @@ $string['pluginname'] = 'DisKurs';
 
 // mod_form.php
 $string['modulename'] = 'DisKurs';
-$string['modulename_help'] = 'Die Aktivität DisKurs bietet die Möglichkeit, in einem mehrschrittigen Verfahren Gruppendiskussionen durchzuführen.
+$string['modulename_help'] = 'Die Aktivität DisKurs bietet die Möglichkeit, in einem mehrstufigen Verfahren Gruppendiskussionen durchzuführen.
 
-Basierend auf dem Konzept der Pyramidendiskussion verfassen die Teilnehmenden des Kurses in einer ersten Phase zunächst einen eigenen Text zum diskutierten Thema. In den nächsten beiden Phasen kombinieren sie ihre eigene Position dann mit denen anderer Teilnehmender und erarbeiten so differenziertere Texte unter Einbezug anderer Standpunkte. In der letzten Phase entwickeln schließlich alle Kursteilnehmenden gemeinsam auf Basis ihrer bisherigen Ergebnisse eine finale Position zum diskutierten Thema.
+Basierend auf dem Konzept der Pyramidendiskussion verfassen die Teilnehmenden des DisKurses in einer ersten Phase zunächst einen eigenen Text zum diskutierten Thema. In den nächsten beiden Phasen kombinieren sie ihre eigenen Positionen dann mit denen anderer Teilnehmender und erarbeiten so zusammen differenziertere Texte unter Einbezug anderer Standpunkte. In der letzten Phase entwickeln schließlich alle Teilnehmenden gemeinsam auf Basis ihrer bisherigen Ergebnisse eine finale Position zum diskutierten Thema.
 
-Auf diese Weise ermöglicht diese Aktivität den Kursteilnehmenden, gemeinsam Argumente und Perspektiven zu einem Thema zu erarbeiten und diese gegen- und miteinander abzuwägen, um in einem reflexiven Austausch differenzierte Positionen zu einem komplexen Thema zu entwickeln.';
+Auf diese Weise ermöglicht der DisKurs den Teilnehmenden, gemeinsam Argumente und Perspektiven zu einem Thema zu erarbeiten und diese gegen- und miteinander abzuwägen. Dies erlaubt es den Teilnehmenden, in einem reflexiven Austausch differenzierte Positionen zu einem komplexen Thema zu entwickeln und macht dabei durch Anzeigen der bisherigen Zwischenpositionen zugleich den Diskussionsfortschritt sichtbar.
+
+Auf der Übersichtsseite können Lehrende …
+
+* Alle Phasen und die bei der Erstellung der Aktivität angegebenen Phasendeadlines und Phasenhinweise ansehen
+* Eine Übersicht über alle DisKurs-Gruppen und deren Abgabestatus ansehen und die Gruppenseite jeder dieser Gruppen öffnen
+* Die aktuelle Phase wechseln (die Phasen können auch automatisch von Moodle zur festgelegten Frist gewechselt werden)
+
+Teilnehmende können dort …
+
+* Ebenfalls alle Phasen, Phasendeadlines und Phasenhinweise einsehen
+* Außerdem ihre eigenen Gruppen in den verschiedenen Phasen ansehen und deren Gruppenseiten öffnen
+
+Auf der Gruppenseite können Lehrende …
+
+* Die Mitglieder, den Abgabestatus und (falls vorhanden) die Einreichung der gewählten Gruppe ansehen
+* Den Hinweis für die Phase der gewählten Gruppe ansehen
+* Die Positionen jeder in dieser Gruppe enthaltenen Gruppe aus der vorherigen Phase ansehen
+
+Teilnehmende können dort zusätzlich eine Einreichung für die Gruppe abgeben falls die Phase der Gruppe der aktuellen Phase des DisKurses entspricht (die Positionen der Vorgruppen sind dann im Editor bereits vorausgefüllt)';
 $string['modulename_link'] = 'mod/discourse/view';
 $string['pluginadministration'] = 'Administration des DisKurses';
 $string['phasecompletion'] = 'Phasen-Abschluss';
@@ -136,3 +155,4 @@ $string['privacy:metadata:discourse_submissions:currentversion'] = 'Aktuelle Ver
 $string['privacy:metadata:discourse_submissions:format'] = 'Format der Einreichung';
 $string['privacy:metadata:discourse_submissions:timecreated'] = 'Zeitpunkt an dem die Einreichung abgegeben wurde';
 $string['privacy:metadata:discourse_submissions:timemodified'] = 'Zeitpunkt der letzten Überarbeitung der Einreichung';
+$string['privacy:metadata:core_group'] = 'Das DisKurs Plugin erstellt und nutzt Gruppen und Gruppierungen';
