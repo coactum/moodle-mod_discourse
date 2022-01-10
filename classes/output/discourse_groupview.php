@@ -79,6 +79,19 @@ class discourse_groupview implements renderable, templatable {
         $data->cmid = $this->cmid;
         $data->phasehint = $this->phasehint;
         $data->group = $this->group;
+
+        if ($data->group->submission) {
+            $data->group->submission->submission = format_text($data->group->submission->submission, $data->group->submission->format, array('para' => false));
+        }
+
+        if ($data->group->formersubmissions) {
+            foreach ($data->group->formersubmissions as $key => $submission) {
+                if ($submission->submission) {
+                    $data->group->formersubmissions[$key]->submission = format_text($submission->submission, $submission->format, array('para' => false));
+                }
+            }
+        }
+
         $data->form = $this->form;
         $data->caneditsubmission = $this->caneditsubmission;
         $data->canviewgroupparticipants = $this->canviewgroupparticipants;

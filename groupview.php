@@ -82,7 +82,7 @@ if ($fromform = $mform->get_data()) {
         if (isset($fromform->submissionid)) {
             if ($fromform->submissionid !== 0) { // Update existing submission.
                 $submission = $DB->get_record('discourse_submissions', array('discourse' => $moduleinstance->id, 'groupid' => $fromform->group, 'id' => $fromform->submissionid));
-                $submission->submission = $fromform->submission['text'];
+                $submission->submission = format_text($fromform->submission['text'], $fromform->submission['format'], array('para' => false));
                 $submission->currentversion += 1;
                 $submission->format = (int) $fromform->submission['format'];
                 $submission->timemodified = time();
@@ -94,7 +94,7 @@ if ($fromform = $mform->get_data()) {
                     $submission = new stdClass();
                     $submission->discourse = (int) $moduleinstance->id;
                     $submission->groupid = $fromform->group;
-                    $submission->submission = $fromform->submission['text'];
+                    $submission->submission = format_text($fromform->submission['text'], $fromform->submission['format'], array('para' => false));
                     $submission->currentversion = 1;
                     $submission->format = (int) $fromform->submission['format'];
                     $submission->timecreated = time();
