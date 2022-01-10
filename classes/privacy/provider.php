@@ -247,7 +247,7 @@ class provider implements
                             $submissionsdata ['group ' . $submission->groupid] = [
                                 'discourse' => $submission->discourse,
                                 'groupid' => $submission->groupid,
-                                'submission' => $submission->submission,
+                                'submission' => format_text($submission->submission, $submission->format, array('para' => false)),
                                 'currentversion' => $submission->currentversion,
                                 'format' => $submission->format,
                                 'timecreated' => \core_privacy\local\request\transform::datetime($submission->timecreated),
