@@ -18,11 +18,10 @@
  * Class containing data for group view in discourse activity
  *
  * @package     mod_discourse
- * @copyright   2021 coactum GmbH
+ * @copyright   2022 coactum GmbH
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 namespace mod_discourse\output;
-defined('MOODLE_INTERNAL') || die();
 
 use renderable;
 use renderer_base;
@@ -33,7 +32,7 @@ use stdClass;
  * Class containing data for discourse_view
  *
  * @package     mod_discourse
- * @copyright   2021 coactum GmbH
+ * @copyright   2022 coactum GmbH
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class discourse_groupview implements renderable, templatable {

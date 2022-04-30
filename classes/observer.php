@@ -18,11 +18,9 @@
  * Event observers used in discourse.
  *
  * @package    mod_discourse
- * @copyright  2021 coactum GmbH
+ * @copyright  2022 coactum GmbH
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Event observer for mod_discourse.

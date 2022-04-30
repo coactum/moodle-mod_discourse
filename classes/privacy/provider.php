@@ -18,7 +18,7 @@
  * Privacy subsystem implementation for discourse.
  *
  * @package    mod_discourse
- * @copyright  2021 coactum GmbH
+ * @copyright  2022 coactum GmbH
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -32,12 +32,10 @@ use \core_privacy\local\request\helper;
 use \core_privacy\local\metadata\collection;
 use \core_privacy\local\request\transform;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Implementation of the privacy subsystem plugin provider for the discourse activity module.
  *
- * @copyright  2021 coactum GmbH
+ * @copyright  2022 coactum GmbH
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class provider implements
@@ -244,7 +242,7 @@ class provider implements
                                 $timemodified = null;
                             }
 
-                            $submissionsdata ['group ' . $submission->groupid] = [
+                            $submissionsdata['group ' . $submission->groupid] = [
                                 'discourse' => $submission->discourse,
                                 'groupid' => $submission->groupid,
                                 'submission' => format_text($submission->submission, $submission->format, array('para' => false)),
