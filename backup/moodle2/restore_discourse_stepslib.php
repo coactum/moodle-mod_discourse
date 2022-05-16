@@ -1,0 +1,145 @@
+<?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * All the steps to restore mod_discourse are defined here.
+ *
+ * @package     mod_discourse
+ * @copyright   2022 coactum GmbH
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+/**
+ * Defines the structure step to restore one mod_discourse activity.
+ */
+class restore_discourse_activity_structure_step extends restore_activity_structure_step {
+
+    /**
+     * Store whether submissions and participants should be included.
+     * Will not be included if groups/grouping information or user infos are not included in the backup.
+     */
+    protected $includeparticipantsandsubmissions = false;
+
+    /**
+     * Defines the structure to be restored.
+     *
+     * @return restore_path_element[].
+     */
+    protected function define_structure() {
+        $paths = array();
+
+        $userinfo = $this->get_setting_value('userinfo');
+        $groupinfo = $this->get_setting_value('groups');
+
+        $paths[] = new restore_path_element('discourse', '/activity/discourse');
+
+        if ($userinfo && $groupinfo) {
+            $paths[] = new restore_path_element('discourse_participant', '/activity/discourse/participants/participant');
+            $paths[] = new restore_path_element('discourse_submission', '/activity/discourse/submissions/submission');
+        }
+
+        return $this->prepare_activity_structure($paths);
+    }
+
+    protected function process_discourse($data) {
+        global $DB;
+
+        $userinfo = $this->get_setting_value('userinfo');
+        $groupinfo = $this->get_setting_value('groups');
+
+        $data = (object)$data;
+        $oldid = $data->id;
+        $data->course = $this->get_courseid();
+
+        // Any changes to the list of dates that needs to be rolled should be same during course restore and course reset.
+        // See MDL-9367.
+        if (!isset($data->deadlinephaseone)) {
+            $data->deadlinephaseone = 0;
+        }
+        $data->deadlinephaseone = $this->apply_date_offset($data->deadlinephaseone);
+
+        if (!isset($data->deadlinephasetwo)) {
+            $data->deadlinephasetwo = 0;
+        }
+        $data->deadlinephasetwo = $this->apply_date_offset($data->deadlinephasetwo);
+
+        if (!isset($data->deadlinephasethree)) {
+            $data->deadlinephasethree = 0;
+        }
+        $data->deadlinephasethree = $this->apply_date_offset($data->deadlinephasethree);
+
+        if (!isset($data->deadlinephasefour)) {
+            $data->deadlinephasefour = 0;
+        }
+        $data->deadlinephasefour = $this->apply_date_offset($data->deadlinephasefour);
+
+        if ($userinfo && $groupinfo) {
+            $includeparticipantsandsubmissions = true;
+            $data->groupingid = $this->get_mappingid('grouping', $data->groupingid);
+        }
+
+        $newitemid = $DB->insert_record('discourse', $data);
+        $this->apply_activity_instance($newitemid);
+    }
+
+    protected function process_discourse_participant($data) {
+
+        if (!$this->includesubmission) {
+            return;
+        }
+
+        global $DB;
+
+        $data = (object)$data;
+        $oldid = $data->id;
+        $data->course = $this->get_courseid();
+
+        $data->discourse = $this->get_new_parentid('discourse');
+        $data->userid = $this->get_mappingid('user', $data->userid);
+
+        $newitemid = $DB->insert_record('discourse_participants', $data);
+        $this->set_mapping('discourse_participant', $oldid, $newitemid);
+    }
+
+    protected function process_discourse_submission($data) {
+
+        if (!$this->includesubmission) {
+            return;
+        }
+
+        global $DB;
+
+        $data = (object)$data;
+        $oldid = $data->id;
+
+        $data->discourse = $this->get_new_parentid('discourse');
+        $data->groupid = $this->get_mappingid('group', $data->groupid);
+
+        $newitemid = $DB->insert_record('discourse_submissions', $data);
+        $this->set_mapping('discourse_submission', $oldid, $newitemid, true);
+    }
+
+    /**
+     * Defines post-execution actions.
+     */
+    protected function after_execute() {
+        // Add discourse related files, no need to match by itemname (just internally handled context)
+        $this->add_related_files('mod_discourse', 'intro', null);
+
+        // Add post related files, matching by itemname = 'discourse_submission'
+        // $this->add_related_files('mod_discourse', 'submission', 'discourse_submission');
+    }
+}

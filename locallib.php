@@ -18,7 +18,7 @@
  * Plugin internal classes, functions and constants are defined here.
  *
  * @package     mod_discourse
- * @copyright   2021 coactum GmbH
+ * @copyright   2022 coactum GmbH
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -26,7 +26,7 @@
  * Base class for mod_discourse.
  *
  * @package   mod_discourse
- * @copyright 2021 coactum GmbH
+ * @copyright 2022 coactum GmbH
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class discourse {
@@ -131,9 +131,12 @@ class discourse {
             $groupurl = new moodle_url('/group/index.php', array('id' => $group->id[0], 'courseid' => $this->course->id));
             $group->profilelink = '<strong><a href="'.$groupurl.'">'.$group->name.'</a></strong>';
 
-            if ($this->instance->name && strpos($group->name, $this->instance->name)) {
+            if ($this->instance->name && strpos($group->name, $this->instance->name)) {  // If instance name is in group name.
                 $group->shortenedname = explode($this->instance->name, $group->name)[1];
                 $group->shortenednametwo = explode($this->instance->name, $group->name)[0] . '-' . explode($this->instance->name, $group->name)[1];
+            } else { // If instance name is not in group name (e.g. because group was manually renamed).
+                $group->shortenedname = $group->name;
+                $group->shortenednametwo = $group->name;
             }
 
             $group->participants = array();
@@ -178,7 +181,11 @@ class discourse {
                         $formersubmission->submission = false;
                     }
 
-                    $formersubmission->groupname = explode($this->instance->name, $formergroupname)[0] . '-' . explode($this->instance->name, $formergroupname)[1];
+                    if (isset(explode($this->instance->name, $formergroupname)[0]) && isset(explode($this->instance->name, $formergroupname)[1])) {
+                        $formersubmission->groupname = explode($this->instance->name, $formergroupname)[0] . '-' . explode($this->instance->name, $formergroupname)[1];
+                    } else {
+                        $formersubmission->groupname = $formergroupname;
+                    }
 
                     $formersubmission->participants = implode(', ', array_column(groups_get_members($formergroupid), 'firstname', 'lastname'));
                     array_push($formersubmissions, $formersubmission);
@@ -351,6 +358,7 @@ class discourse {
         foreach ($users as $user) {
             $groupdata->name = get_string('phaseone', 'mod_discourse') . ' ' . $this->instance->name . ' ' . get_string('group', 'mod_discourse') . ' ' . $i;
             $groupdata->description = get_string('groupfor', 'mod_discourse', get_string('phaseone', 'mod_discourse'));
+            $groupdata->enablemessaging = 0;
             $groupdata->idnumber = 'discourse_' . $this->instance->id . '_phase_' . 1 . '_group_' . $i;
 
             $groupid = groups_create_group($groupdata);
@@ -368,7 +376,7 @@ class discourse {
         for ($i = 1; $i <= 4; $i ++) {
             $groupdata->name = get_string('phasetwo', 'mod_discourse') . ' ' . $this->instance->name . ' ' . get_string('group', 'mod_discourse') . ' ' . $i;
             $groupdata->description = get_string('groupfor', 'mod_discourse', get_string('phasetwo', 'mod_discourse'));
-            $groupdata->enablemessaging = true;
+            $groupdata->enablemessaging = 1;
             $groupdata->idnumber = 'discourse_' . $this->instance->id . '_phase_' . 2 . '_group_' . $i;
 
             $groupid = groups_create_group($groupdata);
@@ -381,7 +389,7 @@ class discourse {
         for ($i = 5; $i <= 6; $i ++) {
             $groupdata->name = get_string('phasethree', 'mod_discourse') . ' ' . $this->instance->name . ' ' . get_string('group', 'mod_discourse') . ' ' . ($i - 4);
             $groupdata->description = get_string('groupfor', 'mod_discourse', get_string('phasethree', 'mod_discourse'));
-            $groupdata->enablemessaging = true;
+            $groupdata->enablemessaging = 1;
             $groupdata->idnumber = 'discourse_' . $this->instance->id . '_phase_' . 3 . '_group_' . ($i - 4);
 
             $groupid = groups_create_group($groupdata);
@@ -418,7 +426,7 @@ class discourse {
         // Group for collaborative phase.
         $groupdata->name = get_string('phasefour', 'mod_discourse') . ' ' . $this->instance->name . ' ' . get_string('group', 'mod_discourse') . ' ' . 1;
         $groupdata->description = get_string('groupfor', 'mod_discourse', get_string('phasefour', 'mod_discourse'));
-        $groupdata->enablemessaging = true;
+        $groupdata->enablemessaging = 1;
         $groupdata->idnumber = 'discourse_' . $this->instance->id . '_phase_' . 4 . '_group_' . 1;
 
         $groupid = groups_create_group($groupdata);

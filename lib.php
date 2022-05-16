@@ -39,6 +39,8 @@ function discourse_supports($feature) {
             return true;
         case FEATURE_SHOW_DESCRIPTION:
             return true;
+        case FEATURE_BACKUP_MOODLE2:
+            return true;
         case FEATURE_GROUPS:
             return true;
         case FEATURE_GROUPINGS:
@@ -93,10 +95,43 @@ function discourse_instance_created($context, $discourse) {
  * @return bool True if successful, false otherwise.
  */
 function discourse_update_instance($discourse, mod_discourse_mod_form $mform = null) {
-    global $DB;
+    global $DB, $CFG;
 
     $discourse->timemodified = time();
     $discourse->id = $discourse->instance;
+
+    $cmid = $discourse->cmid;
+    $oldname = $discourse->oldname;
+    unset($discourse->cmid);
+    unset($discourse->oldname);
+
+    // Rename groups.
+    if (isset($cmid)) {
+        if (isset($oldname) && ($discourse->name != $oldname)) {
+            require_once("$CFG->dirroot/group/lib.php");
+
+            list ($course, $cm) = get_course_and_cm_from_cmid($cmid, 'discourse');
+            $groups = groups_get_activity_allowed_groups($cm);
+
+            foreach ($groups as $group) {
+                $group->name = str_replace($oldname, $discourse->name, $group->name);
+
+                // Needed for groups_update_group.
+                if (strpos($group->idnumber, 'phase_1') == false) {
+                    $group->enablemessaging = 1;
+                } else {
+                    $group->enablemessaging = 0;
+                }
+
+                groups_update_group($group);
+            }
+
+            $grouping = groups_get_grouping($discourse->groupingid);
+            $grouping->name = $discourse->name;
+            groups_update_grouping($grouping);
+        }
+
+    }
 
     return $DB->update_record('discourse', $discourse);
 }
@@ -197,6 +232,16 @@ function discourse_reset_userdata($data) {
             if ($DB->record_exists('discourse_submissions', array('discourse' => $record->id))) {
                 $DB->delete_records('discourse_submissions', array('discourse' => $record->id));
             }
+
+            // Delete discourse groups.
+            $groups = groups_get_all_groups($record->course, 0, $record->groupingid);
+
+            foreach ($groups as $group) {
+                groups_delete_group($group);
+            }
+
+            // Delete discourse grouping.
+            groups_delete_grouping($record->groupingid);
         }
 
         $rs->close();

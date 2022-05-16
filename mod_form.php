@@ -44,11 +44,22 @@ class mod_discourse_mod_form extends moodleform_mod {
 
         $id = optional_param('update', null, PARAM_INT);
 
+        $mform = $this->_form;
+
         if (isset($id) && $id !== 0) {
             $discourse = discourse::get_discourse_instance($id);
-        }
 
-        $mform = $this->_form;
+            // For updating group names.
+            $mform->addElement('hidden', 'cmid', $id);
+            $mform->setType('cmid', PARAM_INT);
+
+            $mform->addElement('hidden', 'oldname', $discourse->get_module_instance()->name);
+            if (!empty($CFG->formatstringstriptags)) {
+                $mform->setType('oldname', PARAM_TEXT);
+            } else {
+                $mform->setType('oldname', PARAM_CLEANHTML);
+            }
+        }
 
         // Adding the "general" fieldset, where all the common settings are showed.
         $mform->addElement('header', 'general', get_string('general', 'form'));
