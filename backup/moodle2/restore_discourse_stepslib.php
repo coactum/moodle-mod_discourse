@@ -98,8 +98,13 @@ class restore_discourse_activity_structure_step extends restore_activity_structu
 
         if ($userinfo && $groupinfo) {
             $this->includeparticipantsandsubmissions = true;
+        }
+
+        if ($groupinfo) {
             $data->groupingid = $this->get_mappingid('grouping', $data->groupingid);
             $this->newgroupingid = $data->groupingid;
+        } else {
+            $data->groupingid = 0;
         }
 
         $newitemid = $DB->insert_record('discourse', $data);
