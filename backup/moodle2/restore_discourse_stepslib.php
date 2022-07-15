@@ -27,11 +27,16 @@
  */
 class restore_discourse_activity_structure_step extends restore_activity_structure_step {
 
-    /**
-     * Store whether submissions and participants should be included.
+    /** @var includeparticipantsandsubmissions Store whether submissions and participants should be included.
      * Will not be included if groups/grouping information or user infos are not included in the backup.
      */
     protected $includeparticipantsandsubmissions = false;
+
+    /** @var newgroupingid Store the new grouping id. */
+    protected $newgroupingid = false;
+
+    /** @var newdiscourseid Store id of new discourse. */
+    protected $newdiscourseid = false;
 
     /**
      * Defines the structure to be restored.
@@ -54,6 +59,11 @@ class restore_discourse_activity_structure_step extends restore_activity_structu
         return $this->prepare_activity_structure($paths);
     }
 
+    /**
+     * Restore discourse.
+     *
+     * @param object $data data.
+     */
     protected function process_discourse($data) {
         global $DB;
 
@@ -87,17 +97,24 @@ class restore_discourse_activity_structure_step extends restore_activity_structu
         $data->deadlinephasefour = $this->apply_date_offset($data->deadlinephasefour);
 
         if ($userinfo && $groupinfo) {
-            $includeparticipantsandsubmissions = true;
+            $this->includeparticipantsandsubmissions = true;
             $data->groupingid = $this->get_mappingid('grouping', $data->groupingid);
+            $this->newgroupingid = $data->groupingid;
         }
 
         $newitemid = $DB->insert_record('discourse', $data);
         $this->apply_activity_instance($newitemid);
+        $this->newdiscourseid = $newitemid;
     }
 
+    /**
+     * Restore discourse participant.
+     *
+     * @param object $data data.
+     */
     protected function process_discourse_participant($data) {
 
-        if (!$this->includesubmission) {
+        if (!$this->includeparticipantsandsubmissions) {
             return;
         }
 
@@ -110,13 +127,34 @@ class restore_discourse_activity_structure_step extends restore_activity_structu
         $data->discourse = $this->get_new_parentid('discourse');
         $data->userid = $this->get_mappingid('user', $data->userid);
 
+        // Update groupids for participants.
+        $newusergroups = groups_get_user_groups($data->course, $data->userid);
+        if ($this->newgroupingid !== 0 && isset($newusergroups[$this->newgroupingid])) {
+            $data->groupids = json_encode(array_keys($newusergroups[$this->newgroupingid]));
+
+            // Change discourse id in the new groups to the new discourse id.
+            foreach ($newusergroups[$this->newgroupingid] as $gid) {
+                if ($group = groups_get_group($gid)) {
+                    $group->idnumber = preg_replace('/discourse_[0-9]+_/', 'discourse_' . $this->newdiscourseid . '_', $group->idnumber);
+                    $group->enablemessaging = 1;
+                    groups_update_group($group);
+                }
+            }
+
+        }
+
         $newitemid = $DB->insert_record('discourse_participants', $data);
         $this->set_mapping('discourse_participant', $oldid, $newitemid);
     }
 
+    /**
+     * Restore discourse submission.
+     *
+     * @param object $data data.
+     */
     protected function process_discourse_submission($data) {
 
-        if (!$this->includesubmission) {
+        if (!$this->includeparticipantsandsubmissions) {
             return;
         }
 
@@ -136,10 +174,11 @@ class restore_discourse_activity_structure_step extends restore_activity_structu
      * Defines post-execution actions.
      */
     protected function after_execute() {
-        // Add discourse related files, no need to match by itemname (just internally handled context)
+        // Add discourse related files, no need to match by itemname (just internally handled context).
         $this->add_related_files('mod_discourse', 'intro', null);
 
         // Add post related files, matching by itemname = 'discourse_submission'
         // $this->add_related_files('mod_discourse', 'submission', 'discourse_submission');
+
     }
 }

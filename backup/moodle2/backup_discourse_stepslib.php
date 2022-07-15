@@ -82,7 +82,7 @@ class backup_discourse_activity_structure_step extends backup_activity_structure
 
         // Define file annotations.
 
-        $discourse->annotate_files('mod_discourse', 'intro', null); // This file area hasn't itemid
+        $discourse->annotate_files('mod_discourse', 'intro', null); // This file area has no itemid.
 
         return $this->prepare_activity_structure($discourse);
     }

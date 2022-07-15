@@ -31,6 +31,7 @@ use \core_privacy\local\request\writer;
 use \core_privacy\local\request\helper;
 use \core_privacy\local\metadata\collection;
 use \core_privacy\local\request\transform;
+use core_privacy\local\request\contextlist;
 
 /**
  * Implementation of the privacy subsystem plugin provider for the discourse activity module.
@@ -63,7 +64,7 @@ class provider implements
             'groupids' => 'privacy:metadata:discourse_participants:groupids',
         ], 'privacy:metadata:discourse_participants');
 
-        // The table 'discourse_submissions' stores all group subbissions.
+        // The table 'discourse_submissions' stores all group submissions.
         $items->add_database_table('discourse_submissions', [
             'discourse' => 'privacy:metadata:discourse_submissions:discourse',
             'groupid' => 'privacy:metadata:discourse_submissions:groupid',
@@ -90,8 +91,8 @@ class provider implements
      * @param   int         $userid     The user to search.
      * @return  contextlist $contextlist  The contextlist containing the list of contexts used in this plugin.
      */
-    public static function get_contexts_for_userid(int $userid) : \core_privacy\local\request\contextlist {
-        $contextlist = new \core_privacy\local\request\contextlist();
+    public static function get_contexts_for_userid(int $userid) : contextlist {
+        $contextlist = new contextlist();
 
         $params = [
             'modulename'       => 'discourse',
@@ -288,7 +289,7 @@ class provider implements
      * @param   context                 $context   The specific context to delete data for.
      */
     public static function delete_data_for_all_users_in_context(\context $context) {
-        global $DB;
+        global $DB, $CFG;
 
         // Check that this is a context_module.
         if (!$context instanceof \context_module) {
@@ -299,6 +300,24 @@ class provider implements
         if (!$cm = get_coursemodule_from_id('discourse', $context->instanceid)) {
             return;
         }
+
+        require_once("$CFG->dirroot/group/lib.php");
+
+        if (!$DB->record_exists('discourse', array('id' => $cm->instance))) {
+            return;
+        } else {
+            $moduleinstance = $DB->get_record('discourse', array('id' => $cm->instance));
+        }
+
+        // Delete discourse groups.
+        $groups = groups_get_all_groups($moduleinstance->course, 0, $moduleinstance->groupingid);
+
+        foreach ($groups as $group) {
+            groups_delete_group($group);
+        }
+
+        // Delete discourse grouping.
+        groups_delete_grouping($moduleinstance->groupingid);
 
         // Delete all records.
         if ($DB->record_exists('discourse_participants', ['discourse' => $cm->instance])) {
