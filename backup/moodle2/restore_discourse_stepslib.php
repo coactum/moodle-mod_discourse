@@ -101,10 +101,14 @@ class restore_discourse_activity_structure_step extends restore_activity_structu
         }
 
         if ($groupinfo) {
-            $data->groupingid = $this->get_mappingid('grouping', $data->groupingid);
-            $this->newgroupingid = $data->groupingid;
-        } else {
-            $data->groupingid = 0;
+            $this->newgroupingid = $this->get_mappingid('grouping', $data->groupingid);
+
+            if ($this->newgroupingid != $data->groupingid) {
+                $data->groupingid = $this->newgroupingid;
+            } else {
+                $this->newgroupingid = false;
+                $data->groupingid = 0;
+            }
         }
 
         $newitemid = $DB->insert_record('discourse', $data);
@@ -119,7 +123,7 @@ class restore_discourse_activity_structure_step extends restore_activity_structu
      */
     protected function process_discourse_participant($data) {
 
-        if (!$this->includeparticipantsandsubmissions) {
+        if (!$this->includeparticipantsandsubmissions || !$this->newgroupingid) {
             return;
         }
 
@@ -159,7 +163,7 @@ class restore_discourse_activity_structure_step extends restore_activity_structu
      */
     protected function process_discourse_submission($data) {
 
-        if (!$this->includeparticipantsandsubmissions) {
+        if (!$this->includeparticipantsandsubmissions || !$this->newgroupingid) {
             return;
         }
 
@@ -181,9 +185,5 @@ class restore_discourse_activity_structure_step extends restore_activity_structu
     protected function after_execute() {
         // Add discourse related files, no need to match by itemname (just internally handled context).
         $this->add_related_files('mod_discourse', 'intro', null);
-
-        // Add post related files, matching by itemname = 'discourse_submission'
-        // $this->add_related_files('mod_discourse', 'submission', 'discourse_submission');
-
     }
 }

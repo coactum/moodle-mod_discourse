@@ -80,6 +80,7 @@ function discourse_add_instance($discourse, mod_discourse_mod_form $mform = null
  * @return void
  */
 function discourse_instance_created($context, $discourse) {
+
     $enrolledusers = get_enrolled_users($context, 'mod/discourse:potentialparticipant');
     $discourse->create_groups_and_grouping($enrolledusers);
 }
@@ -107,7 +108,7 @@ function discourse_update_instance($discourse, mod_discourse_mod_form $mform = n
 
     // Rename groups.
     if (isset($cmid)) {
-        if (isset($oldname) && ($discourse->name != $oldname)) {
+        if (isset($oldname) && ($discourse->name != $oldname) && $discourse->groupingid) {
             require_once("$CFG->dirroot/group/lib.php");
 
             list ($course, $cm) = get_course_and_cm_from_cmid($cmid, 'discourse');
@@ -213,40 +214,42 @@ function discourse_reset_course_form_defaults($course) {
  */
 function discourse_reset_userdata($data) {
 
-    global $DB;
+    if (!empty($data->reset_discourse_all)) {
+        global $DB;
 
-    $componentstr = get_string('modulenameplural', 'discourse');
-    $status = array();
+        $componentstr = get_string('modulenameplural', 'discourse');
+        $status = array();
 
-    $params = array('course' => $data->courseid);
+        $params = array('course' => $data->courseid);
 
-    $rs = $DB->get_recordset('discourse', $params);
+        $rs = $DB->get_recordset('discourse', $params);
 
-    if ($rs->valid()) {
+        if ($rs->valid()) {
 
-        foreach ($rs as $record) {
-            if ($DB->record_exists('discourse_participants', array('discourse' => $record->id))) {
-                $DB->delete_records('discourse_participants', array('discourse' => $record->id));
+            foreach ($rs as $record) {
+                if ($DB->record_exists('discourse_participants', array('discourse' => $record->id))) {
+                    $DB->delete_records('discourse_participants', array('discourse' => $record->id));
+                }
+
+                if ($DB->record_exists('discourse_submissions', array('discourse' => $record->id))) {
+                    $DB->delete_records('discourse_submissions', array('discourse' => $record->id));
+                }
+
+                // Delete discourse groups.
+                $groups = groups_get_all_groups($record->course, 0, $record->groupingid);
+
+                foreach ($groups as $group) {
+                    groups_delete_group($group);
+                }
+
+                // Delete discourse grouping.
+                groups_delete_grouping($record->groupingid);
             }
 
-            if ($DB->record_exists('discourse_submissions', array('discourse' => $record->id))) {
-                $DB->delete_records('discourse_submissions', array('discourse' => $record->id));
-            }
+            $rs->close();
 
-            // Delete discourse groups.
-            $groups = groups_get_all_groups($record->course, 0, $record->groupingid);
-
-            foreach ($groups as $group) {
-                groups_delete_group($group);
-            }
-
-            // Delete discourse grouping.
-            groups_delete_grouping($record->groupingid);
+            $status[] = array('component' => $componentstr, 'item' => get_string('userdatadeleted', 'discourse'), 'error' => false);
         }
-
-        $rs->close();
-
-        $status[] = array('component' => $componentstr, 'item' => get_string('resetting_data', 'discourse'), 'error' => false);
     }
 
     // Updating dates - shift may be negative too.

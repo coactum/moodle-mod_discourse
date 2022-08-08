@@ -52,9 +52,6 @@ class discourse {
     /** @var array cached list of user groups used in the discourse. */
     private $groups;
 
-    /** @var array Array of error messages encountered during the execution of discourse related operations. */
-    private $errors = array();
-
     /**
      * Constructor for the base discourse class.
      *
@@ -87,7 +84,11 @@ class discourse {
 
         $this->participants = $DB->get_records('discourse_participants', array('discourse' => $this->cm->instance), '', 'userid, discourse, groupids');
 
-        $groups = groups_get_activity_allowed_groups($this->cm);
+        if ($this->instance->groupingid && groups_get_grouping($this->instance->groupingid)) {
+            $groups = groups_get_activity_allowed_groups($this->cm);
+        } else {
+            $groups = array();
+        }
 
         /**
          * Helper callback function to compare group objects and sort them by name.
@@ -125,7 +126,12 @@ class discourse {
             }
 
             // Get submission of group.
-            $group->submission = $DB->get_record('discourse_submissions', array('groupid' => $group->id));
+            if ($DB->count_records('discourse_submissions', array('groupid' => $group->id)) <= 1) {
+                $group->submission = $DB->get_record('discourse_submissions', array('groupid' => $group->id));
+            } else {
+                $tempsubmissions = $DB->get_records('discourse_submissions', array('groupid' => $group->id));
+                $group->submission = $tempsubmissions[array_key_first($tempsubmissions)];
+            }
 
             // Get profile link and shortened groupnames.
             $groupurl = new moodle_url('/group/index.php', array('id' => $group->id[0], 'courseid' => $this->course->id));
@@ -162,8 +168,10 @@ class discourse {
 
                 array_push($group->participants, $participant);
 
-                if ($group->phase != 1 && $this->participants && !in_array(json_decode($this->participants[$participant->id]->groupids)[$group->phase - 2], $formergroupids)) {
-                    array_push($formergroupids, json_decode($this->participants[$participant->id]->groupids)[$group->phase - 2]);
+                if ($group->phase != 1 && $this->participants && $this->participants[$participant->id]
+                    && !in_array(json_decode($this->participants[$participant->id]->groupids)[$group->phase - 2], $formergroupids)) {
+
+                        array_push($formergroupids, json_decode($this->participants[$participant->id]->groupids)[$group->phase - 2]);
                 }
 
             }
@@ -333,6 +341,11 @@ class discourse {
         global $DB, $CFG;
 
         require_once("$CFG->dirroot/group/lib.php");
+
+        if ($DB->record_exists('discourse_participants', array('discourse' => $this->instance->id))) {
+            throw new moodle_exception('alreadyparticipants', 'mod_discourse');
+            return;
+        }
 
         // Create grouping for the discourse.
         $grouping = new stdClass();

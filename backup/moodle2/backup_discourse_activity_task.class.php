@@ -57,15 +57,15 @@ class backup_discourse_activity_task extends backup_activity_task {
 
         $base = preg_quote($CFG->wwwroot, "/");
 
-        // Link to the list of choices.
+        // Link to the list of discourses.
         $search = "/(".$base."\/mod\/discourse\/index.php\?id\=)([0-9]+)/";
         $content = preg_replace($search, '$@DISCOURSEINDEX*$2@$', $content);
 
-        // Link to choice view by moduleid.
+        // Link to discourse view by moduleid.
         $search = "/(".$base."\/mod\/discourse\/view.php\?id\=)([0-9]+)/";
         $content = preg_replace($search, '$@DISCOURSEVIEWBYID*$2@$', $content);
 
-        // Link to group view by moduleid, group and userid.
+        // Link to discourse group view by moduleid, group and userid.
         $search = "/(".$base."\/mod\/discourse\/groupview.php\?id\=)([0-9]+)(&|&amp;)group=([0-9]+)(&|&amp;)userid=([0-9]+)/";
         $content = preg_replace($search, '$@DISCOURSEGROUPVIEW*$2*$4*$6@$', $content);
 
