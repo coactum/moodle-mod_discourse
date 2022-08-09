@@ -84,7 +84,8 @@ class discourse {
 
         $this->participants = $DB->get_records('discourse_participants', array('discourse' => $this->cm->instance), '', 'userid, discourse, groupids');
 
-        if ($this->instance->groupingid && groups_get_grouping($this->instance->groupingid)) {
+        $grouping = groups_get_grouping($this->instance->groupingid);
+        if ($this->instance->groupingid && $grouping && $grouping->courseid == $this->instance->course) {
             $groups = groups_get_activity_allowed_groups($this->cm);
         } else {
             $groups = array();

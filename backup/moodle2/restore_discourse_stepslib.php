@@ -109,11 +109,24 @@ class restore_discourse_activity_structure_step extends restore_activity_structu
                 $this->newgroupingid = false;
                 $data->groupingid = 0;
             }
+        } else {
+            $this->newgroupingid = false;
+            $data->groupingid = 0;
         }
 
         $newitemid = $DB->insert_record('discourse', $data);
         $this->apply_activity_instance($newitemid);
         $this->newdiscourseid = $newitemid;
+
+        if ($groupinfo && $this->newgroupingid && $data->groupingid != 0) {
+            $groups = groups_get_all_groups($data->course, 0, $data->groupingid);
+            // Change discourse id in the new groups to the new discourse id.
+            foreach ($groups as $group) {
+                $group->idnumber = preg_replace('/discourse_[0-9]+_/', 'discourse_' . $this->newdiscourseid . '_', $group->idnumber);
+                $group->enablemessaging = 1;
+                groups_update_group($group);
+            }
+        }
     }
 
     /**
@@ -131,25 +144,16 @@ class restore_discourse_activity_structure_step extends restore_activity_structu
 
         $data = (object)$data;
         $oldid = $data->id;
-        $data->course = $this->get_courseid();
 
         $data->discourse = $this->get_new_parentid('discourse');
         $data->userid = $this->get_mappingid('user', $data->userid);
 
         // Update groupids for participants.
-        $newusergroups = groups_get_user_groups($data->course, $data->userid);
-        if ($this->newgroupingid !== 0 && isset($newusergroups[$this->newgroupingid])) {
+        $newusergroups = groups_get_user_groups($this->get_courseid(), $data->userid);
+        if (isset($newusergroups[$this->newgroupingid])) {
             $data->groupids = json_encode(array_keys($newusergroups[$this->newgroupingid]));
-
-            // Change discourse id in the new groups to the new discourse id.
-            foreach ($newusergroups[$this->newgroupingid] as $gid) {
-                if ($group = groups_get_group($gid)) {
-                    $group->idnumber = preg_replace('/discourse_[0-9]+_/', 'discourse_' . $this->newdiscourseid . '_', $group->idnumber);
-                    $group->enablemessaging = 1;
-                    groups_update_group($group);
-                }
-            }
-
+        } else {
+            $data->groupids = json_encode(array());
         }
 
         $newitemid = $DB->insert_record('discourse_participants', $data);

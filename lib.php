@@ -165,8 +165,13 @@ function discourse_delete_instance($id) {
         groups_delete_group($group);
     }
 
-    // Delete discourse grouping.
-    groups_delete_grouping($moduleinstance->groupingid);
+    // Check if grouping is in same course as module instance
+    // (should not be neccessary but better be safe then sorry).
+    $grouping = groups_get_grouping($moduleinstance->groupingid);
+    if (!empty($grouping) && $grouping->courseid == $moduleinstance->course) {
+        // Delete discourse grouping.
+        groups_delete_grouping($moduleinstance->groupingid);
+    }
 
     // Delete discourse participants.
     if ($DB->record_exists('discourse_participants', array('discourse' => $id))) {
@@ -214,11 +219,12 @@ function discourse_reset_course_form_defaults($course) {
  */
 function discourse_reset_userdata($data) {
 
+    $status = array();
+
     if (!empty($data->reset_discourse_all)) {
         global $DB;
 
         $componentstr = get_string('modulenameplural', 'discourse');
-        $status = array();
 
         $params = array('course' => $data->courseid);
 
@@ -242,8 +248,13 @@ function discourse_reset_userdata($data) {
                     groups_delete_group($group);
                 }
 
-                // Delete discourse grouping.
-                groups_delete_grouping($record->groupingid);
+                // Check if grouping is in same course as module instance
+                // (should not be neccessary but better be safe then sorry).
+                $grouping = groups_get_grouping($record->groupingid);
+                if (!empty($grouping) && $grouping->courseid == $record->course) {
+                    // Delete discourse grouping.
+                    groups_delete_grouping($record->groupingid);
+                }
             }
 
             $rs->close();
