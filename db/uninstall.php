@@ -28,15 +28,28 @@
  */
 function xmldb_discourse_uninstall() {
 
-    // Deleting groups created by discourse activity with idnumber discourse_X_phase_x_group_X to prevent problems with already existing idsnumbers after reinstallation of plugin.
     global $DB, $CFG;
 
     require_once("$CFG->dirroot/group/lib.php");
+
+    // Delete all groupings associated with discourses.
+    $discourses = $DB->get_recordset_select('discourse', array());
+
+    if ($discourses->valid()) {
+        foreach ($discourses as $discourse) {
+            if (isset($discourse->groupingid) && $discourse->groupingid != 0) {
+                groups_delete_grouping($discourse->groupingid);
+            }
+        }
+
+        $discourses->close();
+    }
 
     $select = "idnumber LIKE '%discourse%'";
     $select .= "AND idnumber LIKE '%phase%'";
     $select .= "AND idnumber LIKE '%group%'";
 
+    // Deleting groups created by discourse activity with idnumber discourse_X_phase_x_group_X to prevent problems with already existing idsnumbers after reinstallation of plugin.
     $discoursegroups = $DB->get_recordset_select('groups', $select);
 
     if ($discoursegroups->valid()) {
