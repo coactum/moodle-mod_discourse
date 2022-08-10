@@ -109,6 +109,11 @@ class restore_discourse_activity_structure_step extends restore_activity_structu
                 $this->newgroupingid = false;
                 $data->groupingid = 0;
             }
+
+            if ($this->newgroupingid && $DB->record_exists('discourse', array('groupingid' => $this->newgroupingid))) {
+                $this->newgroupingid = false;
+                $data->groupingid = 0;
+            }
         } else {
             $this->newgroupingid = false;
             $data->groupingid = 0;

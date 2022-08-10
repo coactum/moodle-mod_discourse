@@ -130,6 +130,7 @@ $string['nogroupmember'] = 'Not possible because not a group member';
 $string['submissionfaileddoubled'] = 'Submission failed. Another group member has already made a submission recently.';
 $string['groupingmaybedeleted'] = 'The grouping of the DisCourse was deleted or is invalid.';
 $string['alreadyparticipants'] = 'Participants already exist. Group and participant creation canceled.';
+$string['alreadygrouping'] = 'A grouping already exists. Group and participant creation canceled.';
 
 $string['task_switchphases'] = 'Automatic phase switch';
 

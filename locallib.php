@@ -348,6 +348,11 @@ class discourse {
             return;
         }
 
+        if (isset($this->instance->groupingid) && $this->instance->groupingid != 0) {
+            throw new moodle_exception('alreadygrouping', 'mod_discourse');
+            return;
+        }
+
         // Create grouping for the discourse.
         $grouping = new stdClass();
         $grouping->courseid = $this->course->id;

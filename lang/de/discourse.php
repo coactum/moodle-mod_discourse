@@ -130,6 +130,7 @@ $string['nogroupmember'] = 'Nicht möglich da kein Gruppenmitglied';
 $string['submissionfaileddoubled'] = 'Einreichung fehlgeschlagen. Ein weiteres Gruppenmitglied hat bereits kürzlich eine Einreichung abgegeben.';
 $string['groupingmaybedeleted'] = 'Die zum Diskurs gehörende Gruppierung wurde gelöscht oder ist ungültig.';
 $string['alreadyparticipants'] = 'Bereits Teilnehmer vorhanden. Gruppen- und Teilnehmererstellung abgebrochen.';
+$string['alreadygrouping'] = 'Es ist bereits eine Gruppierung vorhanden. Gruppen- und Teilnehmererstellung abgebrochen.';
 
 $string['task_switchphases'] = 'Automatischer Phasenwechsel';
 
