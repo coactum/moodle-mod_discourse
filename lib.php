@@ -158,19 +158,21 @@ function discourse_delete_instance($id) {
         $moduleinstance = $DB->get_record('discourse', array('id' => $id));
     }
 
-    // Delete discourse groups.
-    $groups = groups_get_all_groups($moduleinstance->course, 0, $moduleinstance->groupingid);
+    if ($moduleinstance->groupingid != 0) {
+        // Delete discourse groups.
+        $groups = groups_get_all_groups($moduleinstance->course, 0, $moduleinstance->groupingid);
 
-    foreach ($groups as $group) {
-        groups_delete_group($group);
-    }
+        foreach ($groups as $group) {
+            groups_delete_group($group);
+        }
 
-    // Check if grouping is in same course as module instance
-    // (should not be neccessary but better be safe then sorry).
-    $grouping = groups_get_grouping($moduleinstance->groupingid);
-    if (!empty($grouping) && $grouping->courseid == $moduleinstance->course) {
-        // Delete discourse grouping.
-        groups_delete_grouping($moduleinstance->groupingid);
+        // Check if grouping is in same course as module instance
+        // (should not be neccessary but better be safe then sorry).
+        $grouping = groups_get_grouping($moduleinstance->groupingid);
+        if (!empty($grouping) && $grouping->courseid == $moduleinstance->course) {
+            // Delete discourse grouping.
+            groups_delete_grouping($moduleinstance->groupingid);
+        }
     }
 
     // Delete discourse participants.

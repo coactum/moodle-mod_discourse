@@ -113,6 +113,15 @@ class discourse {
 
         foreach ($groups as $group) {
 
+            // Fix for caching bug in Moodle 4.0 where groups_get_activity_allowed_groups returns the groups of the original cm after duplicating an activity (despite the correct grouping is connected with the duplicated discourse) -> can be "fixed" by clearing the moodle cache or renaming an course activity
+            $control = $DB->get_record('groupings_groups', array('groupingid' => $this->instance->groupingid, 'groupid' => $group->id));
+            if (!$control) {
+                $groups = array();
+
+                \core\notification::add('Wrong groups found due to an internal moodle error. No groups are displayed. If this activity previously was duplicated you should just wait a few minutes and then reload your browser. If this issue remains the teacher should try renaming an activity in the course or ask the moodle administrator to clear the moodle cache to fix this error.', 'error');
+                break;
+            }
+
             // Define phase of group.
             if (stripos($group->idnumber, 'phase_1')) {
                 $group->phase = 1;

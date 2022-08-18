@@ -33,7 +33,7 @@ function xmldb_discourse_uninstall() {
     require_once("$CFG->dirroot/group/lib.php");
 
     // Delete all groupings associated with discourses.
-    $discourses = $DB->get_recordset_select('discourse', array());
+    $discourses = $DB->get_recordset('discourse');
 
     if ($discourses->valid()) {
         foreach ($discourses as $discourse) {
