@@ -18,19 +18,18 @@
  * The mod_discourse course module viewed event.
  *
  * @package    mod_discourse
- * @copyright  2021 coactum GmbH
+ * @copyright  2022 coactum GmbH
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace mod_discourse\event;
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * The mod_discourse course module viewed event class.
  *
  * @package    mod_discourse
  * @since      Moodle 3.9
- * @copyright  2021 coactum GmbH
+ * @copyright  2022 coactum GmbH
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class course_module_viewed extends \core\event\course_module_viewed {
@@ -42,5 +41,12 @@ class course_module_viewed extends \core\event\course_module_viewed {
         $this->data['crud'] = 'r';
         $this->data['edulevel'] = self::LEVEL_PARTICIPATING;
         $this->data['objecttable'] = 'discourse';
+    }
+
+    /**
+     * Get objectid mapping
+     */
+    public static function get_objectid_mapping() {
+        return array('db' => 'discourse', 'restore' => 'discourse');
     }
 }

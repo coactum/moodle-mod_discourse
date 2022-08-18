@@ -18,13 +18,11 @@
  * The main mod_discourse configuration form.
  *
  * @package     mod_discourse
- * @copyright   2021 coactum GmbH
+ * @copyright   2022 coactum GmbH
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-if (!defined('MOODLE_INTERNAL')) {
-    die('Direct access to this script is forbidden.');    // It must be included from a Moodle page.
-}
+defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot.'/course/moodleform_mod.php');
 require_once($CFG->dirroot . '/mod/discourse/locallib.php');
@@ -33,7 +31,7 @@ require_once($CFG->dirroot . '/mod/discourse/locallib.php');
  * Module instance settings form.
  *
  * @package    mod_discourse
- * @copyright  2021 coactum GmbH
+ * @copyright  2022 coactum GmbH
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class mod_discourse_mod_form extends moodleform_mod {
@@ -46,11 +44,22 @@ class mod_discourse_mod_form extends moodleform_mod {
 
         $id = optional_param('update', null, PARAM_INT);
 
+        $mform = $this->_form;
+
         if (isset($id) && $id !== 0) {
             $discourse = discourse::get_discourse_instance($id);
-        }
 
-        $mform = $this->_form;
+            // For updating group names.
+            $mform->addElement('hidden', 'cmid', $id);
+            $mform->setType('cmid', PARAM_INT);
+
+            $mform->addElement('hidden', 'oldname', $discourse->get_module_instance()->name);
+            if (!empty($CFG->formatstringstriptags)) {
+                $mform->setType('oldname', PARAM_TEXT);
+            } else {
+                $mform->setType('oldname', PARAM_CLEANHTML);
+            }
+        }
 
         // Adding the "general" fieldset, where all the common settings are showed.
         $mform->addElement('header', 'general', get_string('general', 'form'));

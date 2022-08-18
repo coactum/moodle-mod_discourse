@@ -19,7 +19,7 @@
  *
  * @package     mod_discourse
  * @category    string
- * @copyright   2021 coactum GmbH
+ * @copyright   2022 coactum GmbH
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -71,8 +71,8 @@ $string['hintphasefour'] = 'Note on the collaborative phase';
 $string['modulenameplural'] = 'DisCourses';
 $string['nonewmodules'] = 'No new modules';
 
-$string['deletealluserdata'] = 'Delete all user data';
-$string['resetting_data'] = 'Participants and submissions deleted';
+$string['deletealluserdata'] = 'Delete all user data (participants, submissions, groups and groupings)';
+$string['userdatadeleted'] = 'User data deleted';
 
 $string['groupingdescription'] = 'Grouping for DisCourse activity {$a}';
 $string['phaseone'] = 'Solo phase';
@@ -128,7 +128,9 @@ $string['groupinvalid'] = 'Group not found';
 $string['useridinvalid'] = 'User ID invalid';
 $string['nogroupmember'] = 'Not possible because not a group member';
 $string['submissionfaileddoubled'] = 'Submission failed. Another group member has already made a submission recently.';
-$string['groupingmaybedeleted'] = 'The grouping of the DisCourse was deleted or is invalid. All course groups (from other DisCourses or activities as well) will be displayed.';
+$string['groupingmaybedeleted'] = 'The grouping of the DisCourse was deleted or is invalid.';
+$string['alreadyparticipants'] = 'Participants already exist. Group and participant creation canceled.';
+$string['alreadygrouping'] = 'A grouping already exists. Group and participant creation canceled.';
 
 $string['task_switchphases'] = 'Automatic phase switch';
 

@@ -18,19 +18,17 @@
  * A cron_task class for switching phases in all discourses to be used by Tasks API.
  *
  * @package     mod_discourse
- * @copyright   2021 coactum GmbH
+ * @copyright   2022 coactum GmbH
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace mod_discourse\task;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * A cron_task class for switching phases in all discourses to be used by Tasks API.
  *
  * @package     mod_discourse
- * @copyright   2021 coactum GmbH
+ * @copyright   2022 coactum GmbH
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class switchphases extends \core\task\scheduled_task {

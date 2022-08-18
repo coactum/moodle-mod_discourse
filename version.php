@@ -18,14 +18,14 @@
  * Plugin version and other meta-data are defined here.
  *
  * @package     mod_discourse
- * @copyright   2021 coactum GmbH
+ * @copyright   2022 coactum GmbH
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'mod_discourse';
-$plugin->release = '1.1.2';
-$plugin->version = 2022010700;
+$plugin->release = '1.2.0';
+$plugin->version = 2022081800;
 $plugin->requires = 2020061500;
 $plugin->maturity = MATURITY_STABLE;

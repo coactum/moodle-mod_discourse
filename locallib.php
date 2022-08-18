@@ -18,17 +18,15 @@
  * Plugin internal classes, functions and constants are defined here.
  *
  * @package     mod_discourse
- * @copyright   2021 coactum GmbH
+ * @copyright   2022 coactum GmbH
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Base class for mod_discourse.
  *
  * @package   mod_discourse
- * @copyright 2021 coactum GmbH
+ * @copyright 2022 coactum GmbH
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class discourse {
@@ -53,9 +51,6 @@ class discourse {
 
     /** @var array cached list of user groups used in the discourse. */
     private $groups;
-
-    /** @var array Array of error messages encountered during the execution of discourse related operations. */
-    private $errors = array();
 
     /**
      * Constructor for the base discourse class.
@@ -89,7 +84,12 @@ class discourse {
 
         $this->participants = $DB->get_records('discourse_participants', array('discourse' => $this->cm->instance), '', 'userid, discourse, groupids');
 
-        $groups = groups_get_activity_allowed_groups($this->cm);
+        $grouping = groups_get_grouping($this->instance->groupingid);
+        if ($this->instance->groupingid && $grouping && $grouping->courseid == $this->instance->course) {
+            $groups = groups_get_activity_allowed_groups($this->cm);
+        } else {
+            $groups = array();
+        }
 
         /**
          * Helper callback function to compare group objects and sort them by name.
@@ -113,6 +113,15 @@ class discourse {
 
         foreach ($groups as $group) {
 
+            // Fix for caching bug in Moodle 4.0 where groups_get_activity_allowed_groups returns the groups of the original cm after duplicating an activity (despite the correct grouping is connected with the duplicated discourse) -> can be "fixed" by clearing the moodle cache or renaming an course activity
+            $control = $DB->get_record('groupings_groups', array('groupingid' => $this->instance->groupingid, 'groupid' => $group->id));
+            if (!$control) {
+                $groups = array();
+
+                \core\notification::add('Wrong groups found due to an internal moodle error. No groups are displayed. If this activity previously was duplicated you should just wait a few minutes and then reload your browser. If this issue remains the teacher should try renaming an activity in the course or ask the moodle administrator to clear the moodle cache to fix this error.', 'error');
+                break;
+            }
+
             // Define phase of group.
             if (stripos($group->idnumber, 'phase_1')) {
                 $group->phase = 1;
@@ -127,15 +136,23 @@ class discourse {
             }
 
             // Get submission of group.
-            $group->submission = $DB->get_record('discourse_submissions', array('groupid' => $group->id));
+            if ($DB->count_records('discourse_submissions', array('groupid' => $group->id)) <= 1) {
+                $group->submission = $DB->get_record('discourse_submissions', array('groupid' => $group->id));
+            } else {
+                $tempsubmissions = $DB->get_records('discourse_submissions', array('groupid' => $group->id));
+                $group->submission = $tempsubmissions[array_key_first($tempsubmissions)];
+            }
 
             // Get profile link and shortened groupnames.
             $groupurl = new moodle_url('/group/index.php', array('id' => $group->id[0], 'courseid' => $this->course->id));
             $group->profilelink = '<strong><a href="'.$groupurl.'">'.$group->name.'</a></strong>';
 
-            if ($this->instance->name && strpos($group->name, $this->instance->name)) {
+            if ($this->instance->name && strpos($group->name, $this->instance->name)) {  // If instance name is in group name.
                 $group->shortenedname = explode($this->instance->name, $group->name)[1];
                 $group->shortenednametwo = explode($this->instance->name, $group->name)[0] . '-' . explode($this->instance->name, $group->name)[1];
+            } else { // If instance name is not in group name (e.g. because group was manually renamed).
+                $group->shortenedname = $group->name;
+                $group->shortenednametwo = $group->name;
             }
 
             $group->participants = array();
@@ -161,8 +178,10 @@ class discourse {
 
                 array_push($group->participants, $participant);
 
-                if ($group->phase != 1 && $this->participants && !in_array(json_decode($this->participants[$participant->id]->groupids)[$group->phase - 2], $formergroupids)) {
-                    array_push($formergroupids, json_decode($this->participants[$participant->id]->groupids)[$group->phase - 2]);
+                if ($group->phase != 1 && $this->participants && $this->participants[$participant->id]
+                    && !in_array(json_decode($this->participants[$participant->id]->groupids)[$group->phase - 2], $formergroupids)) {
+
+                        array_push($formergroupids, json_decode($this->participants[$participant->id]->groupids)[$group->phase - 2]);
                 }
 
             }
@@ -180,7 +199,11 @@ class discourse {
                         $formersubmission->submission = false;
                     }
 
-                    $formersubmission->groupname = explode($this->instance->name, $formergroupname)[0] . '-' . explode($this->instance->name, $formergroupname)[1];
+                    if (isset(explode($this->instance->name, $formergroupname)[0]) && isset(explode($this->instance->name, $formergroupname)[1])) {
+                        $formersubmission->groupname = explode($this->instance->name, $formergroupname)[0] . '-' . explode($this->instance->name, $formergroupname)[1];
+                    } else {
+                        $formersubmission->groupname = $formergroupname;
+                    }
 
                     $formersubmission->participants = implode(', ', array_column(groups_get_members($formergroupid), 'firstname', 'lastname'));
                     array_push($formersubmissions, $formersubmission);
@@ -329,6 +352,16 @@ class discourse {
 
         require_once("$CFG->dirroot/group/lib.php");
 
+        if ($DB->record_exists('discourse_participants', array('discourse' => $this->instance->id))) {
+            throw new moodle_exception('alreadyparticipants', 'mod_discourse');
+            return;
+        }
+
+        if (isset($this->instance->groupingid) && $this->instance->groupingid != 0) {
+            throw new moodle_exception('alreadygrouping', 'mod_discourse');
+            return;
+        }
+
         // Create grouping for the discourse.
         $grouping = new stdClass();
         $grouping->courseid = $this->course->id;
@@ -353,6 +386,7 @@ class discourse {
         foreach ($users as $user) {
             $groupdata->name = get_string('phaseone', 'mod_discourse') . ' ' . $this->instance->name . ' ' . get_string('group', 'mod_discourse') . ' ' . $i;
             $groupdata->description = get_string('groupfor', 'mod_discourse', get_string('phaseone', 'mod_discourse'));
+            $groupdata->enablemessaging = 0;
             $groupdata->idnumber = 'discourse_' . $this->instance->id . '_phase_' . 1 . '_group_' . $i;
 
             $groupid = groups_create_group($groupdata);
@@ -370,7 +404,7 @@ class discourse {
         for ($i = 1; $i <= 4; $i ++) {
             $groupdata->name = get_string('phasetwo', 'mod_discourse') . ' ' . $this->instance->name . ' ' . get_string('group', 'mod_discourse') . ' ' . $i;
             $groupdata->description = get_string('groupfor', 'mod_discourse', get_string('phasetwo', 'mod_discourse'));
-            $groupdata->enablemessaging = true;
+            $groupdata->enablemessaging = 1;
             $groupdata->idnumber = 'discourse_' . $this->instance->id . '_phase_' . 2 . '_group_' . $i;
 
             $groupid = groups_create_group($groupdata);
@@ -383,7 +417,7 @@ class discourse {
         for ($i = 5; $i <= 6; $i ++) {
             $groupdata->name = get_string('phasethree', 'mod_discourse') . ' ' . $this->instance->name . ' ' . get_string('group', 'mod_discourse') . ' ' . ($i - 4);
             $groupdata->description = get_string('groupfor', 'mod_discourse', get_string('phasethree', 'mod_discourse'));
-            $groupdata->enablemessaging = true;
+            $groupdata->enablemessaging = 1;
             $groupdata->idnumber = 'discourse_' . $this->instance->id . '_phase_' . 3 . '_group_' . ($i - 4);
 
             $groupid = groups_create_group($groupdata);
@@ -420,7 +454,7 @@ class discourse {
         // Group for collaborative phase.
         $groupdata->name = get_string('phasefour', 'mod_discourse') . ' ' . $this->instance->name . ' ' . get_string('group', 'mod_discourse') . ' ' . 1;
         $groupdata->description = get_string('groupfor', 'mod_discourse', get_string('phasefour', 'mod_discourse'));
-        $groupdata->enablemessaging = true;
+        $groupdata->enablemessaging = 1;
         $groupdata->idnumber = 'discourse_' . $this->instance->id . '_phase_' . 4 . '_group_' . 1;
 
         $groupid = groups_create_group($groupdata);

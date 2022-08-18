@@ -18,19 +18,17 @@
  * Search area for mod_discourse activities.
  *
  * @package    mod_discourse
- * @copyright  2021 coactum GmbH
+ * @copyright  2022 coactum GmbH
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace mod_discourse\search;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Search area for mod_discourse activities.
  *
  * @package    mod_discourse
- * @copyright  2021 coactum GmbH
+ * @copyright  2022 coactum GmbH
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class activity extends \core_search\base_activity {

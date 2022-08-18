@@ -18,11 +18,9 @@
  * Library of interface functions and constants.
  *
  * @package     mod_discourse
- * @copyright   2021 coactum GmbH
+ * @copyright   2022 coactum GmbH
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Indicates API features that the discourse supports.
@@ -40,6 +38,8 @@ function discourse_supports($feature) {
         case FEATURE_MOD_INTRO:
             return true;
         case FEATURE_SHOW_DESCRIPTION:
+            return true;
+        case FEATURE_BACKUP_MOODLE2:
             return true;
         case FEATURE_GROUPS:
             return true;
@@ -80,6 +80,7 @@ function discourse_add_instance($discourse, mod_discourse_mod_form $mform = null
  * @return void
  */
 function discourse_instance_created($context, $discourse) {
+
     $enrolledusers = get_enrolled_users($context, 'mod/discourse:potentialparticipant');
     $discourse->create_groups_and_grouping($enrolledusers);
 }
@@ -95,10 +96,43 @@ function discourse_instance_created($context, $discourse) {
  * @return bool True if successful, false otherwise.
  */
 function discourse_update_instance($discourse, mod_discourse_mod_form $mform = null) {
-    global $DB;
+    global $DB, $CFG;
 
     $discourse->timemodified = time();
     $discourse->id = $discourse->instance;
+
+    $cmid = $discourse->cmid;
+    $oldname = $discourse->oldname;
+    unset($discourse->cmid);
+    unset($discourse->oldname);
+
+    // Rename groups.
+    if (isset($cmid)) {
+        if (isset($oldname) && ($discourse->name != $oldname) && $discourse->groupingid) {
+            require_once("$CFG->dirroot/group/lib.php");
+
+            list ($course, $cm) = get_course_and_cm_from_cmid($cmid, 'discourse');
+            $groups = groups_get_activity_allowed_groups($cm);
+
+            foreach ($groups as $group) {
+                $group->name = str_replace($oldname, $discourse->name, $group->name);
+
+                // Needed for groups_update_group.
+                if (strpos($group->idnumber, 'phase_1') == false) {
+                    $group->enablemessaging = 1;
+                } else {
+                    $group->enablemessaging = 0;
+                }
+
+                groups_update_group($group);
+            }
+
+            $grouping = groups_get_grouping($discourse->groupingid);
+            $grouping->name = $discourse->name;
+            groups_update_grouping($grouping);
+        }
+
+    }
 
     return $DB->update_record('discourse', $discourse);
 }
@@ -124,15 +158,22 @@ function discourse_delete_instance($id) {
         $moduleinstance = $DB->get_record('discourse', array('id' => $id));
     }
 
-    // Delete discourse groups.
-    $groups = groups_get_all_groups($moduleinstance->course, 0, $moduleinstance->groupingid);
+    if ($moduleinstance->groupingid != 0) {
+        // Delete discourse groups.
+        $groups = groups_get_all_groups($moduleinstance->course, 0, $moduleinstance->groupingid);
 
-    foreach ($groups as $group) {
-        groups_delete_group($group);
+        foreach ($groups as $group) {
+            groups_delete_group($group);
+        }
+
+        // Check if grouping is in same course as module instance
+        // (should not be neccessary but better be safe then sorry).
+        $grouping = groups_get_grouping($moduleinstance->groupingid);
+        if (!empty($grouping) && $grouping->courseid == $moduleinstance->course) {
+            // Delete discourse grouping.
+            groups_delete_grouping($moduleinstance->groupingid);
+        }
     }
-
-    // Delete discourse grouping.
-    groups_delete_grouping($moduleinstance->groupingid);
 
     // Delete discourse participants.
     if ($DB->record_exists('discourse_participants', array('discourse' => $id))) {
@@ -180,30 +221,48 @@ function discourse_reset_course_form_defaults($course) {
  */
 function discourse_reset_userdata($data) {
 
-    global $DB;
-
-    $componentstr = get_string('modulenameplural', 'discourse');
     $status = array();
 
-    $params = array('course' => $data->courseid);
+    if (!empty($data->reset_discourse_all)) {
+        global $DB;
 
-    $rs = $DB->get_recordset('discourse', $params);
+        $componentstr = get_string('modulenameplural', 'discourse');
 
-    if ($rs->valid()) {
+        $params = array('course' => $data->courseid);
 
-        foreach ($rs as $record) {
-            if ($DB->record_exists('discourse_participants', array('discourse' => $record->id))) {
-                $DB->delete_records('discourse_participants', array('discourse' => $record->id));
+        $rs = $DB->get_recordset('discourse', $params);
+
+        if ($rs->valid()) {
+
+            foreach ($rs as $record) {
+                if ($DB->record_exists('discourse_participants', array('discourse' => $record->id))) {
+                    $DB->delete_records('discourse_participants', array('discourse' => $record->id));
+                }
+
+                if ($DB->record_exists('discourse_submissions', array('discourse' => $record->id))) {
+                    $DB->delete_records('discourse_submissions', array('discourse' => $record->id));
+                }
+
+                // Delete discourse groups.
+                $groups = groups_get_all_groups($record->course, 0, $record->groupingid);
+
+                foreach ($groups as $group) {
+                    groups_delete_group($group);
+                }
+
+                // Check if grouping is in same course as module instance
+                // (should not be neccessary but better be safe then sorry).
+                $grouping = groups_get_grouping($record->groupingid);
+                if (!empty($grouping) && $grouping->courseid == $record->course) {
+                    // Delete discourse grouping.
+                    groups_delete_grouping($record->groupingid);
+                }
             }
 
-            if ($DB->record_exists('discourse_submissions', array('discourse' => $record->id))) {
-                $DB->delete_records('discourse_submissions', array('discourse' => $record->id));
-            }
+            $rs->close();
+
+            $status[] = array('component' => $componentstr, 'item' => get_string('userdatadeleted', 'discourse'), 'error' => false);
         }
-
-        $rs->close();
-
-        $status[] = array('component' => $componentstr, 'item' => get_string('resetting_data', 'discourse'), 'error' => false);
     }
 
     // Updating dates - shift may be negative too.
