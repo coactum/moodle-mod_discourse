@@ -69,7 +69,10 @@ if (!$group) {
 }
 
 echo $OUTPUT->header();
-echo $OUTPUT->heading(get_string('modulename', 'mod_discourse').': ' . format_string($moduleinstance->name), 3);
+
+if ($CFG->branch < 41) {
+    echo $OUTPUT->heading(get_string('modulename', 'mod_discourse').': ' . format_string($moduleinstance->name), 3);
+}
 
 // Instantiate form.
 $mform = new submit_form();
@@ -166,7 +169,6 @@ if ($fromform = $mform->get_data()) {
         case 1:
             $phasehint = $moduleinstance->hintphaseone;
             break;
-
         case 2:
             $phasehint = $moduleinstance->hintphasetwo;
             break;
@@ -178,7 +180,15 @@ if ($fromform = $mform->get_data()) {
             break;
     }
 
-    $page = new discourse_groupview($cm->id, $phasehint, $group, $form, $caneditsubmission, $canviewgroupparticipants);
+    if ($group->phase == $moduleinstance->activephase) {
+        $phaseactive = get_string('phaseactive', 'mod_discourse');
+    } else if ($group->phase < $moduleinstance->activephase) {
+        $phaseactive = get_string('phaseclosed', 'mod_discourse');
+    } else {
+        $phaseactive = false;
+    }
+
+    $page = new discourse_groupview($cm->id, $phasehint, $phaseactive, $group, $form, $caneditsubmission, $canviewgroupparticipants);
 
     // Render page and display the form.
     echo $OUTPUT->render($page);

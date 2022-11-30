@@ -67,6 +67,7 @@ $string['hintphaseone'] = 'Note on the solo phase';
 $string['hintphasetwo'] = 'Note on the 1st group phase';
 $string['hintphasethree'] = 'Note on the 2nd group phase';
 $string['hintphasefour'] = 'Note on the collaborative phase';
+$string['errinvalidphasedeadline'] = 'The phase deadlines are invalid.';
 
 $string['modulenameplural'] = 'DisCourses';
 $string['nonewmodules'] = 'No new modules';
@@ -98,6 +99,7 @@ $string['nogroups'] = 'No groups available';
 $string['noautoswitch'] = 'The automatic phase switch is deactivated. The phases must therefore be changed manually.';
 $string['shouldswitchphaseto'] = 'The automatic phase switch is deactivated. The next phase should be activated by now.';
 $string['phaseswitched'] = 'Phase switched.';
+$string['groupmodevisiblegroups'] = 'The group mode "Visible groups" is activated. This allows all participants to view all groups and their submissions.';
 
 $string['view'] = 'Overview';
 
@@ -115,6 +117,9 @@ $string['currentsubmission'] = 'Current submission';
 $string['submissioncontent'] = 'Content of submission';
 $string['errfilloutfield'] = 'Please fill out this field';
 $string['backtooverview'] = 'Back to overview';
+$string['deletedgroup'] = 'Deleted group';
+$string['phaseactive'] = 'Phase active';
+$string['phaseclosed'] = 'Phase closed';
 
 $string['discourse:addinstance'] = 'Add new DisCourse';
 $string['discourse:potentialparticipant'] = 'Enter DisCourse as participant';

@@ -67,6 +67,7 @@ $string['hintphaseone'] = 'Hinweis zur Einzelphase';
 $string['hintphasetwo'] = 'Hinweis zur 1. Gruppenphase';
 $string['hintphasethree'] = 'Hinweis zur 2. Gruppenphase';
 $string['hintphasefour'] = 'Hinweis zur Gemeinschaftsphase';
+$string['errinvalidphasedeadline'] = 'Die Phasen-Deadlines sind ungültig.';
 
 $string['modulenameplural'] = 'DisKurse';
 $string['nonewmodules'] = 'Keine neuen DisKurse';
@@ -98,6 +99,7 @@ $string['nogroups'] = 'Keine Gruppen vorhanden';
 $string['noautoswitch'] = 'Der automatische Phasenwechsel ist deaktiviert. Die Phasen müssen deshalb manuell gewechselt werden.';
 $string['shouldswitchphaseto'] = 'Der automatische Phasenwechsel ist deaktiviert. Die nächste Phase sollte aktiviert werden.';
 $string['phaseswitched'] = 'Phase gewechselt.';
+$string['groupmodevisiblegroups'] = 'Der Gruppenmodus "Sichtbare Gruppen" ist aktiviert. Dadurch können alle Teilnehmenden alle Gruppen und deren Einreichungen ansehen.';
 
 $string['view'] = 'Übersicht';
 
@@ -115,12 +117,15 @@ $string['currentsubmission'] = 'Aktuelle Einreichung';
 $string['submissioncontent'] = 'Inhalt der Einreichung';
 $string['errfilloutfield'] = 'Bitte Feld ausfüllen';
 $string['backtooverview'] = 'Zurück zur Übersicht';
+$string['deletedgroup'] = 'Gelöschte Gruppe';
+$string['phaseactive'] = 'Phase aktiv';
+$string['phaseclosed'] = 'Phase abgeschlossen';
 
 $string['discourse:addinstance'] = 'Neuen DisKurs hinzufügen';
 $string['discourse:potentialparticipant'] = 'DisKurs als Teilnehmer beitreten';
 $string['discourse:editsubmission'] = 'Gruppentext einreichen oder bearbeiten';
 $string['discourse:editphase'] = 'Phaseninformationen bearbeiten';
-$string['discourse:switchphase'] = 'Diskurs-Phase umschalten';
+$string['discourse:switchphase'] = 'DisKurs-Phase umschalten';
 $string['discourse:viewallgroups'] = 'Alle Gruppen sehen';
 $string['discourse:viewgroupparticipants'] = 'Alle Gruppenteilnehmer einsehen';
 
@@ -128,7 +133,7 @@ $string['groupinvalid'] = 'Gruppe nicht vorhanden';
 $string['useridinvalid'] = 'Benutzer-ID ungültig';
 $string['nogroupmember'] = 'Nicht möglich da kein Gruppenmitglied';
 $string['submissionfaileddoubled'] = 'Einreichung fehlgeschlagen. Ein weiteres Gruppenmitglied hat bereits kürzlich eine Einreichung abgegeben.';
-$string['groupingmaybedeleted'] = 'Die zum Diskurs gehörende Gruppierung wurde gelöscht oder ist ungültig.';
+$string['groupingmaybedeleted'] = 'Die zum DisKurs gehörende Gruppierung wurde gelöscht oder ist ungültig.';
 $string['alreadyparticipants'] = 'Bereits Teilnehmer vorhanden. Gruppen- und Teilnehmererstellung abgebrochen.';
 $string['alreadygrouping'] = 'Es ist bereits eine Gruppierung vorhanden. Gruppen- und Teilnehmererstellung abgebrochen.';
 
@@ -139,11 +144,11 @@ $string['privacy:metadata:discourse_submissions'] = 'Enthält Informationen zu a
 $string['privacy:metadata:discourse_participants:userid'] = 'Benutzer-ID der oder des Teilnehmenden';
 $string['privacy:metadata:discourse_participants:discourse'] = 'ID des DisKurses der oder des Teilnehmenden';
 $string['privacy:metadata:discourse_participants:groupids'] = 'IDs der DisKurs-Gruppen der oder des Teilnehmenden';
-$string['privacy:metadata:discourse_submissions:discourse'] = 'ID des DisKurses in dem die Einreichung abgegeben wurde';
-$string['privacy:metadata:discourse_submissions:groupid'] = 'ID der Gruppe von der die Einreichung abgegeben wurde';
+$string['privacy:metadata:discourse_submissions:discourse'] = 'ID des DisKurses, in dem die Einreichung abgegeben wurde';
+$string['privacy:metadata:discourse_submissions:groupid'] = 'ID der Gruppe, von der die Einreichung abgegeben wurde';
 $string['privacy:metadata:discourse_submissions:submission'] = 'Inhalt der Einreichung';
 $string['privacy:metadata:discourse_submissions:currentversion'] = 'Aktuelle Version der Einreichung';
 $string['privacy:metadata:discourse_submissions:format'] = 'Format der Einreichung';
-$string['privacy:metadata:discourse_submissions:timecreated'] = 'Zeitpunkt an dem die Einreichung abgegeben wurde';
+$string['privacy:metadata:discourse_submissions:timecreated'] = 'Zeitpunkt, an dem die Einreichung abgegeben wurde';
 $string['privacy:metadata:discourse_submissions:timemodified'] = 'Zeitpunkt der letzten Überarbeitung der Einreichung';
-$string['privacy:metadata:core_group'] = 'Das DisKurs Plugin erstellt und nutzt Gruppen und Gruppierungen';
+$string['privacy:metadata:core_group'] = 'Das DisKurs-Plugin erstellt und nutzt Gruppen und Gruppierungen';

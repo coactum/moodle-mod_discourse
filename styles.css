@@ -37,8 +37,14 @@
     padding-top: 8px;
 }
 
-#page-mod-discourse-view .phaseinformation {
-    height: 250px;
+@media (min-width: 992px) {
+    #page-mod-discourse-view .phaseinformation {
+        height: 120px;
+    }
+
+    #page-mod-discourse-view .phaseinformation-big {
+        height: 250px;
+    }
 }
 
 @media (max-width: 767px) {

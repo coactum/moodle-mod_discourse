@@ -48,11 +48,11 @@
                         {{#canviewallgroups}}<button class="btn btn-secondary discourse-btn-round m-r-1" data-toggle="collapse" data-target=".collapseGroupPhaseOne" aria-expanded="false" aria-controls="collapseGroupPhaseOne" title="{{#str}} toggleallgroups, mod_discourse, {{#str}} phaseone, mod_discourse {{/str}} {{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>{{/canviewallgroups}}
                         {{#str}}phaseone, mod_discourse{{/str}}
                         {{#activephaseone}}<span class="badge badge-pill badge-success pull-right"><span class="d-none d-xl-inline">{{#str}}activephase, mod_discourse{{/str}}</span> <i class="fa fa-lg fa-check" title="{{#str}}activephase, mod_discourse{{/str}}"></i></span>{{/activephaseone}}
-                        {{^activephaseone}}{{#canswitchphase}}<a href="view.php?id={{cmid}}&newphase=1"><i class="fa fa-lg fa-toggle-off pull-right" title="{{#str}}switchto, mod_discourse{{/str}} {{#str}}phaseone, mod_discourse{{/str}}"></i></a>{{/canswitchphase}}{{/activephaseone}}
+                        {{^activephaseone}}{{#canswitchphase}}<a href="view.php?id={{cmid}}&newphase=1&sesskey={{sesskey}}"><i class="fa fa-lg fa-toggle-off pull-right" title="{{#str}}switchto, mod_discourse{{/str}} {{#str}}phaseone, mod_discourse{{/str}}"></i></a>{{/canswitchphase}}{{/activephaseone}}
                     </th>
                 </thead>
                 <tbody>
-                    <tr class="phaseinformation">
+                    <tr class="phaseinformation{{#phasehints}} phaseinformation-big{{/phasehints}}">
                         <td class="{{#activephaseone}}discourse-border-success{{/activephaseone}}{{^activephaseone}}discourse-border-default border-right-0{{/activephaseone}}">
                             {{#deadlinephaseone}}
                                 <strong> {{#str}}sheduledend, mod_discourse{{/str}}:</strong>
@@ -113,11 +113,11 @@
                         {{#canviewallgroups}}<button class="btn btn-secondary discourse-btn-round m-r-1" data-toggle="collapse" data-target=".collapseGroupPhaseTwo" aria-expanded="false" aria-controls="collapseGroupPhaseTwo" title="{{#str}} toggleallgroups, mod_discourse, {{#str}} phasetwo, mod_discourse {{/str}} {{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>{{/canviewallgroups}}
                         {{#str}}phasetwo, mod_discourse{{/str}}
                         {{#activephasetwo}}<span class="badge badge-pill badge-success pull-right"><span class="d-none d-xl-inline">{{#str}}activephase, mod_discourse{{/str}}</span> <i class="fa fa-lg fa-check" title="{{#str}}activephase, mod_discourse{{/str}}"></i></span>{{/activephasetwo}}
-                        {{^activephasetwo}}{{#canswitchphase}}<a href="view.php?id={{cmid}}&newphase=2"><i class="fa fa-lg fa-toggle-off pull-right" title="{{#str}}switchto, mod_discourse{{/str}} {{#str}}phasetwo, mod_discourse{{/str}}"></i></a>{{/canswitchphase}}{{/activephasetwo}}
+                        {{^activephasetwo}}{{#canswitchphase}}<a href="view.php?id={{cmid}}&newphase=2&sesskey={{sesskey}}"><i class="fa fa-lg fa-toggle-off pull-right" title="{{#str}}switchto, mod_discourse{{/str}} {{#str}}phasetwo, mod_discourse{{/str}}"></i></a>{{/canswitchphase}}{{/activephasetwo}}
                     </th>
                 </thead>
                 <tbody>
-                    <tr class="phaseinformation">
+                    <tr class="phaseinformation{{#phasehints}} phaseinformation-big{{/phasehints}}">
                         <td class="{{#activephasetwo}}discourse-border-success{{/activephasetwo}}{{^activephasetwo}}discourse-border-default border-right-0{{/activephasetwo}}">
                             {{#deadlinephasetwo}}
                                 <strong> {{#str}}sheduledend, mod_discourse{{/str}}:</strong>
@@ -182,10 +182,11 @@
                         {{#canviewallgroups}}<button class="btn btn-secondary discourse-btn-round m-r-1" data-toggle="collapse" data-target=".collapseGroupPhaseThree" aria-expanded="false" aria-controls="collapseGroupPhaseThree" title="{{#str}} toggleallgroups, mod_discourse, {{#str}} phasethree, mod_discourse {{/str}} {{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>{{/canviewallgroups}}
                         {{#str}}phasethree, mod_discourse{{/str}}
                         {{#activephasethree}}<span class="badge badge-pill badge-success pull-right"><span class="d-none d-xl-inline">{{#str}}activephase, mod_discourse{{/str}}</span> <i class="fa fa-lg fa-check" title="{{#str}}activephase, mod_discourse{{/str}}"></i></span>{{/activephasethree}}
-                        {{^activephasethree}}{{#canswitchphase}}<a href="view.php?id={{cmid}}&newphase=3"><i class="fa fa-lg fa-toggle-off pull-right" title="{{#str}}switchto, mod_discourse{{/str}} {{#str}}phasethree, mod_discourse{{/str}}"></i></a>{{/canswitchphase}}{{/activephasethree}}
+                        {{^activephasethree}}{{#canswitchphase}}<a href="view.php?id={{cmid}}&newphase=3&sesskey={{sesskey}}"><i class="fa fa-lg fa-toggle-off pull-right" title="{{#str}}switchto, mod_discourse{{/str}} {{#str}}phasethree, mod_discourse{{/str}}"></i></a>{{/canswitchphase}}{{/activephasethree}}
                     </th>
+                </thead>
                 <tbody>
-                    <tr class="phaseinformation">
+                    <tr class="phaseinformation{{#phasehints}} phaseinformation-big{{/phasehints}}">
                         <td class="{{#activephasethree}}discourse-border-success{{/activephasethree}}{{^activephasethree}}discourse-border-default border-right-0{{/activephasethree}}">
                             {{#deadlinephasethree}}
                                 <strong> {{#str}}sheduledend, mod_discourse{{/str}}:</strong>
@@ -250,10 +251,11 @@
                         {{#canviewallgroups}}<button class="btn btn-secondary discourse-btn-round m-r-1" data-toggle="collapse" data-target=".collapseGroupPhaseFour" aria-expanded="false" aria-controls="collapseGroupPhaseFour" title="{{#str}} toggleallgroups, mod_discourse, {{#str}} phasefour, mod_discourse {{/str}} {{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>{{/canviewallgroups}}
                         {{#str}}phasefour, mod_discourse{{/str}}
                         {{#activephasefour}}<span class="badge badge-pill badge-success pull-right"><span class="d-none d-xl-inline">{{#str}}activephase, mod_discourse{{/str}}</span> <i class="fa fa-lg fa-check" title="{{#str}}activephase, mod_discourse{{/str}}"></i></span>{{/activephasefour}}
-                        {{^activephasefour}}{{#canswitchphase}}<a href="view.php?id={{cmid}}&newphase=4"><i class="fa fa-lg fa-toggle-off pull-right" title="{{#str}}switchto, mod_discourse{{/str}} {{#str}}phasefour, mod_discourse{{/str}}"></i></a>{{/canswitchphase}}{{/activephasefour}}
+                        {{^activephasefour}}{{#canswitchphase}}<a href="view.php?id={{cmid}}&newphase=4&sesskey={{sesskey}}"><i class="fa fa-lg fa-toggle-off pull-right" title="{{#str}}switchto, mod_discourse{{/str}} {{#str}}phasefour, mod_discourse{{/str}}"></i></a>{{/canswitchphase}}{{/activephasefour}}
                     </th>
+                </thead>
                 <tbody>
-                    <tr class="phaseinformation">
+                    <tr class="phaseinformation{{#phasehints}} phaseinformation-big{{/phasehints}}">
                         <td class="{{#activephasefour}}discourse-border-success{{/activephasefour}}{{^activephasefour}}discourse-border-default{{/activephasefour}}">
                             {{#deadlinephasefour}}
                                 <strong> {{#str}}sheduledend, mod_discourse{{/str}}:</strong>

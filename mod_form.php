@@ -78,26 +78,22 @@ class mod_discourse_mod_form extends moodleform_mod {
         $mform->addHelpButton('name', 'modulename', 'mod_discourse');
 
         // Adding the standard "intro" and "introformat" fields.
-        if ($CFG->branch >= 29) {
-            $this->standard_intro_elements();
-        } else {
-            $this->add_intro_editor();
-        }
+        $this->standard_intro_elements();
 
         // Adding section for phase completion.
         $mform->addElement('header', 'phasecompletion', get_string('phasecompletion', 'mod_discourse'));
 
         $mform->addElement('date_time_selector', 'deadlinephaseone', get_string('deadlinephaseone', 'mod_discourse'));
-        $mform->setDefault('deadlinephaseone', time() + (7 * 24 * 60 * 60));
+        $mform->setDefault('deadlinephaseone', strtotime("+7 days noon"));
 
         $mform->addElement('date_time_selector', 'deadlinephasetwo', get_string('deadlinephasetwo', 'mod_discourse'));
-        $mform->setDefault('deadlinephasetwo', time() + (14 * 24 * 60 * 60));
+        $mform->setDefault('deadlinephasetwo', strtotime("+14 days noon"));
 
         $mform->addElement('date_time_selector', 'deadlinephasethree', get_string('deadlinephasethree', 'mod_discourse'));
-        $mform->setDefault('deadlinephasethree', time() + (21 * 24 * 60 * 60));
+        $mform->setDefault('deadlinephasethree', strtotime("+21 days noon"));
 
         $mform->addElement('date_time_selector', 'deadlinephasefour', get_string('deadlinephasefour', 'mod_discourse'));
-        $mform->setDefault('deadlinephasefour', time() + (28 * 24 * 60 * 60));
+        $mform->setDefault('deadlinephasefour', strtotime("+28 days noon"));
 
         $mform->addElement('advcheckbox', 'autoswitch', get_string('modeautoswitch', 'mod_discourse'), get_string('autoswitch', 'mod_discourse'));
 
@@ -127,5 +123,33 @@ class mod_discourse_mod_form extends moodleform_mod {
 
         // Add standard buttons.
         $this->add_action_buttons();
+    }
+
+
+    /**
+     * Custom validation for the form.
+     * @param array $data Array with all the form data
+     * @param array $files Array with files submitted with form
+     * @return array $errors Array with errors
+     */
+    public function validation($data, $files) {
+        $errors = array();
+
+        if ($data['deadlinephaseone'] >= $data['deadlinephasetwo']) {
+            $errors['deadlinephaseone'] = get_string('errinvalidphasedeadline', 'mod_discourse');
+            $errors['deadlinephasetwo'] = get_string('errinvalidphasedeadline', 'mod_discourse');
+        }
+
+        if ($data['deadlinephasetwo'] >= $data['deadlinephasethree']) {
+            $errors['deadlinephasetwo'] = get_string('errinvalidphasedeadline', 'mod_discourse');
+            $errors['deadlinephasethree'] = get_string('errinvalidphasedeadline', 'mod_discourse');
+        }
+
+        if ($data['deadlinephasethree'] >= $data['deadlinephasefour']) {
+            $errors['deadlinephasethree'] = get_string('errinvalidphasedeadline', 'mod_discourse');
+            $errors['deadlinephasefour'] = get_string('errinvalidphasedeadline', 'mod_discourse');
+        }
+
+        return $errors;
     }
 }

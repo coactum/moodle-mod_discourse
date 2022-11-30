@@ -59,7 +59,7 @@ class switchphases extends \core\task\scheduled_task {
 
         if ($rs->valid()) {
 
-            mtrace('Discourses found where phases should be switched.');
+            mtrace('DisCourses found where phases should be switched.');
 
             $count = 0;
 

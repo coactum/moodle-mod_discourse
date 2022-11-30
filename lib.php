@@ -30,10 +30,15 @@
  * @uses FEATURE_BACKUP_MOODLE2
  * @uses FEATURE_GROUPS
  * @uses FEATURE_GROUPINGS
+ * @uses FEATURE_MOD_PURPOSE
  * @param string $feature
  * @return mixed True if yes (some features may use other values)
  */
 function discourse_supports($feature) {
+    if (!defined('FEATURE_MOD_PURPOSE')) {
+        return null;
+    }
+
     switch ($feature) {
         case FEATURE_MOD_INTRO:
             return true;
@@ -45,6 +50,8 @@ function discourse_supports($feature) {
             return true;
         case FEATURE_GROUPINGS:
             return true;
+        case FEATURE_MOD_PURPOSE;
+            return MOD_PURPOSE_COLLABORATION;
         default:
             return null;
     }

@@ -163,7 +163,7 @@ class provider implements
 
         list($contextsql, $contextparams) = $DB->get_in_or_equal($contextlist->get_contextids(), SQL_PARAMS_NAMED);
 
-        // Discourse participants data.
+        // DisCourse participants data.
         $sql;
         $sql = "SELECT
                     cm.id AS cmid,

@@ -60,20 +60,3 @@ No dependencies.
 
 ## Incompatibilities ##
 - Incompatible with 3rd party plugin block_sharing_cart (https://moodle.org/plugins/block_sharing_cart). If you try to copy a DisCourse with the Sharing-Cart it may create an incomplete and unusable DisCourse.
-
-## Changelog ##
-- [1.2.0]:
-    - [Bugfix]: Deleting expired contexts via Moodle privacy mechanism now deletes all groups and groupings of a DisCourse (the grouping wich id is stored for the instance in the table mod_discourse and its groups).
-    - [Bugfix]: Deleting the whole plugin now removes all groupings connected with DisCourses (and all groups in this groupings).
-    - [Bugfix]: Renaming a DisCourse (in the edit settings, not via the quick edit option in the course) now renames groups and groupings connected with the DisCourse to its new name.
-    - [Bugfix]: Manual renaming of groups wont break the display of the shortened group names anymore.
-    - [Bugfix]: For DisCourse groups messaging is now enabled by default.
-    - [Bugfix]: If an invalid groupingid is stored for a DisCourse or the grouping stored for a DisCourse is deleted, other course groups are not displayed in the DisCourse anymore.
-    - [Feature]: Added possibility to backup and restore DisCourses via Moodle backup api.
-        - [Note]: If you restore a DisCourse within its original course Moodle does not create new groupings and groups. So no grouping is assigned with the new DisCourse and no participants or submissions are recreated.
-        - [Note]: Incompatible with 3rd party plugin block_sharing_cart (https://moodle.org/plugins/block_sharing_cart). If you try to copy a DisCourse with the Sharing-Cart it may create an incomplete and unusable DisCourse.
-    - [Feature]: DisCourses can now be included in the course reset.
-    - [Versions]: Tested for Moodle 3.9, 3.10, 3.11 and 4.0
-        - [Note]: Still uses old icon in Moodle 4.0
-        - [Known issue]: Minor display issues with some themes in Moodle 4.0 if sidebars are open and display is too small
-        - [Known issue]: After duplicating an activity in Moodle 4.0 Moodle returns the wrong activity allowed groups (for the original activity). In this case no groups but an error message is shown and the activity cant be used correctly. Teachers may just wait a few minutes, rename an activity in the course or contact the moodle administrator to clear the moodle cache to fix this issue.
