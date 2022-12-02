@@ -35,8 +35,9 @@
  * @return mixed True if yes (some features may use other values)
  */
 function discourse_supports($feature) {
-    if (!defined('FEATURE_MOD_PURPOSE')) {
-        return null;
+    // Adding support for FEATURE_MOD_PURPOSE (MDL-71457) and providing backward compatibility (pre-v4.0).
+    if (defined('FEATURE_MOD_PURPOSE') && $feature === FEATURE_MOD_PURPOSE) {
+        return MOD_PURPOSE_COLLABORATION;
     }
 
     switch ($feature) {
@@ -50,8 +51,6 @@ function discourse_supports($feature) {
             return true;
         case FEATURE_GROUPINGS:
             return true;
-        case FEATURE_MOD_PURPOSE;
-            return MOD_PURPOSE_COLLABORATION;
         default:
             return null;
     }
@@ -116,6 +115,7 @@ function discourse_update_instance($discourse, mod_discourse_mod_form $mform = n
     // Rename groups.
     if (isset($cmid)) {
         if (isset($oldname) && ($discourse->name != $oldname) && $discourse->groupingid) {
+
             require_once("$CFG->dirroot/group/lib.php");
 
             list ($course, $cm) = get_course_and_cm_from_cmid($cmid, 'discourse');
