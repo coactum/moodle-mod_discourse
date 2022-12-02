@@ -1,4 +1,6 @@
 ## Changelog ##
+- [1.2.2]:
+    - Hotfix to make recent changes for icon and layout compatible with Moodle pre 4.0.
 
 - [1.2.1]:
     - [Bugfix]: Added some margin between current submission and return button on groupview.
