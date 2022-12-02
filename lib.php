@@ -30,10 +30,16 @@
  * @uses FEATURE_BACKUP_MOODLE2
  * @uses FEATURE_GROUPS
  * @uses FEATURE_GROUPINGS
+ * @uses FEATURE_MOD_PURPOSE
  * @param string $feature
  * @return mixed True if yes (some features may use other values)
  */
 function discourse_supports($feature) {
+    // Adding support for FEATURE_MOD_PURPOSE (MDL-71457) and providing backward compatibility (pre-v4.0).
+    if (defined('FEATURE_MOD_PURPOSE') && $feature === FEATURE_MOD_PURPOSE) {
+        return MOD_PURPOSE_COLLABORATION;
+    }
+
     switch ($feature) {
         case FEATURE_MOD_INTRO:
             return true;
@@ -109,6 +115,7 @@ function discourse_update_instance($discourse, mod_discourse_mod_form $mform = n
     // Rename groups.
     if (isset($cmid)) {
         if (isset($oldname) && ($discourse->name != $oldname) && $discourse->groupingid) {
+
             require_once("$CFG->dirroot/group/lib.php");
 
             list ($course, $cm) = get_course_and_cm_from_cmid($cmid, 'discourse');

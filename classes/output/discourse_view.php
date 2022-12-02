@@ -87,6 +87,10 @@ class discourse_view implements renderable, templatable {
     protected $shouldswitchphase;
     /** @var int */
     protected $userid;
+    /** @var int */
+    protected $sesskey;
+    /** @var bool */
+    protected $phasehints;
     /**
      * Construct this renderable.
      * @param int $cmid The course module id
@@ -114,11 +118,13 @@ class discourse_view implements renderable, templatable {
      * @param bool $canviewgroupparticipants If user can view all groups
      * @param int $shouldswitchphase If user should switch phase manually
      * @param int $userid ID of current user
+     * @param int $sesskey Session key for changing phases
+     * @param bool $phasehints If any phase hints are set.
      */
     public function __construct($cmid, $groups, $autoswitch, $activephaseone, $activephasetwo, $activephasethree, $activephasefour,
         $hintphaseone, $hintphasetwo, $hintphasethree, $hintphasefour, $hintphaseoneshortened, $hintphasetwoshortened, $hintphasethreeshortened,
         $hintphasefourshortened, $deadlinephaseone, $deadlinephasetwo, $deadlinephasethree, $deadlinephasefour, $caneditphase, $canswitchphase,
-        $canviewallgroups, $canviewgroupparticipants, $shouldswitchphase, $userid) {
+        $canviewallgroups, $canviewgroupparticipants, $shouldswitchphase, $userid, $sesskey, $phasehints) {
 
         $this->cmid = $cmid;
         $this->groups = $groups;
@@ -145,6 +151,8 @@ class discourse_view implements renderable, templatable {
         $this->canviewgroupparticipants = $canviewgroupparticipants;
         $this->shouldswitchphase = $shouldswitchphase;
         $this->userid = $userid;
+        $this->sesskey = $sesskey;
+        $this->phasehints = $phasehints;
     }
 
     /**
@@ -180,6 +188,8 @@ class discourse_view implements renderable, templatable {
         $data->canviewgroupparticipants = $this->canviewgroupparticipants;
         $data->shouldswitchphase = $this->shouldswitchphase;
         $data->userid = $this->userid;
+        $data->sesskey = $this->sesskey;
+        $data->phasehints = $this->phasehints;
         return $data;
     }
 }

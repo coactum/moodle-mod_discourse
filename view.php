@@ -47,32 +47,11 @@ $cm = $discourse->get_course_module();
 
 require_login($course, true, $cm);
 
-$event = \mod_discourse\event\course_module_viewed::create(array(
-    'objectid' => $moduleinstance->id,
-    'context' => $context
-));
-$event->add_record_snapshot('course', $course);
-$event->add_record_snapshot('discourse', $moduleinstance);
-$event->trigger();
-
-$PAGE->set_url('/mod/discourse/view.php', array('id' => $cm->id));
-$PAGE->set_title(format_string($moduleinstance->name) . ' - ' . get_string('view', 'mod_discourse'));
-$PAGE->set_heading(format_string($course->fullname));
-$PAGE->set_context($context);
-$PAGE->force_settings_menu();
-
-$navbar = $PAGE->navbar->add(get_string('view', 'mod_discourse'), $PAGE->url);
-
-echo $OUTPUT->header();
-echo $OUTPUT->heading(get_string('modulename', 'mod_discourse').': ' . format_string($moduleinstance->name), 3);
-
-if ($moduleinstance->intro) {
-    echo $OUTPUT->box(format_module_intro('discourse', $moduleinstance, $cm->id), 'generalbox mod_introbox', 'newmoduleintro');
-}
-
 $canswitchphase = has_capability('mod/discourse:switchphase', $context);
 
 if (isset($newphase) && $canswitchphase) {
+    require_sesskey();
+
     global $DB;
     switch ($newphase) {
         case 1:
@@ -115,39 +94,69 @@ if (isset($newphase) && $canswitchphase) {
 
     redirect(new moodle_url('/mod/discourse/view.php', array('id' => $id)), get_string('phaseswitched', 'mod_discourse'), null, notification::NOTIFY_SUCCESS);
 
-} else {
-    switch ($moduleinstance->activephase) {
-        case 1:
-            $activephaseone = true;
-            $activephasetwo = false;
-            $activephasethree = false;
-            $activephasefour = false;
-            break;
-        case 2:
-            $activephaseone = false;
-            $activephasetwo = true;
-            $activephasethree = false;
-            $activephasefour = false;
-            break;
-        case 3:
-            $activephaseone = false;
-            $activephasetwo = false;
-            $activephasethree = true;
-            $activephasefour = false;
-            break;
-        case 4:
-            $activephaseone = false;
-            $activephasetwo = false;
-            $activephasethree = false;
-            $activephasefour = true;
-            break;
-        default:
-            $activephaseone = true;
-            $activephasetwo = false;
-            $activephasethree = false;
-            $activephasefour = false;
-            break;
+}
+
+$event = \mod_discourse\event\course_module_viewed::create(array(
+    'objectid' => $moduleinstance->id,
+    'context' => $context
+));
+$event->add_record_snapshot('course', $course);
+$event->add_record_snapshot('discourse', $moduleinstance);
+$event->trigger();
+
+$PAGE->set_url('/mod/discourse/view.php', array('id' => $cm->id));
+$PAGE->set_title(format_string($moduleinstance->name) . ' - ' . get_string('view', 'mod_discourse'));
+$PAGE->set_heading(format_string($course->fullname));
+$PAGE->set_context($context);
+
+if ($CFG->branch < 41) {
+    $PAGE->force_settings_menu();
+}
+
+$navbar = $PAGE->navbar->add(get_string('view', 'mod_discourse'), $PAGE->url);
+
+echo $OUTPUT->header();
+
+if ($CFG->branch < 41) {
+    echo $OUTPUT->heading(get_string('modulename', 'mod_discourse').': ' . format_string($moduleinstance->name), 3);
+
+    if ($moduleinstance->intro) {
+        echo $OUTPUT->box(format_module_intro('discourse', $moduleinstance, $cm->id), 'generalbox mod_introbox', 'newmoduleintro');
     }
+}
+
+// Set active phase.
+switch ($moduleinstance->activephase) {
+    case 1:
+        $activephaseone = true;
+        $activephasetwo = false;
+        $activephasethree = false;
+        $activephasefour = false;
+        break;
+    case 2:
+        $activephaseone = false;
+        $activephasetwo = true;
+        $activephasethree = false;
+        $activephasefour = false;
+        break;
+    case 3:
+        $activephaseone = false;
+        $activephasetwo = false;
+        $activephasethree = true;
+        $activephasefour = false;
+        break;
+    case 4:
+        $activephaseone = false;
+        $activephasetwo = false;
+        $activephasethree = false;
+        $activephasefour = true;
+        break;
+    default:
+        $activephaseone = true;
+        $activephasetwo = false;
+        $activephasethree = false;
+        $activephasefour = false;
+        break;
 }
 
 $caneditphase = has_capability('mod/discourse:editphase', $context);
@@ -173,6 +182,10 @@ if (!groups_get_grouping($moduleinstance->groupingid)) {
     echo $OUTPUT->notification(get_string('groupingmaybedeleted', 'mod_discourse'), notification::NOTIFY_ERROR);
 }
 
+if (groups_get_activity_groupmode($cm) == 2 && has_capability('mod/discourse:viewallgroups', $context)) {
+    echo $OUTPUT->notification(get_string('groupmodevisiblegroups', 'mod_discourse'), notification::NOTIFY_WARNING);
+}
+
 global $USER;
 $userid = $USER->id;
 
@@ -181,11 +194,18 @@ $hintphasetwoshortened = (strlen($moduleinstance->hintphasetwo) >= 250) ? true :
 $hintphasethreeshortened = (strlen($moduleinstance->hintphasethree) >= 250) ? true : false;
 $hintphasefourshortened = (strlen($moduleinstance->hintphasefour) >= 250) ? true : false;
 
+if ($moduleinstance->hintphaseone || $moduleinstance->hintphasetwo
+    || $moduleinstance->hintphasethree || $moduleinstance->hintphasefour) {
+    $phasehints = true;
+} else {
+    $phasehints = false;
+}
+
 $page = new discourse_view($cm->id, $discourse->get_groups(), $moduleinstance->autoswitch, $activephaseone, $activephasetwo,
     $activephasethree, $activephasefour, $moduleinstance->hintphaseone, $moduleinstance->hintphasetwo, $moduleinstance->hintphasethree,
     $moduleinstance->hintphasefour, $hintphaseoneshortened, $hintphasetwoshortened, $hintphasethreeshortened, $hintphasefourshortened,
     $moduleinstance->deadlinephaseone, $moduleinstance->deadlinephasetwo, $moduleinstance->deadlinephasethree, $moduleinstance->deadlinephasefour,
-    $caneditphase, $canswitchphase, $canviewallgroups, $canviewgroupparticipants, $shouldswitchphase, $userid);
+    $caneditphase, $canswitchphase, $canviewallgroups, $canviewgroupparticipants, $shouldswitchphase, $userid, sesskey(), $phasehints);
 
 echo $OUTPUT->render($page);
 

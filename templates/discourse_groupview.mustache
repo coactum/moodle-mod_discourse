@@ -39,6 +39,12 @@
         <div class="row">
             <h3 class="col-md-12 text-center">{{shortenednametwo}}</h3>
         </div>
+        {{#phaseactive}}
+            <div class="row">
+                <strong class="col-md-12 text-center mb-1 text-warning">{{phaseactive}}</strong>
+            </div>
+        {{/phaseactive}}
+
         <div class="table-responsive">
             <table class="table table-striped table-hover generaltable generalbox">
                 <thead>
@@ -75,11 +81,13 @@
         {{/phasehint}}
         {{#group.canviewformersubmissions}}
             {{#group.canhaveformersubmissions}}
-                <h4 class="text-center"> {{#str}}positionsfromlastphase, mod_discourse{{/str}}: </h4>
+                <h4 class="text-center m-2"> {{#str}}positionsfromlastphase, mod_discourse{{/str}}: </h4>
                 <div class="d-flex flex-wrap w-100 p-b-2">
                     {{#group.formersubmissions}}
                         <div class="formersubmissions border border-secondary p-1">
-                            <strong class="text-center">{{{groupname}}} ({{{participants}}}):</strong><br><br>
+                            <strong class="text-center">
+                                {{#groupname}}{{{groupname}}} ({{{participants}}}):{{/groupname}}{{^groupname}}{{#str}}deletedgroup, mod_discourse{{/str}}{{/groupname}}
+                            </strong><br><br>
                             {{#submission}}<span>{{{submission}}}</span>{{/submission}}
                             {{^submission}}<strong class="text-danger">{{#str}}nosubmission, mod_discourse{{/str}}</strong>{{/submission}}
                         </div>
@@ -88,9 +96,9 @@
             {{/group.canhaveformersubmissions}}
         {{/group.canviewformersubmissions}}
         {{#submission.id}}
-            <h4 class="text-center">{{#str}}currentsubmission, mod_discourse{{/str}}:</h4>
+            <h4 class="text-center m-3">{{#str}}currentsubmission, mod_discourse{{/str}}:</h4>
             <div class="collapse show collapseSubmissionForm">
-                <div class="w-100">
+                <div class="w-100 mb-3">
                     {{{submission.submission}}}
                 </div>
             </div>
@@ -103,7 +111,7 @@
         </div>
     {{/caneditsubmission}}
 
-    <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center mt-1">
         <a href="view.php?id={{cmid}}" role="button" class="btn btn-primary collapse show collapseSubmissionForm">{{#str}}backtooverview, mod_discourse{{/str}}</a>
     </div>
 </div>
