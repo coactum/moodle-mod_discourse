@@ -44,12 +44,14 @@
         <div class="discourse-table-groups discourse-table-phaseone col-lg-3 p-0">
             <table class="table table-striped table-hover generaltable generalbox {{#activephaseone}}discourse-border-success{{/activephaseone}}{{^activephaseone}}discourse-border-default{{/activephaseone}}">
                 <thead>
-                    <th scope="col" class="{{#activephaseone}}discourse-border-success{{/activephaseone}}{{^activephaseone}}discourse-border-default border-right-0{{/activephaseone}}">
-                        {{#canviewallgroups}}<button class="btn btn-secondary discourse-btn-round m-r-1" data-toggle="collapse" data-target=".collapseGroupPhaseOne" aria-expanded="false" aria-controls="collapseGroupPhaseOne" title="{{#str}} toggleallgroups, mod_discourse, {{#str}} phaseone, mod_discourse {{/str}} {{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>{{/canviewallgroups}}
-                        {{#str}}phaseone, mod_discourse{{/str}}
-                        {{#activephaseone}}<span class="badge badge-pill badge-success float-right"><span class="d-none d-xl-inline">{{#str}}activephase, mod_discourse{{/str}}</span> <i class="fa fa-lg fa-check" title="{{#str}}activephase, mod_discourse{{/str}}"></i></span>{{/activephaseone}}
-                        {{^activephaseone}}{{#canswitchphase}}<a href="view.php?id={{cmid}}&newphase=1&sesskey={{sesskey}}"><i class="fa fa-lg fa-toggle-off float-right" title="{{#str}}switchto, mod_discourse{{/str}} {{#str}}phaseone, mod_discourse{{/str}}"></i></a>{{/canswitchphase}}{{/activephaseone}}
-                    </th>
+                    <tr>
+                        <th scope="col" class="{{#activephaseone}}discourse-border-success{{/activephaseone}}{{^activephaseone}}discourse-border-default border-right-0{{/activephaseone}}">
+                            {{#canviewallgroups}}<button class="btn btn-secondary discourse-btn-round m-r-1" data-toggle="collapse" data-target=".collapseGroupPhaseOne" aria-expanded="false" aria-controls="collapseGroupPhaseOne" title="{{#str}} toggleallgroups, mod_discourse, {{#str}} phaseone, mod_discourse {{/str}} {{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>{{/canviewallgroups}}
+                            {{#str}}phaseone, mod_discourse{{/str}}
+                            {{#activephaseone}}<span class="badge badge-pill badge-success float-right"><span class="d-none d-xl-inline">{{#str}}activephase, mod_discourse{{/str}}</span> <i class="fa fa-lg fa-check" title="{{#str}}activephase, mod_discourse{{/str}}"></i></span>{{/activephaseone}}
+                            {{^activephaseone}}{{#canswitchphase}}<a href="view.php?id={{cmid}}&newphase=1&sesskey={{sesskey}}"><i class="fa fa-lg fa-toggle-off float-right" title="{{#str}}switchto, mod_discourse{{/str}} {{#str}}phaseone, mod_discourse{{/str}}"></i></a>{{/canswitchphase}}{{/activephaseone}}
+                        </th>
+                    </tr>
                 </thead>
                 <tbody>
                     <tr class="phaseinformation{{#phasehints}} phaseinformation-big{{/phasehints}}">
@@ -109,12 +111,14 @@
         <div class="discourse-table-groups discourse-table-phasetwo col-lg-3 p-0">
             <table class="table table-striped table-hover generaltable generalbox {{#activephasetwo}}discourse-border-success{{/activephasetwo}}{{^activephasetwo}}discourse-border-default{{/activephasetwo}}">
                 <thead>
-                    <th scope="col" class="{{#activephasetwo}}discourse-border-success{{/activephasetwo}}{{^activephasetwo}}discourse-border-default border-right-0{{/activephasetwo}}">
-                        {{#canviewallgroups}}<button class="btn btn-secondary discourse-btn-round m-r-1" data-toggle="collapse" data-target=".collapseGroupPhaseTwo" aria-expanded="false" aria-controls="collapseGroupPhaseTwo" title="{{#str}} toggleallgroups, mod_discourse, {{#str}} phasetwo, mod_discourse {{/str}} {{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>{{/canviewallgroups}}
-                        {{#str}}phasetwo, mod_discourse{{/str}}
-                        {{#activephasetwo}}<span class="badge badge-pill badge-success float-right"><span class="d-none d-xl-inline">{{#str}}activephase, mod_discourse{{/str}}</span> <i class="fa fa-lg fa-check" title="{{#str}}activephase, mod_discourse{{/str}}"></i></span>{{/activephasetwo}}
-                        {{^activephasetwo}}{{#canswitchphase}}<a href="view.php?id={{cmid}}&newphase=2&sesskey={{sesskey}}"><i class="fa fa-lg fa-toggle-off float-right" title="{{#str}}switchto, mod_discourse{{/str}} {{#str}}phasetwo, mod_discourse{{/str}}"></i></a>{{/canswitchphase}}{{/activephasetwo}}
-                    </th>
+                    <tr>
+                        <th scope="col" class="{{#activephasetwo}}discourse-border-success{{/activephasetwo}}{{^activephasetwo}}discourse-border-default border-right-0{{/activephasetwo}}">
+                            {{#canviewallgroups}}<button class="btn btn-secondary discourse-btn-round m-r-1" data-toggle="collapse" data-target=".collapseGroupPhaseTwo" aria-expanded="false" aria-controls="collapseGroupPhaseTwo" title="{{#str}} toggleallgroups, mod_discourse, {{#str}} phasetwo, mod_discourse {{/str}} {{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>{{/canviewallgroups}}
+                            {{#str}}phasetwo, mod_discourse{{/str}}
+                            {{#activephasetwo}}<span class="badge badge-pill badge-success float-right"><span class="d-none d-xl-inline">{{#str}}activephase, mod_discourse{{/str}}</span> <i class="fa fa-lg fa-check" title="{{#str}}activephase, mod_discourse{{/str}}"></i></span>{{/activephasetwo}}
+                            {{^activephasetwo}}{{#canswitchphase}}<a href="view.php?id={{cmid}}&newphase=2&sesskey={{sesskey}}"><i class="fa fa-lg fa-toggle-off float-right" title="{{#str}}switchto, mod_discourse{{/str}} {{#str}}phasetwo, mod_discourse{{/str}}"></i></a>{{/canswitchphase}}{{/activephasetwo}}
+                        </th>
+                    </tr>
                 </thead>
                 <tbody>
                     <tr class="phaseinformation{{#phasehints}} phaseinformation-big{{/phasehints}}">
@@ -178,12 +182,14 @@
         <div class="discourse-table-groups discourse-table-phasethree col-lg-3 p-0">
             <table class="table table-striped table-hover generaltable generalbox {{#activephasethree}}discourse-border-success{{/activephasethree}}{{^activephasethree}}discourse-border-default{{/activephasethree}}">
                 <thead>
-                    <th scope="col" class="{{#activephasethree}}discourse-border-success{{/activephasethree}}{{^activephasethree}}discourse-border-default border-right-0{{/activephasethree}}">
-                        {{#canviewallgroups}}<button class="btn btn-secondary discourse-btn-round m-r-1" data-toggle="collapse" data-target=".collapseGroupPhaseThree" aria-expanded="false" aria-controls="collapseGroupPhaseThree" title="{{#str}} toggleallgroups, mod_discourse, {{#str}} phasethree, mod_discourse {{/str}} {{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>{{/canviewallgroups}}
-                        {{#str}}phasethree, mod_discourse{{/str}}
-                        {{#activephasethree}}<span class="badge badge-pill badge-success float-right"><span class="d-none d-xl-inline">{{#str}}activephase, mod_discourse{{/str}}</span> <i class="fa fa-lg fa-check" title="{{#str}}activephase, mod_discourse{{/str}}"></i></span>{{/activephasethree}}
-                        {{^activephasethree}}{{#canswitchphase}}<a href="view.php?id={{cmid}}&newphase=3&sesskey={{sesskey}}"><i class="fa fa-lg fa-toggle-off float-right" title="{{#str}}switchto, mod_discourse{{/str}} {{#str}}phasethree, mod_discourse{{/str}}"></i></a>{{/canswitchphase}}{{/activephasethree}}
-                    </th>
+                    <tr>
+                        <th scope="col" class="{{#activephasethree}}discourse-border-success{{/activephasethree}}{{^activephasethree}}discourse-border-default border-right-0{{/activephasethree}}">
+                            {{#canviewallgroups}}<button class="btn btn-secondary discourse-btn-round m-r-1" data-toggle="collapse" data-target=".collapseGroupPhaseThree" aria-expanded="false" aria-controls="collapseGroupPhaseThree" title="{{#str}} toggleallgroups, mod_discourse, {{#str}} phasethree, mod_discourse {{/str}} {{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>{{/canviewallgroups}}
+                            {{#str}}phasethree, mod_discourse{{/str}}
+                            {{#activephasethree}}<span class="badge badge-pill badge-success float-right"><span class="d-none d-xl-inline">{{#str}}activephase, mod_discourse{{/str}}</span> <i class="fa fa-lg fa-check" title="{{#str}}activephase, mod_discourse{{/str}}"></i></span>{{/activephasethree}}
+                            {{^activephasethree}}{{#canswitchphase}}<a href="view.php?id={{cmid}}&newphase=3&sesskey={{sesskey}}"><i class="fa fa-lg fa-toggle-off float-right" title="{{#str}}switchto, mod_discourse{{/str}} {{#str}}phasethree, mod_discourse{{/str}}"></i></a>{{/canswitchphase}}{{/activephasethree}}
+                        </th>
+                    </tr>
                 </thead>
                 <tbody>
                     <tr class="phaseinformation{{#phasehints}} phaseinformation-big{{/phasehints}}">
@@ -247,12 +253,14 @@
         <div class="discourse-table-groups discourse-table-phasefour col-lg-3 p-0">
             <table class="table table-striped table-hover generaltable generalbox {{#activephasefour}}discourse-border-success{{/activephasefour}}{{^activephasefour}}discourse-border-default{{/activephasefour}}">
                 <thead>
-                    <th scope="col" class="{{#activephasefour}}discourse-border-success{{/activephasefour}}{{^activephasefour}}discourse-border-default{{/activephasefour}}">
-                        {{#canviewallgroups}}<button class="btn btn-secondary discourse-btn-round m-r-1" data-toggle="collapse" data-target=".collapseGroupPhaseFour" aria-expanded="false" aria-controls="collapseGroupPhaseFour" title="{{#str}} toggleallgroups, mod_discourse, {{#str}} phasefour, mod_discourse {{/str}} {{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>{{/canviewallgroups}}
-                        {{#str}}phasefour, mod_discourse{{/str}}
-                        {{#activephasefour}}<span class="badge badge-pill badge-success float-right"><span class="d-none d-xl-inline">{{#str}}activephase, mod_discourse{{/str}}</span> <i class="fa fa-lg fa-check" title="{{#str}}activephase, mod_discourse{{/str}}"></i></span>{{/activephasefour}}
-                        {{^activephasefour}}{{#canswitchphase}}<a href="view.php?id={{cmid}}&newphase=4&sesskey={{sesskey}}"><i class="fa fa-lg fa-toggle-off float-right" title="{{#str}}switchto, mod_discourse{{/str}} {{#str}}phasefour, mod_discourse{{/str}}"></i></a>{{/canswitchphase}}{{/activephasefour}}
-                    </th>
+                    <tr>
+                        <th scope="col" class="{{#activephasefour}}discourse-border-success{{/activephasefour}}{{^activephasefour}}discourse-border-default{{/activephasefour}}">
+                            {{#canviewallgroups}}<button class="btn btn-secondary discourse-btn-round m-r-1" data-toggle="collapse" data-target=".collapseGroupPhaseFour" aria-expanded="false" aria-controls="collapseGroupPhaseFour" title="{{#str}} toggleallgroups, mod_discourse, {{#str}} phasefour, mod_discourse {{/str}} {{/str}}"><i class="fa fa-lg fa-caret-down"></i></button>{{/canviewallgroups}}
+                            {{#str}}phasefour, mod_discourse{{/str}}
+                            {{#activephasefour}}<span class="badge badge-pill badge-success float-right"><span class="d-none d-xl-inline">{{#str}}activephase, mod_discourse{{/str}}</span> <i class="fa fa-lg fa-check" title="{{#str}}activephase, mod_discourse{{/str}}"></i></span>{{/activephasefour}}
+                            {{^activephasefour}}{{#canswitchphase}}<a href="view.php?id={{cmid}}&newphase=4&sesskey={{sesskey}}"><i class="fa fa-lg fa-toggle-off float-right" title="{{#str}}switchto, mod_discourse{{/str}} {{#str}}phasefour, mod_discourse{{/str}}"></i></a>{{/canswitchphase}}{{/activephasefour}}
+                        </th>
+                    </tr>
                 </thead>
                 <tbody>
                     <tr class="phaseinformation{{#phasehints}} phaseinformation-big{{/phasehints}}">

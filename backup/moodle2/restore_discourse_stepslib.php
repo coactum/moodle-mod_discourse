@@ -127,7 +127,8 @@ class restore_discourse_activity_structure_step extends restore_activity_structu
             $groups = groups_get_all_groups($data->course, 0, $data->groupingid);
             // Change discourse id in the new groups to the new discourse id.
             foreach ($groups as $group) {
-                $group->idnumber = preg_replace('/discourse_[0-9]+_/', 'discourse_' . $this->newdiscourseid . '_', $group->idnumber);
+                $group->idnumber = preg_replace('/discourse_[0-9]+_/',
+                    'discourse_' . $this->newdiscourseid . '_', $group->idnumber);
                 $group->enablemessaging = 1;
                 groups_update_group($group);
             }

@@ -28,7 +28,6 @@ namespace mod_discourse\event;
  * The mod_discourse course module viewed event class.
  *
  * @package    mod_discourse
- * @since      Moodle 3.9
  * @copyright  2022 coactum GmbH
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -44,7 +43,7 @@ class course_module_viewed extends \core\event\course_module_viewed {
     }
 
     /**
-     * Get objectid mapping
+     * Get objectid mapping for restore.
      */
     public static function get_objectid_mapping() {
         return array('db' => 'discourse', 'restore' => 'discourse');

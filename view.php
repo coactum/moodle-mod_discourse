@@ -33,10 +33,10 @@ require_once($CFG->dirroot . '/mod/discourse/locallib.php');
 $id = optional_param('id', null, PARAM_INT);
 
 // Module instance ID as alternative.
-$d  = optional_param('d', null, PARAM_INT);
+$d = optional_param('d', null, PARAM_INT);
 
 // New phase that discourse should switch to.
-$newphase  = optional_param('newphase', null, PARAM_INT);
+$newphase = optional_param('newphase', null, PARAM_INT);
 
 $discourse = discourse::get_discourse_instance($id, $d);
 
@@ -92,7 +92,8 @@ if (isset($newphase) && $canswitchphase) {
 
     $DB->update_record('discourse', $moduleinstance);
 
-    redirect(new moodle_url('/mod/discourse/view.php', array('id' => $id)), get_string('phaseswitched', 'mod_discourse'), null, notification::NOTIFY_SUCCESS);
+    redirect(new moodle_url('/mod/discourse/view.php', array('id' => $id)), get_string('phaseswitched', 'mod_discourse'),
+        null, notification::NOTIFY_SUCCESS);
 
 }
 
@@ -201,11 +202,12 @@ if ($moduleinstance->hintphaseone || $moduleinstance->hintphasetwo
     $phasehints = false;
 }
 
-$page = new discourse_view($cm->id, $discourse->get_groups(), $moduleinstance->autoswitch, $activephaseone, $activephasetwo,
-    $activephasethree, $activephasefour, $moduleinstance->hintphaseone, $moduleinstance->hintphasetwo, $moduleinstance->hintphasethree,
-    $moduleinstance->hintphasefour, $hintphaseoneshortened, $hintphasetwoshortened, $hintphasethreeshortened, $hintphasefourshortened,
-    $moduleinstance->deadlinephaseone, $moduleinstance->deadlinephasetwo, $moduleinstance->deadlinephasethree, $moduleinstance->deadlinephasefour,
-    $caneditphase, $canswitchphase, $canviewallgroups, $canviewgroupparticipants, $shouldswitchphase, $userid, sesskey(), $phasehints);
+$page = new discourse_view($cm->id, $discourse->get_groups(), $moduleinstance->autoswitch, $activephaseone,
+    $activephasetwo, $activephasethree, $activephasefour, $moduleinstance->hintphaseone, $moduleinstance->hintphasetwo,
+    $moduleinstance->hintphasethree, $moduleinstance->hintphasefour, $hintphaseoneshortened, $hintphasetwoshortened,
+    $hintphasethreeshortened, $hintphasefourshortened, $moduleinstance->deadlinephaseone, $moduleinstance->deadlinephasetwo,
+    $moduleinstance->deadlinephasethree, $moduleinstance->deadlinephasefour, $caneditphase, $canswitchphase, $canviewallgroups,
+    $canviewgroupparticipants, $shouldswitchphase, $userid, sesskey(), $phasehints);
 
 echo $OUTPUT->render($page);
 

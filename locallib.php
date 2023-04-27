@@ -82,7 +82,8 @@ class discourse {
 
         $this->modulename = get_string('modulename', 'mod_discourse');
 
-        $this->participants = $DB->get_records('discourse_participants', array('discourse' => $this->cm->instance), '', 'userid, discourse, groupids');
+        $this->participants = $DB->get_records('discourse_participants', array('discourse' => $this->cm->instance),
+            '', 'userid, discourse, groupids');
 
         $grouping = groups_get_grouping($this->instance->groupingid);
         if ($this->instance->groupingid && $grouping && $grouping->courseid == $this->instance->course) {
@@ -113,10 +114,12 @@ class discourse {
 
         foreach ($groups as $group) {
 
-            // Fix for caching bug in Moodle 4.0 where groups_get_activity_allowed_groups returns the groups of the original cm after duplicating an activity ...
-            // despite the correct grouping is connected with the duplicated discourse (see https://tracker.moodle.org/browse/MDL-75530).
+            // Fix for caching bug in Moodle 4.0 where groups_get_activity_allowed_groups returns the groups
+            // of the original cm after duplicating an activity despite the correct grouping is connected with
+            // the duplicated discourse (see https://tracker.moodle.org/browse/MDL-75530).
             // Workaround is clearing the moodle cache or renaming an course activity.
-            $control = $DB->get_record('groupings_groups', array('groupingid' => $this->instance->groupingid, 'groupid' => $group->id));
+            $control = $DB->get_record('groupings_groups',
+                array('groupingid' => $this->instance->groupingid, 'groupid' => $group->id));
             if (!$control) {
                 $groups = array();
 
@@ -154,7 +157,8 @@ class discourse {
 
             if ($this->instance->name && strpos($group->name, $this->instance->name)) {  // If instance name is in group name.
                 $group->shortenedname = explode($this->instance->name, $group->name)[1];
-                $group->shortenednametwo = explode($this->instance->name, $group->name)[0] . '-' . explode($this->instance->name, $group->name)[1];
+                $group->shortenednametwo = explode($this->instance->name, $group->name)[0] . '-' .
+                    explode($this->instance->name, $group->name)[1];
             } else { // If instance name is not in group name (e.g. because group was manually renamed).
                 $group->shortenedname = $group->name;
                 $group->shortenednametwo = $group->name;
@@ -184,9 +188,11 @@ class discourse {
                 array_push($group->participants, $participant);
 
                 if ($group->phase != 1 && $this->participants && isset($this->participants[$participant->id])
-                    && !in_array(json_decode($this->participants[$participant->id]->groupids)[$group->phase - 2], $formergroupids)) {
+                    && !in_array(json_decode($this->participants[$participant->id]->groupids)[$group->phase - 2],
+                    $formergroupids)) {
 
-                        array_push($formergroupids, json_decode($this->participants[$participant->id]->groupids)[$group->phase - 2]);
+                        array_push($formergroupids,
+                            json_decode($this->participants[$participant->id]->groupids)[$group->phase - 2]);
                 }
 
             }
@@ -199,18 +205,23 @@ class discourse {
 
                     $formergroupname = groups_get_group_name($formergroupid);
 
-                    if (!$formersubmission = $DB->get_record('discourse_submissions', array('discourse' => $this->instance->id, 'groupid' => $formergroupid))) {
+                    if (!$formersubmission = $DB->get_record('discourse_submissions',
+                        array('discourse' => $this->instance->id, 'groupid' => $formergroupid))) {
                         $formersubmission = new stdClass();
                         $formersubmission->submission = false;
                     }
 
-                    if (isset(explode($this->instance->name, $formergroupname)[0]) && isset(explode($this->instance->name, $formergroupname)[1])) {
-                        $formersubmission->groupname = explode($this->instance->name, $formergroupname)[0] . '-' . explode($this->instance->name, $formergroupname)[1];
+                    if (isset(explode($this->instance->name, $formergroupname)[0])
+                        && isset(explode($this->instance->name, $formergroupname)[1])) {
+                        $formersubmission->groupname = explode($this->instance->name, $formergroupname)[0] . '-' .
+                            explode($this->instance->name, $formergroupname)[1];
                     } else {
                         $formersubmission->groupname = $formergroupname;
                     }
 
-                    $formersubmission->participants = implode(', ', array_column(groups_get_members($formergroupid), 'firstname', 'lastname'));
+                    $formersubmission->participants = implode(', ',
+                        array_column(groups_get_members($formergroupid), 'firstname', 'lastname'));
+
                     array_push($formersubmissions, $formersubmission);
 
                 }
@@ -389,7 +400,8 @@ class discourse {
 
         // Group for solo phase.
         foreach ($users as $user) {
-            $groupdata->name = get_string('phaseone', 'mod_discourse') . ' ' . $this->instance->name . ' ' . get_string('group', 'mod_discourse') . ' ' . $i;
+            $groupdata->name = get_string('phaseone', 'mod_discourse') . ' ' . $this->instance->name . ' ' .
+                get_string('group', 'mod_discourse') . ' ' . $i;
             $groupdata->description = get_string('groupfor', 'mod_discourse', get_string('phaseone', 'mod_discourse'));
             $groupdata->enablemessaging = 0;
             $groupdata->idnumber = 'discourse_' . $this->instance->id . '_phase_' . 1 . '_group_' . $i;
@@ -407,7 +419,8 @@ class discourse {
 
         // Groups for 1st group phase.
         for ($i = 1; $i <= 4; $i ++) {
-            $groupdata->name = get_string('phasetwo', 'mod_discourse') . ' ' . $this->instance->name . ' ' . get_string('group', 'mod_discourse') . ' ' . $i;
+            $groupdata->name = get_string('phasetwo', 'mod_discourse') . ' ' . $this->instance->name . ' ' .
+                get_string('group', 'mod_discourse') . ' ' . $i;
             $groupdata->description = get_string('groupfor', 'mod_discourse', get_string('phasetwo', 'mod_discourse'));
             $groupdata->enablemessaging = 1;
             $groupdata->idnumber = 'discourse_' . $this->instance->id . '_phase_' . 2 . '_group_' . $i;
@@ -420,7 +433,8 @@ class discourse {
 
         // Groups for 2nd group phase.
         for ($i = 5; $i <= 6; $i ++) {
-            $groupdata->name = get_string('phasethree', 'mod_discourse') . ' ' . $this->instance->name . ' ' . get_string('group', 'mod_discourse') . ' ' . ($i - 4);
+            $groupdata->name = get_string('phasethree', 'mod_discourse') . ' ' . $this->instance->name . ' ' .
+                get_string('group', 'mod_discourse') . ' ' . ($i - 4);
             $groupdata->description = get_string('groupfor', 'mod_discourse', get_string('phasethree', 'mod_discourse'));
             $groupdata->enablemessaging = 1;
             $groupdata->idnumber = 'discourse_' . $this->instance->id . '_phase_' . 3 . '_group_' . ($i - 4);
@@ -457,7 +471,8 @@ class discourse {
         }
 
         // Group for collaborative phase.
-        $groupdata->name = get_string('phasefour', 'mod_discourse') . ' ' . $this->instance->name . ' ' . get_string('group', 'mod_discourse') . ' ' . 1;
+        $groupdata->name = get_string('phasefour', 'mod_discourse') . ' ' . $this->instance->name . ' ' .
+            get_string('group', 'mod_discourse') . ' ' . 1;
         $groupdata->description = get_string('groupfor', 'mod_discourse', get_string('phasefour', 'mod_discourse'));
         $groupdata->enablemessaging = 1;
         $groupdata->idnumber = 'discourse_' . $this->instance->id . '_phase_' . 4 . '_group_' . 1;
@@ -479,7 +494,9 @@ class discourse {
         ));
 
         // Set group mode for module.
-        if ($DB->get_field('course_modules', 'groupmode', array('id' => $this->cm->id, 'course' => $this->course->id, 'instance' => $this->instance->id)) === 0) {
+        if ($DB->get_field('course_modules', 'groupmode',
+            array('id' => $this->cm->id, 'course' => $this->course->id, 'instance' => $this->instance->id)) === 0) {
+
             $DB->set_field('course_modules', 'groupmode', 1, array(
                 'id' => $this->cm->id,
                 'course' => $this->course->id,

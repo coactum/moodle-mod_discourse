@@ -275,8 +275,8 @@ function discourse_reset_userdata($data) {
     // Updating dates - shift may be negative too.
     if ($data->timeshift) {
         // Any changes to the list of dates that needs to be rolled should be same during course restore and course reset.
-        $shifterror = !shift_course_mod_dates('discourse', array('deadlinephaseone', 'deadlinephasetwo', 'deadlinephasethree', 'deadlinephasefour'),
-            $data->timeshift, $data->courseid);
+        $shifterror = !shift_course_mod_dates('discourse', array('deadlinephaseone', 'deadlinephasetwo',
+            'deadlinephasethree', 'deadlinephasefour'), $data->timeshift, $data->courseid);
         $status[] = array('component' => $componentstr, 'item' => get_string('datechanged'), 'error' => $shifterror);
     }
 

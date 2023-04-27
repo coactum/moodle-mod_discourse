@@ -48,10 +48,12 @@
         <div class="table-responsive">
             <table class="table table-striped table-hover generaltable generalbox">
                 <thead>
-                    {{#canviewgroupparticipants}}<th scope="col">{{#str}}groupparticipants, mod_discourse{{/str}}</th>{{/canviewgroupparticipants}}
-                    <th scope="col">{{#str}}submissionstate, mod_discourse{{/str}}</th>
-                    <th scope="col">{{#str}}currentversion, mod_discourse{{/str}}</th>
-                    {{#caneditsubmission}}<th scope="col"></th>{{/caneditsubmission}}
+                    <tr>
+                        {{#canviewgroupparticipants}}<th scope="col">{{#str}}groupparticipants, mod_discourse{{/str}}</th>{{/canviewgroupparticipants}}
+                        <th scope="col">{{#str}}submissionstate, mod_discourse{{/str}}</th>
+                        <th scope="col">{{#str}}currentversion, mod_discourse{{/str}}</th>
+                        {{#caneditsubmission}}<th scope="col"></th>{{/caneditsubmission}}
+                    </tr>
                 </thead>
                 <tbody><tr>
                     {{#canviewgroupparticipants}}<td class="w-50">

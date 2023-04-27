@@ -85,13 +85,15 @@ class discourse_groupview implements renderable, templatable {
         $data->group = $this->group;
 
         if ($data->group->submission) {
-            $data->group->submission->submission = format_text($data->group->submission->submission, $data->group->submission->format, array('para' => false));
+            $data->group->submission->submission = format_text($data->group->submission->submission,
+                $data->group->submission->format, array('para' => false));
         }
 
         if ($data->group->formersubmissions) {
             foreach ($data->group->formersubmissions as $key => $submission) {
                 if ($submission->submission) {
-                    $data->group->formersubmissions[$key]->submission = format_text($submission->submission, $submission->format, array('para' => false));
+                    $data->group->formersubmissions[$key]->submission = format_text($submission->submission,
+                        $submission->format, array('para' => false));
                 }
             }
         }

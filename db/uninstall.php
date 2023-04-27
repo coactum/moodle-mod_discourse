@@ -49,7 +49,8 @@ function xmldb_discourse_uninstall() {
     $select .= "AND idnumber LIKE '%phase%'";
     $select .= "AND idnumber LIKE '%group%'";
 
-    // Deleting groups created by discourse activity with idnumber discourse_X_phase_x_group_X to prevent problems with already existing idsnumbers after reinstallation of plugin.
+    // Deleting groups created by discourse activity with idnumber discourse_X_phase_x_group_X
+    // to prevent problems with already existing idsnumbers after reinstallation of plugin.
     $discoursegroups = $DB->get_recordset_select('groups', $select);
 
     if ($discoursegroups->valid()) {
