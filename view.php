@@ -109,7 +109,7 @@ $PAGE->set_title(format_string($moduleinstance->name) . ' - ' . get_string('view
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($context);
 
-if ($CFG->branch < 41) {
+if ($CFG->branch < 40) {
     $PAGE->force_settings_menu();
 }
 
@@ -117,11 +117,11 @@ $navbar = $PAGE->navbar->add(get_string('view', 'mod_discourse'), $PAGE->url);
 
 echo $OUTPUT->header();
 
-if ($CFG->branch < 41) {
+if ($CFG->branch < 40) {
     echo $OUTPUT->heading(get_string('modulename', 'mod_discourse').': ' . format_string($moduleinstance->name), 3);
 
     if ($moduleinstance->intro) {
-        echo $OUTPUT->box(format_module_intro('discourse', $moduleinstance, $cm->id), 'generalbox mod_introbox', 'newmoduleintro');
+        echo $OUTPUT->box(format_module_intro('discourse', $moduleinstance, $cm->id), 'generalbox', 'intro');
     }
 }
 
