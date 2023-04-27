@@ -69,8 +69,8 @@
                         {{^submission.id}}-{{/submission.id}}
                     </td>
                     {{#caneditsubmission}}<td>
-                        {{#submission.id}}<button class="btn btn-primary pull-right" data-toggle="collapse" data-target=".collapseSubmissionForm" aria-expanded="false" aria-controls="collapseSubmissionForm">{{#str}}editsubmission, mod_discourse{{/str}}</button>{{/submission.id}}
-                        {{^submission.id}}<button class="btn btn-primary pull-right" data-toggle="collapse" data-target=".collapseSubmissionForm" aria-expanded="false" aria-controls="collapseSubmissionForm">{{#str}}submitsubmission, mod_discourse{{/str}}</button>{{/submission.id}}
+                        {{#submission.id}}<button class="btn btn-primary float-right" data-toggle="collapse" data-target=".collapseSubmissionForm" aria-expanded="false" aria-controls="collapseSubmissionForm">{{#str}}editsubmission, mod_discourse{{/str}}</button>{{/submission.id}}
+                        {{^submission.id}}<button class="btn btn-primary float-right" data-toggle="collapse" data-target=".collapseSubmissionForm" aria-expanded="false" aria-controls="collapseSubmissionForm">{{#str}}submitsubmission, mod_discourse{{/str}}</button>{{/submission.id}}
                     </td>{{/caneditsubmission}}
                 </tr></tbody>
             </table>
