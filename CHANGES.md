@@ -3,6 +3,7 @@
     - Ensured compatibility with Moodle 4.2.
         - [Layout]: Minor layout fixes because of the new versions of the bootstrap and fontawesome libraries.
         - [Icon]: Added monologo version of the activity icon for current Moodle versions.
+        - [Bugfix]: Fix for an error when a discourse group is deleted externally.
     - [Bugfix]: Hide heading and intro in Moodle 4.0 to avoid redundant information.
     - [Chore]: Some code reformating to fix moodle code check errors.
 

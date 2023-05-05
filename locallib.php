@@ -219,8 +219,12 @@ class discourse {
                         $formersubmission->groupname = $formergroupname;
                     }
 
-                    $formersubmission->participants = implode(', ',
-                        array_column(groups_get_members($formergroupid), 'firstname', 'lastname'));
+                    if (groups_group_exists($formergroupid)) {
+                        $formersubmission->participants = implode(', ',
+                            array_column(groups_get_members($formergroupid), 'firstname', 'lastname'));
+                    } else {
+                        $formersubmission->participants = false;
+                    }
 
                     array_push($formersubmissions, $formersubmission);
 
