@@ -95,9 +95,9 @@ class provider implements
         $contextlist = new contextlist();
 
         $params = [
-            'modulename'       => 'discourse',
-            'contextlevel'  => CONTEXT_MODULE,
-            'userid'        => $userid,
+            'modulename' => 'discourse',
+            'contextlevel' => CONTEXT_MODULE,
+            'userid' => $userid,
         ];
 
         // Select discourses of user.
@@ -130,8 +130,8 @@ class provider implements
         }
 
         $params = [
-            'instanceid'    => $context->id,
-            'modulename'    => 'discourse',
+            'instanceid' => $context->id,
+            'modulename' => 'discourse',
         ];
 
         // Get users.
@@ -200,8 +200,8 @@ class provider implements
                     }
 
                     $discoursedata = [
-                        'id'       => $discourse->discourse,
-                        'timecreated'   => \core_privacy\local\request\transform::datetime($discourse->timecreated),
+                        'id' => $discourse->discourse,
+                        'timecreated' => \core_privacy\local\request\transform::datetime($discourse->timecreated),
                         'timemodified' => $discourse->timemodified,
                     ];
 
@@ -273,7 +273,9 @@ class provider implements
      * @param array $subcontext The location within the current context that this data belongs.
      * @param \stdClass $user the user record
      */
-    protected static function export_discourse_data_for_user(array $discoursedata, \context_module $context, array $subcontext, \stdClass $user) {
+    protected static function export_discourse_data_for_user(array $discoursedata, \context_module $context,
+        array $subcontext, \stdClass $user) {
+
         // Fetch the generic module data for the discourse activity.
         $contextdata = helper::get_context_data($context, $user);
         // Merge with discourse data and write it.

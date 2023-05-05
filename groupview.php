@@ -34,13 +34,13 @@ require_once($CFG->dirroot . '/mod/discourse/submit_form.php');
 $id = optional_param('id', null, PARAM_INT);
 
 // Module instance ID as alternative.
-$d  = optional_param('d', null, PARAM_INT);
+$d = optional_param('d', null, PARAM_INT);
 
 // ID of the group to be viewed.
-$groupid  = required_param('group', PARAM_INT);
+$groupid = required_param('group', PARAM_INT);
 
 // ID of the user viewing (for unique draft savings).
-$userid  = required_param('userid', PARAM_INT);
+$userid = required_param('userid', PARAM_INT);
 
 $discourse = discourse::get_discourse_instance($id, $d);
 
@@ -63,14 +63,16 @@ $navbar = $PAGE->navbar->add(get_string('groupview', 'mod_discourse'), $PAGE->ur
 $group = $discourse->get_group($groupid);
 
 if (!$group) {
-    redirect(new moodle_url('/mod/discourse/view.php', array('id' => $id)), get_string('groupinvalid', 'mod_discourse'), null, notification::NOTIFY_ERROR);
+    redirect(new moodle_url('/mod/discourse/view.php', array('id' => $id)), get_string('groupinvalid', 'mod_discourse'),
+        null, notification::NOTIFY_ERROR);
 } else if ($userid != $USER->id) {
-    redirect(new moodle_url('/mod/discourse/view.php', array('id' => $id)), get_string('useridinvalid', 'mod_discourse'), null, notification::NOTIFY_ERROR);
+    redirect(new moodle_url('/mod/discourse/view.php', array('id' => $id)), get_string('useridinvalid', 'mod_discourse'),
+        null, notification::NOTIFY_ERROR);
 }
 
 echo $OUTPUT->header();
 
-if ($CFG->branch < 41) {
+if ($CFG->branch < 400) {
     echo $OUTPUT->heading(get_string('modulename', 'mod_discourse').': ' . format_string($moduleinstance->name), 3);
 }
 
@@ -84,8 +86,10 @@ if ($fromform = $mform->get_data()) {
 
         if (isset($fromform->submissionid)) {
             if ($fromform->submissionid !== 0) { // Update existing submission.
-                $submission = $DB->get_record('discourse_submissions', array('discourse' => $moduleinstance->id, 'groupid' => $fromform->group, 'id' => $fromform->submissionid));
-                $submission->submission = format_text($fromform->submission['text'], $fromform->submission['format'], array('para' => false));
+                $submission = $DB->get_record('discourse_submissions',
+                    array('discourse' => $moduleinstance->id, 'groupid' => $fromform->group, 'id' => $fromform->submissionid));
+                $submission->submission = format_text($fromform->submission['text'], $fromform->submission['format'],
+                    array('para' => false));
                 $submission->currentversion += 1;
                 $submission->format = (int) $fromform->submission['format'];
                 $submission->timemodified = time();
@@ -97,7 +101,8 @@ if ($fromform = $mform->get_data()) {
                     $submission = new stdClass();
                     $submission->discourse = (int) $moduleinstance->id;
                     $submission->groupid = $fromform->group;
-                    $submission->submission = format_text($fromform->submission['text'], $fromform->submission['format'], array('para' => false));
+                    $submission->submission = format_text($fromform->submission['text'], $fromform->submission['format'],
+                        array('para' => false));
                     $submission->currentversion = 1;
                     $submission->format = (int) $fromform->submission['format'];
                     $submission->timecreated = time();
@@ -105,15 +110,18 @@ if ($fromform = $mform->get_data()) {
 
                     $DB->insert_record('discourse_submissions', $submission);
                 } else {
-                    redirect(new moodle_url('/mod/discourse/groupview.php', array('id' => $id, 'group' => $fromform->group, 'userid' => $userid)),
+                    redirect(new moodle_url('/mod/discourse/groupview.php',
+                        array('id' => $id, 'group' => $fromform->group, 'userid' => $userid)),
                         get_string('submissionfaileddoubled', 'mod_discourse'), null, notification::NOTIFY_ERROR );
                 }
             }
 
-            redirect(new moodle_url('/mod/discourse/groupview.php', array('id' => $id, 'group' => $fromform->group, 'userid' => $userid)));
+            redirect(new moodle_url('/mod/discourse/groupview.php',
+                array('id' => $id, 'group' => $fromform->group, 'userid' => $userid)));
         }
     } else {
-        redirect(new moodle_url('/mod/discourse/groupview.php', array('id' => $id, 'group' => $fromform->group, 'userid' => $userid)),
+        redirect(new moodle_url('/mod/discourse/groupview.php',
+            array('id' => $id, 'group' => $fromform->group, 'userid' => $userid)),
             get_string('nogroupmember', 'mod_discourse'), null, notification::NOTIFY_ERROR);
     }
 
@@ -141,7 +149,8 @@ if ($fromform = $mform->get_data()) {
     // Set default data.
     if (isset($group->submission) && $group->submission) { // Default data if group has made submission.
         $mform->set_data(array('id' => $id, 'group' => $groupid, 'submissionid' => $group->submission->id,
-            'submission' => ['text' => $group->submission->submission, 'format' => $group->submission->format], 'userid' => $userid));
+            'submission' => ['text' => $group->submission->submission, 'format' => $group->submission->format],
+            'userid' => $userid));
     } else if (isset($formersubmission)) { // Default data if group has merged submissions from former groups of the participants.
         $mform->set_data(array('id' => $id, 'group' => $groupid, 'submissionid' => 0,
             'submission' => ['text' => $formersubmission->text, 'format' => $formersubmission->format], 'userid' => $userid));
@@ -188,7 +197,8 @@ if ($fromform = $mform->get_data()) {
         $phaseactive = false;
     }
 
-    $page = new discourse_groupview($cm->id, $phasehint, $phaseactive, $group, $form, $caneditsubmission, $canviewgroupparticipants);
+    $page = new discourse_groupview($cm->id, $phasehint, $phaseactive, $group, $form, $caneditsubmission,
+        $canviewgroupparticipants);
 
     // Render page and display the form.
     echo $OUTPUT->render($page);

@@ -95,7 +95,8 @@ class mod_discourse_mod_form extends moodleform_mod {
         $mform->addElement('date_time_selector', 'deadlinephasefour', get_string('deadlinephasefour', 'mod_discourse'));
         $mform->setDefault('deadlinephasefour', strtotime("+28 days noon"));
 
-        $mform->addElement('advcheckbox', 'autoswitch', get_string('modeautoswitch', 'mod_discourse'), get_string('autoswitch', 'mod_discourse'));
+        $mform->addElement('advcheckbox', 'autoswitch', get_string('modeautoswitch', 'mod_discourse'),
+            get_string('autoswitch', 'mod_discourse'));
 
         if (isset($id) && $id !== 0 && !isset($discourse->get_module_instance()->autoswitch)) {
             $mform->setDefault('autoswitch', 0);
@@ -106,16 +107,20 @@ class mod_discourse_mod_form extends moodleform_mod {
         // Adding section for phase hints.
         $mform->addElement('header', 'phaseshints', get_string('phaseshints', 'mod_discourse'));
 
-        $mform->addElement('textarea', 'hintphaseone', get_string('hintphaseone', 'mod_discourse'), 'wrap="virtual" rows="2" cols="150"');
+        $mform->addElement('textarea', 'hintphaseone', get_string('hintphaseone', 'mod_discourse'),
+            'wrap="virtual" rows="2" cols="150"');
         $mform->setType('hintphaseone', PARAM_TEXT);
 
-        $mform->addElement('textarea', 'hintphasetwo', get_string('hintphasetwo', 'mod_discourse'), 'wrap="virtual" rows="2" cols="150"');
+        $mform->addElement('textarea', 'hintphasetwo', get_string('hintphasetwo', 'mod_discourse'),
+            'wrap="virtual" rows="2" cols="150"');
         $mform->setType('hintphasetwo', PARAM_TEXT);
 
-        $mform->addElement('textarea', 'hintphasethree', get_string('hintphasethree', 'mod_discourse'), 'wrap="virtual" rows="2" cols="150"');
+        $mform->addElement('textarea', 'hintphasethree', get_string('hintphasethree', 'mod_discourse'),
+            'wrap="virtual" rows="2" cols="150"');
         $mform->setType('hintphasethree', PARAM_TEXT);
 
-        $mform->addElement('textarea', 'hintphasefour', get_string('hintphasefour', 'mod_discourse'), 'wrap="virtual" rows="2" cols="150"');
+        $mform->addElement('textarea', 'hintphasefour', get_string('hintphasefour', 'mod_discourse'),
+            'wrap="virtual" rows="2" cols="150"');
         $mform->setType('hintphasefour', PARAM_TEXT);
 
         // Add standard elements.

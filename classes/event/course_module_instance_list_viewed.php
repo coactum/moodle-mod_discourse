@@ -28,7 +28,6 @@ namespace mod_discourse\event;
  * The mod_discourse instance list viewed event class.
  *
  * @package    mod_discourse
- * @since      Moodle 3.9
  * @copyright  2022 coactum GmbH
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

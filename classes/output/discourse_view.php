@@ -122,9 +122,10 @@ class discourse_view implements renderable, templatable {
      * @param bool $phasehints If any phase hints are set.
      */
     public function __construct($cmid, $groups, $autoswitch, $activephaseone, $activephasetwo, $activephasethree, $activephasefour,
-        $hintphaseone, $hintphasetwo, $hintphasethree, $hintphasefour, $hintphaseoneshortened, $hintphasetwoshortened, $hintphasethreeshortened,
-        $hintphasefourshortened, $deadlinephaseone, $deadlinephasetwo, $deadlinephasethree, $deadlinephasefour, $caneditphase, $canswitchphase,
-        $canviewallgroups, $canviewgroupparticipants, $shouldswitchphase, $userid, $sesskey, $phasehints) {
+        $hintphaseone, $hintphasetwo, $hintphasethree, $hintphasefour, $hintphaseoneshortened, $hintphasetwoshortened,
+        $hintphasethreeshortened, $hintphasefourshortened, $deadlinephaseone, $deadlinephasetwo, $deadlinephasethree,
+        $deadlinephasefour, $caneditphase, $canswitchphase, $canviewallgroups, $canviewgroupparticipants, $shouldswitchphase,
+        $userid, $sesskey, $phasehints) {
 
         $this->cmid = $cmid;
         $this->groups = $groups;
