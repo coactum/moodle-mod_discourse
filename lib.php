@@ -35,11 +35,6 @@
  * @return mixed True if yes (some features may use other values)
  */
 function discourse_supports($feature) {
-    // Adding support for FEATURE_MOD_PURPOSE (MDL-71457) and providing backward compatibility (pre-v4.0).
-    if (defined('FEATURE_MOD_PURPOSE') && $feature === FEATURE_MOD_PURPOSE) {
-        return MOD_PURPOSE_COLLABORATION;
-    }
-
     switch ($feature) {
         case FEATURE_MOD_INTRO:
             return true;
@@ -51,6 +46,8 @@ function discourse_supports($feature) {
             return true;
         case FEATURE_GROUPINGS:
             return true;
+        case FEATURE_MOD_PURPOSE:
+            return MOD_PURPOSE_COLLABORATION;
         default:
             return null;
     }
@@ -67,7 +64,7 @@ function discourse_supports($feature) {
  * @param mod_discourse_mod_form $mform The form.
  * @return int The id of the newly inserted record.
  */
-function discourse_add_instance($discourse, mod_discourse_mod_form $mform = null) {
+function discourse_add_instance($discourse, ?mod_discourse_mod_form $mform = null) {
     global $DB;
 
     $discourse->timecreated = time();
@@ -101,7 +98,7 @@ function discourse_instance_created($context, $discourse) {
  * @param mod_discourse_mod_form $mform The form.
  * @return bool True if successful, false otherwise.
  */
-function discourse_update_instance($discourse, mod_discourse_mod_form $mform = null) {
+function discourse_update_instance($discourse, ?mod_discourse_mod_form $mform = null) {
     global $DB, $CFG;
 
     $discourse->timemodified = time();

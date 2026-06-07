@@ -72,10 +72,6 @@ if (!$group) {
 
 echo $OUTPUT->header();
 
-if ($CFG->branch < 400) {
-    echo $OUTPUT->heading(get_string('modulename', 'mod_discourse').': ' . format_string($moduleinstance->name), 3);
-}
-
 // Instantiate form.
 $mform = new submit_form();
 

@@ -71,8 +71,8 @@
                         {{^submission.id}}-{{/submission.id}}
                     </td>
                     {{#caneditsubmission}}<td>
-                        {{#submission.id}}<button class="btn btn-primary float-right" data-toggle="collapse" data-target=".collapseSubmissionForm" aria-expanded="false" aria-controls="collapseSubmissionForm">{{#str}}editsubmission, mod_discourse{{/str}}</button>{{/submission.id}}
-                        {{^submission.id}}<button class="btn btn-primary float-right" data-toggle="collapse" data-target=".collapseSubmissionForm" aria-expanded="false" aria-controls="collapseSubmissionForm">{{#str}}submitsubmission, mod_discourse{{/str}}</button>{{/submission.id}}
+                        {{#submission.id}}<button class="btn btn-primary float-end" data-bs-toggle="collapse" data-bs-target=".collapseSubmissionForm" aria-expanded="false" aria-controls="collapseSubmissionForm">{{#str}}editsubmission, mod_discourse{{/str}}</button>{{/submission.id}}
+                        {{^submission.id}}<button class="btn btn-primary float-end" data-bs-toggle="collapse" data-bs-target=".collapseSubmissionForm" aria-expanded="false" aria-controls="collapseSubmissionForm">{{#str}}submitsubmission, mod_discourse{{/str}}</button>{{/submission.id}}
                     </td>{{/caneditsubmission}}
                 </tr></tbody>
             </table>
@@ -84,7 +84,7 @@
         {{#group.canviewformersubmissions}}
             {{#group.canhaveformersubmissions}}
                 <h4 class="text-center m-2"> {{#str}}positionsfromlastphase, mod_discourse{{/str}}: </h4>
-                <div class="d-flex flex-wrap w-100 p-b-2">
+                <div class="d-flex flex-wrap w-100 pb-2">
                     {{#group.formersubmissions}}
                         <div class="formersubmissions border border-secondary p-1">
                             <strong class="text-center">

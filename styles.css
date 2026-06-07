@@ -27,7 +27,7 @@
     top: -4px;
 }
 
-#page-mod-discourse-view .badge-pill {
+#page-mod-discourse-view .rounded-pill {
     border-radius: 10rem;
     position: relative;
     top: 7px;
