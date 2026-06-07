@@ -1,4 +1,15 @@
 ## Changelog ##
+- [1.3.0]:
+    - Migrated the plugin to Moodle 5.2.
+        - [Requirements]: Now requires Moodle 5.2 (build 2026042000) and PHP 8.3 or later. Support for Moodle 4.x and earlier was dropped.
+        - [Bootstrap 5]: Migrated all templates and styles from Bootstrap 4 to Bootstrap 5.
+            - Replaced the `data-toggle` / `data-target` / `data-dismiss` collapse and alert attributes with their `data-bs-*` equivalents.
+            - Replaced directional/utility classes (`float-right` → `float-end`, `m-r-1` → `me-1`, `border-right-0` → `border-end-0`, `p-b-2` → `pb-2`).
+            - Replaced the badge classes (`badge-pill badge-success` → `rounded-pill text-bg-success`) and the matching CSS selector.
+            - Rebuilt the dismissible alerts as Bootstrap 5 `alert-dismissible` with the `btn-close` button.
+        - [Cleanup]: Removed the now-dead pre-Moodle-4.0 compatibility branches (`$CFG->branch < 400`) in the view and group view and simplified `discourse_supports()`.
+        - [CI]: Updated the GitHub Actions matrix to PHP 8.3/8.4 on `MOODLE_502_STABLE` with moodle-plugin-ci `^4`.
+
 - [1.2.3]:
     - Ensured compatibility with Moodle 4.2.
         - [Layout]: Minor layout fixes because of the new versions of the bootstrap and fontawesome libraries.

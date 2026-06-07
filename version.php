@@ -25,7 +25,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'mod_discourse';
-$plugin->release = '1.2.3';
-$plugin->version = 2023050500;
-$plugin->requires = 2020061500;
+$plugin->release = '1.3.0';
+$plugin->version = 2026060700;
+$plugin->requires = 2026042000; // Requires Moodle 5.2 (Bootstrap 5, PHP 8.3+).
+$plugin->supported = [502, 502]; // Supported on the Moodle 5.2 branch.
 $plugin->maturity = MATURITY_STABLE;

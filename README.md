@@ -43,16 +43,21 @@ On the group page teachers can see …
 
 Students can additionally hand in a submission for the group if the phase of the group corresponds to the current phase of the DisCourse (the positions of the pre-groups are already pre-filled in the editor).
 
+## Requirements ##
+This version requires Moodle 5.2 or later (PHP 8.3+). For older Moodle versions (4.x and earlier) use the 1.x releases of this plugin.
+
 ## Quick installation instructions ##
 
+Since Moodle 5.0 the web root lives in the `public/` folder, so the plugin must be installed into `public/mod/discourse`. On installations that still use the legacy layout (no `public/` folder) use `mod/discourse` instead.
+
 ### Install from git ###
-- Navigate to Moodle root folder.
-- **git clone https://github.com/coactum/moodle-mod_discourse.git mod/discourse**
+- Navigate to the Moodle root folder.
+- **git clone https://github.com/coactum/moodle-mod_discourse.git public/mod/discourse**
 
 ### Install from a compressed file ###
 - Extract the compressed file data.
 - Rename the main folder to discourse.
-- Copy to the Moodle mod/ folder.
+- Copy it to the Moodle `public/mod/` folder.
 - Click the 'Notifications' link on the frontpage administration block.
 
 ## Dependencies ##
